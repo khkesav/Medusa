@@ -1,18 +1,26 @@
+import { IsOptional, IsString } from "class-validator"
 import { EntityManager } from "typeorm"
-import { OrderEditService } from "../../../../services"
+import { PaymentCollectionType } from "../../../../models"
+import {
+  OrderEditService,
+  OrderService,
+  PaymentCollectionService,
+} from "../../../../services"
 import {
   defaultOrderEditFields,
   defaultOrderEditRelations,
 } from "../../../../types/order-edit"
 
 /**
- * @oas [post] /order-edits/{id}/request
+ * @oas [post] /admin/order-edits/{id}/request
  * operationId: "PostOrderEditsOrderEditRequest"
- * summary: "Request order edit confirmation"
+ * summary: "Request Confirmation"
  * description: "Request customer confirmation of an Order Edit"
  * x-authenticated: true
  * parameters:
  *   - (path) id=* {string} The ID of the Order Edit to request confirmation from.
+ * x-codegen:
+ *   method: requestConfirmation
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -33,16 +41,14 @@ import {
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - OrderEdit
+ *   - Order Edits
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             order_edit:
- *               $ref: "#/components/schemas/order_edit"
+ *           $ref: "#/components/schemas/AdminOrderEditsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -54,26 +60,71 @@ import {
  */
 export default async (req, res) => {
   const { id } = req.params
+  const validatedBody =
+    req.validatedBody as AdminPostOrderEditsRequestConfirmationReq
 
   const orderEditService: OrderEditService =
     req.scope.resolve("orderEditService")
+
+  const orderService: OrderService = req.scope.resolve("orderService")
+
+  const paymentCollectionService: PaymentCollectionService = req.scope.resolve(
+    "paymentCollectionService"
+  )
 
   const manager: EntityManager = req.scope.resolve("manager")
 
   const loggedInUser = (req.user?.id ?? req.user?.userId) as string
 
   await manager.transaction(async (transactionManager) => {
-    await orderEditService
-      .withTransaction(transactionManager)
-      .requestConfirmation(id, { loggedInUserId: loggedInUser })
+    const orderEditServiceTx =
+      orderEditService.withTransaction(transactionManager)
+
+    const orderEdit = await orderEditServiceTx.requestConfirmation(id, {
+      requestedBy: loggedInUser,
+    })
+
+    const total = await orderEditServiceTx.decorateTotals(orderEdit)
+
+    if (total.difference_due > 0) {
+      const order = await orderService
+        .withTransaction(transactionManager)
+        .retrieve(orderEdit.order_id, {
+          select: ["currency_code", "region_id"],
+        })
+
+      const paymentCollection = await paymentCollectionService
+        .withTransaction(transactionManager)
+        .create({
+          type: PaymentCollectionType.ORDER_EDIT,
+          amount: total.difference_due,
+          currency_code: order.currency_code,
+          region_id: order.region_id,
+          description: validatedBody.payment_collection_description,
+          created_by: loggedInUser,
+        })
+
+      orderEdit.payment_collection_id = paymentCollection.id
+
+      await orderEditServiceTx.update(orderEdit.id, {
+        payment_collection_id: paymentCollection.id,
+      })
+    }
   })
 
-  const orderEdit = await orderEditService.retrieve(id, {
+  let orderEdit = await orderEditService.retrieve(id, {
     relations: defaultOrderEditRelations,
     select: defaultOrderEditFields,
   })
+  orderEdit = await orderEditService.decorateTotals(orderEdit)
 
   res.status(200).send({
     order_edit: orderEdit,
   })
+}
+
+export class AdminPostOrderEditsRequestConfirmationReq {
+  @IsString()
+  @IsOptional()
+  payment_collection_description?: string | undefined
 }

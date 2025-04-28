@@ -5,7 +5,7 @@ import { MedusaError } from "medusa-core-utils"
 import { FindParams } from "../../../../types/common"
 
 /**
- * @oas [delete] /discounts/{discount_id}/conditions/{condition_id}
+ * @oas [delete] /admin/discounts/{discount_id}/conditions/{condition_id}
  * operationId: "DeleteDiscountsDiscountConditionsCondition"
  * summary: "Delete a Condition"
  * description: "Deletes a DiscountCondition"
@@ -15,6 +15,9 @@ import { FindParams } from "../../../../types/common"
  *   - (path) condition_id=* {string} The ID of the DiscountCondition
  *   - (query) expand {string} Comma separated list of relations to include in the results.
  *   - (query) fields {string} Comma separated list of fields to include in the results.
+ * x-codegen:
+ *   method: deleteCondition
+ *   queryParams: AdminDeleteDiscountsDiscountConditionsConditionParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -35,28 +38,14 @@ import { FindParams } from "../../../../types/common"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Discount Condition
+ *   - Discounts
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             id:
- *               type: string
- *               description: The ID of the deleted DiscountCondition
- *             object:
- *               type: string
- *               description: The type of the object that was deleted.
- *               default: discount-condition
- *             deleted:
- *               type: boolean
- *               description: Whether the discount condition was deleted successfully or not.
- *               default: true
- *             discount:
- *               description: The Discount to which the condition used to belong
- *               $ref: "#/components/schemas/discount"
+ *           $ref: "#/components/schemas/AdminDiscountConditionsDeleteRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":

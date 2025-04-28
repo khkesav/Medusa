@@ -10,9 +10,10 @@ import { AdminGetDiscountsDiscountRuleParams } from "../../../../types/discount"
 import { extendedFindParamsMixin } from "../../../../types/common"
 import { Request, Response } from "express"
 import { DiscountService } from "../../../../services"
+import { optionalBooleanMapper } from "../../../../utils/validators/is-boolean"
 
 /**
- * @oas [get] /discounts
+ * @oas [get] /admin/discounts
  * operationId: "GetDiscounts"
  * summary: "List Discounts"
  * x-authenticated: true
@@ -38,6 +39,9 @@ import { DiscountService } from "../../../../services"
  *   - (query) limit=20 {number} The number of items in the response
  *   - (query) offset=0 {number} The offset of items in response
  *   - (query) expand {string} Comma separated list of relations to include in the results.
+ * x-codegen:
+ *   method: list
+ *   queryParams: AdminGetDiscountsParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -58,27 +62,14 @@ import { DiscountService } from "../../../../services"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Discount
+ *   - Discounts
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             discounts:
- *               type: array
- *               items:
- *                 $ref: "#/components/schemas/discount"
- *             count:
- *               type: integer
- *               description: The total number of items available
- *             offset:
- *               type: integer
- *               description: The number of items skipped before these items
- *             limit:
- *               type: integer
- *               description: The number of items per page
+ *           $ref: "#/components/schemas/AdminDiscountsListRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -126,11 +117,11 @@ export class AdminGetDiscountsParams extends extendedFindParamsMixin({
 
   @IsBoolean()
   @IsOptional()
-  @Transform(({ value }) => value === "true")
+  @Transform(({ value }) => optionalBooleanMapper.get(value))
   is_dynamic?: boolean
 
   @IsBoolean()
   @IsOptional()
-  @Transform(({ value }) => value === "true")
+  @Transform(({ value }) => optionalBooleanMapper.get(value))
   is_disabled?: boolean
 }

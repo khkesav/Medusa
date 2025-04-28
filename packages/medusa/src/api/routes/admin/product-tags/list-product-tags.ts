@@ -10,7 +10,7 @@ import { Type } from "class-transformer"
 import { Request, Response } from "express"
 
 /**
- * @oas [get] /product-tags
+ * @oas [get] /admin/product-tags
  * operationId: "GetProductTags"
  * summary: "List Product Tags"
  * description: "Retrieve a list of Product Tags."
@@ -83,6 +83,9 @@ import { Request, Response } from "express"
  *            type: string
  *            description: filter by dates greater than or equal to this date
  *            format: date
+ * x-codegen:
+ *   method: list
+ *   queryParams: AdminGetProductTagsParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -103,25 +106,14 @@ import { Request, Response } from "express"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Product Tag
+ *   - Product Tags
  * responses:
  *  "200":
  *    description: OK
  *    content:
  *      application/json:
  *        schema:
- *          properties:
- *            product_tags:
- *              $ref: "#/components/schemas/product_tag"
- *            count:
- *              type: integer
- *              description: The total number of items available
- *            offset:
- *              type: integer
- *              description: The number of items skipped before these items
- *            limit:
- *              type: integer
- *              description: The number of items per page
+ *          $ref: "#/components/schemas/AdminProductTagsListRes"
  *  "400":
  *    $ref: "#/components/responses/400_error"
  *  "401":

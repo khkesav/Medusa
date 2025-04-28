@@ -6,7 +6,7 @@ import { EntityManager } from "typeorm"
 import { FindParams } from "../../../../types/common"
 
 /**
- * @oas [post] /discounts/{discount_id}/conditions/{condition_id}
+ * @oas [post] /admin/discounts/{discount_id}/conditions/{condition_id}
  * operationId: "PostDiscountsDiscountConditionsCondition"
  * summary: "Update a Condition"
  * description: "Updates a DiscountCondition. Only one of `products`, `product_types`, `product_collections`, `product_tags`, and `customer_groups` should be provided."
@@ -20,32 +20,10 @@ import { FindParams } from "../../../../types/common"
  *   content:
  *     application/json:
  *       schema:
- *         properties:
- *           products:
- *              type: array
- *              description: list of product IDs if the condition is applied on products.
- *              items:
- *                type: string
- *           product_types:
- *              type: array
- *              description: list of product type IDs if the condition is applied on product types.
- *              items:
- *                type: string
- *           product_collections:
- *              type: array
- *              description: list of product collection IDs if the condition is applied on product collections.
- *              items:
- *                type: string
- *           product_tags:
- *              type: array
- *              description: list of product tag IDs if the condition is applied on product tags.
- *              items:
- *                type: string
- *           customer_groups:
- *              type: array
- *              description: list of customer group IDs if the condition is applied on customer groups.
- *              items:
- *                type: string
+ *         $ref: "#/components/schemas/AdminPostDiscountsDiscountConditionsCondition"
+ * x-codegen:
+ *   method: updateCondition
+ *   queryParams: AdminPostDiscountsDiscountConditionsConditionParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -76,16 +54,14 @@ import { FindParams } from "../../../../types/common"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Discount
+ *   - Discounts
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             discount:
- *               $ref: "#/components/schemas/discount"
+ *           $ref: "#/components/schemas/AdminDiscountsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -131,7 +107,38 @@ export default async (req: Request, res: Response) => {
   res.status(200).json({ discount })
 }
 
+/**
+ * @schema AdminPostDiscountsDiscountConditionsCondition
+ * type: object
+ * properties:
+ *   products:
+ *      type: array
+ *      description: list of product IDs if the condition is applied on products.
+ *      items:
+ *        type: string
+ *   product_types:
+ *      type: array
+ *      description: list of product type IDs if the condition is applied on product types.
+ *      items:
+ *        type: string
+ *   product_collections:
+ *      type: array
+ *      description: list of product collection IDs if the condition is applied on product collections.
+ *      items:
+ *        type: string
+ *   product_tags:
+ *      type: array
+ *      description: list of product tag IDs if the condition is applied on product tags.
+ *      items:
+ *        type: string
+ *   customer_groups:
+ *      type: array
+ *      description: list of customer group IDs if the condition is applied on customer groups.
+ *      items:
+ *        type: string
+ */
 // eslint-disable-next-line max-len
 export class AdminPostDiscountsDiscountConditionsCondition extends AdminUpsertConditionsReq {}
 
+// eslint-disable-next-line max-len
 export class AdminPostDiscountsDiscountConditionsConditionParams extends FindParams {}

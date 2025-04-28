@@ -4,7 +4,7 @@ import DiscountService from "../../../../services/discount"
 import { EntityManager } from "typeorm"
 
 /**
- * @oas [delete] /discounts/{id}/regions/{region_id}
+ * @oas [delete] /admin/discounts/{id}/regions/{region_id}
  * operationId: "DeleteDiscountsDiscountRegionsRegion"
  * summary: "Remove Region"
  * x-authenticated: true
@@ -12,6 +12,8 @@ import { EntityManager } from "typeorm"
  * parameters:
  *   - (path) id=* {string} The ID of the Discount.
  *   - (path) region_id=* {string} The ID of the Region.
+ * x-codegen:
+ *   method: removeRegion
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -32,16 +34,14 @@ import { EntityManager } from "typeorm"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Discount
+ *   - Discounts
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             discount:
- *               $ref: "#/components/schemas/discount"
+ *           $ref: "#/components/schemas/AdminDiscountsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":

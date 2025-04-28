@@ -1,14 +1,17 @@
 import { CartService } from "../../../../services"
 import { EntityManager } from "typeorm"
+import { cleanResponseData } from "../../../../utils/clean-response-data"
 
 /**
- * @oas [post] /carts/{id}/payment-sessions/{provider_id}/refresh
+ * @oas [post] /store/carts/{id}/payment-sessions/{provider_id}/refresh
  * operationId: PostCartsCartPaymentSessionsSession
  * summary: Refresh a Payment Session
  * description: "Refreshes a Payment Session to ensure that it is in sync with the Cart - this is usually not necessary."
  * parameters:
  *   - (path) id=* {string} The id of the Cart.
  *   - (path) provider_id=* {string} The id of the Payment Provider that created the Payment Session to be refreshed.
+ * x-codegen:
+ *   method: refreshPaymentSession
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -24,16 +27,14 @@ import { EntityManager } from "typeorm"
  *     source: |
  *       curl --location --request POST 'https://medusa-url.com/store/carts/{id}/payment-sessions/manual/refresh'
  * tags:
- *   - Cart
+ *   - Carts
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             cart:
- *               $ref: "#/components/schemas/cart"
+ *           $ref: "#/components/schemas/StoreCartsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "404":
@@ -67,5 +68,5 @@ export default async (req, res) => {
     ],
   })
 
-  res.status(200).json({ cart: data })
+  res.status(200).json({ cart: cleanResponseData(data, []) })
 }

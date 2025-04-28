@@ -1,18 +1,24 @@
 import { IsObject } from "class-validator"
 import { defaultStoreCartFields, defaultStoreCartRelations } from "."
 import { CartService } from "../../../../services"
-import { validator } from "../../../../utils/validator"
 import { EntityManager } from "typeorm"
+import { cleanResponseData } from "../../../../utils/clean-response-data"
 
 /**
- * @oas [post] /carts/{id}/payment-sessions/{provider_id}
+ * @oas [post] /store/carts/{id}/payment-sessions/{provider_id}
  * operationId: PostCartsCartPaymentSessionUpdate
  * summary: Update a Payment Session
  * description: "Updates a Payment Session with additional data."
  * parameters:
  *   - (path) id=* {string} The id of the Cart.
  *   - (path) provider_id=* {string} The id of the payment provider.
- *   - (body) data=* {object} The data to update the payment session with.
+ * requestBody:
+ *   content:
+ *     application/json:
+ *       schema:
+ *         $ref: "#/components/schemas/StorePostCartsCartPaymentSessionUpdateReq"
+ * x-codegen:
+ *   method: updatePaymentSession
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -36,16 +42,14 @@ import { EntityManager } from "typeorm"
  *           "data": {}
  *       }'
  * tags:
- *   - Cart
+ *   - Carts
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             cart:
- *               $ref: "#/components/schemas/cart"
+ *           $ref: "#/components/schemas/StoreCartsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "404":
@@ -60,10 +64,7 @@ import { EntityManager } from "typeorm"
 export default async (req, res) => {
   const { id, provider_id } = req.params
 
-  const validated = await validator(
-    StorePostCartsCartPaymentSessionUpdateReq,
-    req.body
-  )
+  const validated = req.validatedBody
 
   const cartService: CartService = req.scope.resolve("cartService")
 
@@ -82,9 +83,19 @@ export default async (req, res) => {
     relations: defaultStoreCartRelations,
   })
 
-  res.status(200).json({ cart: data })
+  res.status(200).json({ cart: cleanResponseData(data, []) })
 }
 
+/**
+ * @schema StorePostCartsCartPaymentSessionUpdateReq
+ * type: object
+ * required:
+ *   - data
+ * properties:
+ *   data:
+ *     type: object
+ *     description: The data to update the payment session with.
+ */
 export class StorePostCartsCartPaymentSessionUpdateReq {
   @IsObject()
   data: Record<string, unknown>

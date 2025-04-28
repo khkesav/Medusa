@@ -24,7 +24,7 @@ TransactionBaseService.constructor
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:64](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L64)
+[medusa/src/services/return.ts:64](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L64)
 
 ## Properties
 
@@ -38,7 +38,7 @@ TransactionBaseService.\_\_configModule\_\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:10](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L10)
+[medusa/src/interfaces/transaction-base-service.ts:14](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L14)
 
 ___
 
@@ -52,7 +52,21 @@ TransactionBaseService.\_\_container\_\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:9](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L9)
+[medusa/src/interfaces/transaction-base-service.ts:13](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L13)
+
+___
+
+### \_\_moduleDeclaration\_\_
+
+• `Protected` `Optional` `Readonly` **\_\_moduleDeclaration\_\_**: `Record`<`string`, `unknown`\>
+
+#### Inherited from
+
+TransactionBaseService.\_\_moduleDeclaration\_\_
+
+#### Defined in
+
+[medusa/src/interfaces/transaction-base-service.ts:15](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L15)
 
 ___
 
@@ -62,17 +76,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:59](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L59)
-
-___
-
-### inventoryService\_
-
-• `Protected` `Readonly` **inventoryService\_**: [`InventoryService`](InventoryService.md)
-
-#### Defined in
-
-[packages/medusa/src/services/return.ts:61](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L61)
+[medusa/src/services/return.ts:58](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L58)
 
 ___
 
@@ -82,7 +86,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:56](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L56)
+[medusa/src/services/return.ts:55](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L55)
 
 ___
 
@@ -90,13 +94,13 @@ ___
 
 • `Protected` **manager\_**: `EntityManager`
 
-#### Overrides
+#### Inherited from
 
 TransactionBaseService.manager\_
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:50](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L50)
+[medusa/src/interfaces/transaction-base-service.ts:5](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L5)
 
 ___
 
@@ -106,17 +110,27 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:62](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L62)
+[medusa/src/services/return.ts:60](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L60)
+
+___
+
+### productVariantInventoryService\_
+
+• `Protected` `Readonly` **productVariantInventoryService\_**: [`ProductVariantInventoryService`](ProductVariantInventoryService.md)
+
+#### Defined in
+
+[medusa/src/services/return.ts:62](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L62)
 
 ___
 
 ### returnItemRepository\_
 
-• `Protected` `Readonly` **returnItemRepository\_**: typeof `ReturnItemRepository`
+• `Protected` `Readonly` **returnItemRepository\_**: `Repository`<`ReturnItem`\>
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:55](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L55)
+[medusa/src/services/return.ts:54](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L54)
 
 ___
 
@@ -126,17 +140,17 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:60](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L60)
+[medusa/src/services/return.ts:59](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L59)
 
 ___
 
 ### returnRepository\_
 
-• `Protected` `Readonly` **returnRepository\_**: typeof `ReturnRepository`
+• `Protected` `Readonly` **returnRepository\_**: `Repository`<`Return`\>
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:54](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L54)
+[medusa/src/services/return.ts:53](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L53)
 
 ___
 
@@ -146,7 +160,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:58](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L58)
+[medusa/src/services/return.ts:57](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L57)
 
 ___
 
@@ -156,7 +170,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:57](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L57)
+[medusa/src/services/return.ts:56](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L56)
 
 ___
 
@@ -166,7 +180,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:53](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L53)
+[medusa/src/services/return.ts:52](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L52)
 
 ___
 
@@ -174,13 +188,31 @@ ___
 
 • `Protected` **transactionManager\_**: `undefined` \| `EntityManager`
 
-#### Overrides
+#### Inherited from
 
 TransactionBaseService.transactionManager\_
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:51](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L51)
+[medusa/src/interfaces/transaction-base-service.ts:6](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L6)
+
+## Accessors
+
+### activeManager\_
+
+• `Protected` `get` **activeManager_**(): `EntityManager`
+
+#### Returns
+
+`EntityManager`
+
+#### Inherited from
+
+TransactionBaseService.activeManager\_
+
+#### Defined in
+
+[medusa/src/interfaces/transaction-base-service.ts:8](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L8)
 
 ## Methods
 
@@ -219,7 +251,7 @@ TransactionBaseService.atomicPhase\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:50](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L50)
+[medusa/src/interfaces/transaction-base-service.ts:56](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L56)
 
 ___
 
@@ -243,7 +275,7 @@ the updated Return
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:160](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L160)
+[medusa/src/services/return.ts:161](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L161)
 
 ___
 
@@ -269,7 +301,7 @@ the created return
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:338](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L338)
+[medusa/src/services/return.ts:346](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L346)
 
 ___
 
@@ -289,7 +321,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:484](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L484)
+[medusa/src/services/return.ts:490](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L490)
 
 ___
 
@@ -315,7 +347,7 @@ the line items generated by the transformer.
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:102](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L102)
+[medusa/src/services/return.ts:101](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L101)
 
 ___
 
@@ -338,13 +370,13 @@ the result of the find operation
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:142](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L142)
+[medusa/src/services/return.ts:141](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L141)
 
 ___
 
 ### receive
 
-▸ **receive**(`returnId`, `receivedItems`, `refundAmount?`, `allowMismatch?`): `Promise`<`Return`\>
+▸ **receive**(`returnId`, `receivedItems`, `refundAmount?`, `allowMismatch?`, `context?`): `Promise`<`Return`\>
 
 Registers a previously requested return as received. This will create a
 refund to the customer. If the returned items don't match the requested
@@ -362,6 +394,8 @@ mismatches.
 | `receivedItems` | `OrdersReturnItem`[] | `undefined` | the items received after return. |
 | `refundAmount?` | `number` | `undefined` | the amount to return |
 | `allowMismatch` | `boolean` | `false` | whether to ignore return/received product mismatch |
+| `context` | `Object` | `{}` | - |
+| `context.locationId?` | `string` | `undefined` | - |
 
 #### Returns
 
@@ -371,13 +405,13 @@ the result of the update operation
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:555](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L555)
+[medusa/src/services/return.ts:561](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L561)
 
 ___
 
 ### retrieve
 
-▸ **retrieve**(`id`, `config?`): `Promise`<`Return`\>
+▸ **retrieve**(`returnId`, `config?`): `Promise`<`Return`\>
 
 Retrieves a return by its id.
 
@@ -385,7 +419,7 @@ Retrieves a return by its id.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `id` | `string` | the id of the return to retrieve |
+| `returnId` | `string` | the id of the return to retrieve |
 | `config` | `FindConfig`<`Return`\> | the config object |
 
 #### Returns
@@ -396,7 +430,7 @@ the return
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:258](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L258)
+[medusa/src/services/return.ts:259](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L259)
 
 ___
 
@@ -417,7 +451,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:279](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L279)
+[medusa/src/services/return.ts:287](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L287)
 
 ___
 
@@ -441,7 +475,7 @@ TransactionBaseService.shouldRetryTransaction\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:31](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L31)
+[medusa/src/interfaces/transaction-base-service.ts:37](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L37)
 
 ___
 
@@ -462,13 +496,13 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:304](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L304)
+[medusa/src/services/return.ts:312](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L312)
 
 ___
 
 ### validateReturnLineItem
 
-▸ `Protected` **validateReturnLineItem**(`item?`, `quantity?`, `additional?`): `Object`
+▸ `Protected` **validateReturnLineItem**(`item?`, `quantity?`, `additional?`): `DeepPartial`<`LineItem`\>
 
 Checks that a given quantity of a line item can be returned. Fails if the
 item is undefined or if the returnable quantity of the item is lower, than
@@ -486,58 +520,14 @@ the quantity that is requested to be returned.
 
 #### Returns
 
-`Object`
+`DeepPartial`<`LineItem`\>
 
 a line item where the quantity is set to the requested
   return quantity.
 
-| Name | Type |
-| :------ | :------ |
-| `adjustments?` | (`undefined` \| { id?: string \| undefined; item\_id?: string \| undefined; item?: { cart\_id?: string \| undefined; cart?: { readonly object?: "cart" \| undefined; email?: string \| undefined; billing\_address\_id?: string \| undefined; ... 37 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 38 more ...; updated\_at?: { ...; }...)[] |
-| `allow_discounts?` | `boolean` |
-| `cart?` | { readonly object?: "cart" \| undefined; email?: string \| undefined; billing\_address\_id?: string \| undefined; billing\_address?: { customer\_id?: string \| null \| undefined; customer?: { ...; } \| ... 1 more ... \| undefined; ... 15 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 36 more ...; updated\_at?: ... |
-| `cart_id?` | `string` |
-| `claim_order?` | { payment\_status?: ClaimPaymentStatus \| undefined; fulfillment\_status?: ClaimFulfillmentStatus \| undefined; claim\_items?: ({ images?: ({ ...; } \| undefined)[] \| undefined; ... 14 more ...; updated\_at?: { ...; } \| undefined; } \| undefined)[] \| undefined; ... 17 more ...; id?: string \| undefined; } |
-| `claim_order_id?` | `string` |
-| `created_at?` | { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; } |
-| `description?` | `string` |
-| `discount_total?` | ``null`` \| `number` |
-| `fulfilled_quantity?` | `number` |
-| `gift_card_total?` | ``null`` \| `number` |
-| `has_shipping?` | `boolean` |
-| `id?` | `string` |
-| `includes_tax?` | `boolean` |
-| `is_giftcard?` | `boolean` |
-| `is_return?` | `boolean` |
-| `metadata?` | { [x: string]: unknown; } |
-| `order?` | { readonly object?: "order" \| undefined; status?: OrderStatus \| undefined; fulfillment\_status?: FulfillmentStatus \| undefined; payment\_status?: PaymentStatus \| undefined; ... 48 more ...; updated\_at?: { ...; } \| undefined; } |
-| `order_edit?` | ``null`` \| { order\_id?: string \| undefined; order?: { readonly object?: "order" \| undefined; status?: OrderStatus \| undefined; fulfillment\_status?: FulfillmentStatus \| undefined; ... 49 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 27 more ...; updated\_at?: { ...; } \| undefined; } |
-| `order_edit_id?` | ``null`` \| `string` |
-| `order_id?` | ``null`` \| `string` |
-| `original_item_id?` | ``null`` \| `string` |
-| `original_tax_total?` | ``null`` \| `number` |
-| `original_total?` | ``null`` \| `number` |
-| `quantity?` | `number` |
-| `refundable?` | ``null`` \| `number` |
-| `returned_quantity?` | `number` |
-| `shipped_quantity?` | `number` |
-| `should_merge?` | `boolean` |
-| `subtotal?` | ``null`` \| `number` |
-| `swap?` | { fulfillment\_status?: SwapFulfillmentStatus \| undefined; payment\_status?: SwapPaymentStatus \| undefined; order\_id?: string \| undefined; ... 20 more ...; updated\_at?: { ...; } \| undefined; } |
-| `swap_id?` | `string` |
-| `tax_lines?` | (`undefined` \| { item\_id?: string \| undefined; item?: { cart\_id?: string \| undefined; cart?: { readonly object?: "cart" \| undefined; email?: string \| undefined; billing\_address\_id?: string \| undefined; ... 37 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 38 more ...; updated\_at?: { ...; } \| undefined; } \| undefin...)[] |
-| `tax_total?` | ``null`` \| `number` |
-| `thumbnail?` | ``null`` \| `string` |
-| `title?` | `string` |
-| `total?` | ``null`` \| `number` |
-| `unit_price?` | `number` |
-| `updated_at?` | { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; } |
-| `variant?` | { title?: string \| undefined; product\_id?: string \| undefined; product?: { title?: string \| undefined; subtitle?: string \| null \| undefined; description?: string \| null \| undefined; ... 29 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 22 more ...; updated\_at?: { ...; } \| undefined; } |
-| `variant_id?` | `string` |
-
 #### Defined in
 
-[packages/medusa/src/services/return.ts:216](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L216)
+[medusa/src/services/return.ts:217](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L217)
 
 ___
 
@@ -565,7 +555,7 @@ when statuses are not sufficient for returns.
 
 #### Defined in
 
-[packages/medusa/src/services/return.ts:186](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/return.ts#L186)
+[medusa/src/services/return.ts:187](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/return.ts#L187)
 
 ___
 
@@ -589,4 +579,4 @@ TransactionBaseService.withTransaction
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:13](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L13)
+[medusa/src/interfaces/transaction-base-service.ts:20](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L20)

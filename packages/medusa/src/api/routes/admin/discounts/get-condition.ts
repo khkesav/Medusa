@@ -3,7 +3,7 @@ import DiscountConditionService from "../../../../services/discount-condition"
 import { FindParams } from "../../../../types/common"
 
 /**
- * @oas [get] /discounts/{discount_id}/conditions/{condition_id}
+ * @oas [get] /admin/discounts/{discount_id}/conditions/{condition_id}
  * operationId: "GetDiscountsDiscountConditionsCondition"
  * summary: "Get a Condition"
  * description: "Gets a DiscountCondition"
@@ -13,6 +13,9 @@ import { FindParams } from "../../../../types/common"
  *   - (path) condition_id=* {string} The ID of the DiscountCondition.
  *   - (query) expand {string} Comma separated list of relations to include in the results.
  *   - (query) fields {string} Comma separated list of fields to include in the results.
+ * x-codegen:
+ *   method: getCondition
+ *   queryParams: AdminGetDiscountsDiscountConditionsConditionParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -33,16 +36,14 @@ import { FindParams } from "../../../../types/common"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Discount Condition
+ *   - Discounts
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             discount_condition:
- *               $ref: "#/components/schemas/discount_condition"
+ *           $ref: "#/components/schemas/AdminDiscountConditionsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":

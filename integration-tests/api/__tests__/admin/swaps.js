@@ -349,7 +349,7 @@ describe("/admin/swaps", () => {
           {}
         )
 
-        // ********* VALIDATE *********
+        // ********* VALIDATE  *********
         expect(swap.data.swap.difference_due).toBe(swapCart.data.cart.total)
       })
     })
@@ -363,7 +363,6 @@ describe("/admin/swaps", () => {
       const [process, connection] = await startServerWithEnvironment({
         cwd,
         env: { MEDUSA_FF_TAX_INCLUSIVE_PRICING: true },
-        verbose: false,
       })
       dbConnection = connection
       medusaProcess = process

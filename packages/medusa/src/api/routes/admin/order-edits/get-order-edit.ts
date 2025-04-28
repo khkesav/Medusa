@@ -3,15 +3,18 @@ import { OrderEditService } from "../../../../services"
 import { FindParams } from "../../../../types/common"
 
 /**
- * @oas [get] /order-edits/{id}
+ * @oas [get] /admin/order-edits/{id}
  * operationId: "GetOrderEditsOrderEdit"
- * summary: "Retrieve an OrderEdit"
+ * summary: "Get an OrderEdit"
  * description: "Retrieves a OrderEdit."
  * x-authenticated: true
  * parameters:
  *   - (path) id=* {string} The ID of the OrderEdit.
  *   - (query) expand {string} Comma separated list of relations to include in the results.
  *   - (query) fields {string} Comma separated list of fields to include in the results.
+ * x-codegen:
+ *   method: retrieve
+ *   queryParams: GetOrderEditsOrderEditParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -32,16 +35,14 @@ import { FindParams } from "../../../../types/common"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - OrderEdit
+ *   - Order Edits
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             order_edit:
- *               $ref: "#/components/schemas/order_edit"
+ *           $ref: "#/components/schemas/AdminOrderEditsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":

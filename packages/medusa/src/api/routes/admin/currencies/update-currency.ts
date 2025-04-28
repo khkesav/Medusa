@@ -4,9 +4,10 @@ import { ExtendedRequest } from "../../../../types/global"
 import { CurrencyService } from "../../../../services"
 import { FeatureFlagDecorators } from "../../../../utils/feature-flag-decorators"
 import TaxInclusivePricingFeatureFlag from "../../../../loaders/feature-flags/tax-inclusive-pricing"
+import { EntityManager } from "typeorm"
 
 /**
- * @oas [post] /currencies/{code}
+ * @oas [post] /admin/currencies/{code}
  * operationId: "PostCurrenciesCurrency"
  * summary: "Update a Currency"
  * description: "Update a Currency"
@@ -17,10 +18,9 @@ import TaxInclusivePricingFeatureFlag from "../../../../loaders/feature-flags/ta
  *   content:
  *     application/json:
  *       schema:
- *         properties:
- *           includes_tax:
- *             type: boolean
- *             description: "[EXPERIMENTAL] Tax included in prices of currency."
+ *         $ref: "#/components/schemas/AdminPostCurrenciesCurrencyReq"
+ * x-codegen:
+ *   method: update
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -44,27 +44,38 @@ import TaxInclusivePricingFeatureFlag from "../../../../loaders/feature-flags/ta
  *           "includes_tax": true
  *       }'
  * tags:
- *   - Currency
+ *   - Currencies
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             currency:
- *                 $ref: "#/components/schemas/currency"
+ *           $ref: "#/components/schemas/AdminCurrenciesRes"
  */
 export default async (req: ExtendedRequest<Currency>, res) => {
   const code = req.params.code as string
   const data = req.validatedBody as AdminPostCurrenciesCurrencyReq
   const currencyService: CurrencyService = req.scope.resolve("currencyService")
+  const manager: EntityManager = req.scope.resolve("manager")
 
-  const currency = await currencyService.update(code, data)
+  const currency = await manager.transaction(async (transactionManager) => {
+    return await currencyService
+      .withTransaction(transactionManager)
+      .update(code, data)
+  })
 
   res.json({ currency })
 }
 
+/**
+ * @schema AdminPostCurrenciesCurrencyReq
+ * type: object
+ * properties:
+ *   includes_tax:
+ *     type: boolean
+ *     description: "[EXPERIMENTAL] Tax included in prices of currency."
+ */
 export class AdminPostCurrenciesCurrencyReq {
   @FeatureFlagDecorators(TaxInclusivePricingFeatureFlag.key, [
     IsOptional(),

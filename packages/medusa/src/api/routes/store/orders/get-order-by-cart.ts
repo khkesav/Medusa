@@ -1,14 +1,17 @@
 import { defaultStoreOrdersFields, defaultStoreOrdersRelations } from "."
 
 import { OrderService } from "../../../../services"
+import { cleanResponseData } from "../../../../utils/clean-response-data"
 
 /**
- * @oas [get] /orders/cart/{cart_id}
+ * @oas [get] /store/orders/cart/{cart_id}
  * operationId: GetOrdersOrderCartId
  * summary: Get by Cart ID
  * description: "Retrieves an Order by the id of the Cart that was used to create the Order."
  * parameters:
  *   - (path) cart_id=* {string} The ID of Cart.
+ * x-codegen:
+ *   method: retrieveByCartId
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -24,16 +27,14 @@ import { OrderService } from "../../../../services"
  *     source: |
  *       curl --location --request GET 'https://medusa-url.com/store/orders/cart/{id}'
  * tags:
- *   - Order
+ *   - Orders
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             order:
- *               $ref: "#/components/schemas/order"
+ *           $ref: "#/components/schemas/StoreOrdersRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "404":
@@ -54,5 +55,5 @@ export default async (req, res) => {
     relations: defaultStoreOrdersRelations,
   })
 
-  res.json({ order })
+  res.json({ order: cleanResponseData(order, []) })
 }

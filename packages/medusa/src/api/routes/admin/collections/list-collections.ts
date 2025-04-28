@@ -6,7 +6,7 @@ import ProductCollectionService from "../../../../services/product-collection"
 import { Type } from "class-transformer"
 
 /**
- * @oas [get] /collections
+ * @oas [get] /admin/collections
  * operationId: "GetCollections"
  * summary: "List Collections"
  * description: "Retrieve a list of Product Collection."
@@ -84,6 +84,9 @@ import { Type } from "class-transformer"
  *            type: string
  *            description: filter by dates greater than or equal to this date
  *            format: date
+ * x-codegen:
+ *   method: list
+ *   queryParams: AdminGetCollectionsParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -104,27 +107,14 @@ import { Type } from "class-transformer"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Collection
+ *   - Collections
  * responses:
  *  "200":
  *    description: OK
  *    content:
  *      application/json:
  *        schema:
- *          properties:
- *            collections:
- *               type: array
- *               items:
- *                 $ref: "#/components/schemas/product_collection"
- *            count:
- *               type: integer
- *               description: The total number of items available
- *            offset:
- *               type: integer
- *               description: The number of items skipped before these items
- *            limit:
- *               type: integer
- *               description: The number of items per page
+ *          $ref: "#/components/schemas/AdminCollectionsListRes"
  *  "400":
  *    $ref: "#/components/responses/400_error"
  *  "401":

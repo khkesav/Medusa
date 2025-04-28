@@ -1,5 +1,6 @@
 import fs from "fs"
 import aws from "aws-sdk"
+import { parse } from "path"
 import { AbstractFileService } from "@medusajs/medusa"
 import stream from "stream"
 
@@ -14,6 +15,9 @@ class S3Service extends AbstractFileService {
     this.secretAccessKey_ = options.secret_access_key
     this.region_ = options.region
     this.endpoint_ = options.endpoint
+    this.awsConfigObject_ = options.aws_config_object
+
+    this.client_ = new aws.S3()
   }
 
   upload(file) {
@@ -29,16 +33,18 @@ class S3Service extends AbstractFileService {
   }
 
   uploadFile(file, options = { isProtected: false, acl: undefined }) {
-    const s3 = new aws.S3()
+    const parsedFilename = parse(file.originalname)
+    const fileKey = `${parsedFilename.name}-${Date.now()}${parsedFilename.ext}`
+
     const params = {
       ACL: options.acl ?? (options.isProtected ? "private" : "public-read"),
       Bucket: this.bucket_,
       Body: fs.createReadStream(file.path),
-      Key: `${file.originalname}`,
+      Key: fileKey,
     }
 
     return new Promise((resolve, reject) => {
-      s3.upload(params, (err, data) => {
+      this.client_.upload(params, (err, data) => {
         if (err) {
           reject(err)
           return
@@ -52,14 +58,13 @@ class S3Service extends AbstractFileService {
   async delete(file) {
     this.updateAwsConfig()
 
-    const s3 = new aws.S3()
     const params = {
       Bucket: this.bucket_,
       Key: `${file}`,
     }
 
     return new Promise((resolve, reject) => {
-      s3.deleteObject(params, (err, data) => {
+      this.client_.deleteObject(params, (err, data) => {
         if (err) {
           reject(err)
           return
@@ -82,10 +87,9 @@ class S3Service extends AbstractFileService {
       Key: fileKey,
     }
 
-    const s3 = new aws.S3()
     return {
       writeStream: pass,
-      promise: s3.upload(params).promise(),
+      promise: this.client_.upload(params).promise(),
       url: `${this.s3Url_}/${fileKey}`,
       fileKey,
     }
@@ -94,14 +98,12 @@ class S3Service extends AbstractFileService {
   async getDownloadStream(fileData) {
     this.updateAwsConfig()
 
-    const s3 = new aws.S3()
-
     const params = {
       Bucket: this.bucket_,
       Key: `${fileData.fileKey}`,
     }
 
-    return s3.getObject(params).createReadStream()
+    return this.client_.getObject(params).createReadStream()
   }
 
   async getPresignedDownloadUrl(fileData) {
@@ -109,29 +111,28 @@ class S3Service extends AbstractFileService {
       signatureVersion: "v4",
     })
 
-    const s3 = new aws.S3()
-
     const params = {
       Bucket: this.bucket_,
       Key: `${fileData.fileKey}`,
       Expires: this.downloadUrlDuration,
     }
 
-    return await s3.getSignedUrlPromise("getObject", params)
+    return await this.client_.getSignedUrlPromise("getObject", params)
   }
 
   updateAwsConfig(additionalConfiguration = {}) {
     aws.config.setPromisesDependency(null)
-    aws.config.update(
-      {
-        accessKeyId: this.accessKeyId_,
-        secretAccessKey: this.secretAccessKey_,
-        region: this.region_,
-        endpoint: this.endpoint_,
-        ...additionalConfiguration,
-      },
-      true
-    )
+
+    const config = {
+      ...additionalConfiguration,
+      accessKeyId: this.accessKeyId_,
+      secretAccessKey: this.secretAccessKey_,
+      region: this.region_,
+      endpoint: this.endpoint_,
+      ...this.awsConfigObject_,
+    }
+
+    aws.config.update(config, true)
   }
 }
 

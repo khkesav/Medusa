@@ -5,13 +5,22 @@ import ProductCollectionService from "../../../../services/product-collection"
 import { Type } from "class-transformer"
 
 /**
- * @oas [get] /collections
+ * @oas [get] /store/collections
  * operationId: "GetCollections"
  * summary: "List Collections"
  * description: "Retrieve a list of Product Collection."
  * parameters:
  *   - (query) offset=0 {integer} The number of collections to skip before starting to collect the collections set
  *   - (query) limit=10 {integer} The number of collections to return
+ *   - in: query
+ *     name: handle
+ *     style: form
+ *     explode: false
+ *     description: Filter by the collection handle
+ *     schema:
+ *       type: array
+ *       items:
+ *         type: string
  *   - in: query
  *     name: created_at
  *     description: Date comparison for when resulting collections were created.
@@ -56,6 +65,9 @@ import { Type } from "class-transformer"
  *            type: string
  *            description: filter by dates greater than or equal to this date
  *            format: date
+ * x-codegen:
+ *   method: list
+ *   queryParams: StoreGetCollectionsParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -71,27 +83,14 @@ import { Type } from "class-transformer"
  *     source: |
  *       curl --location --request GET 'https://medusa-url.com/store/collections'
  * tags:
- *   - Collection
+ *   - Collections
  * responses:
  *  "200":
  *    description: OK
  *    content:
  *      application/json:
  *        schema:
- *          properties:
- *            collections:
- *               type: array
- *               items:
- *                 $ref: "#/components/schemas/product_collection"
- *            count:
- *               type: integer
- *               description: The total number of items available
- *            offset:
- *               type: integer
- *               description: The number of items skipped before these items
- *            limit:
- *               type: integer
- *               description: The number of items per page
+ *          $ref: "#/components/schemas/StoreCollectionsListRes"
  *  "400":
  *    $ref: "#/components/responses/400_error"
  *  "404":

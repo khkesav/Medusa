@@ -1,20 +1,24 @@
 import { CartService, DraftOrderService } from "../../../../services"
 import {
+  defaultAdminDraftOrdersCartFields,
   defaultAdminDraftOrdersCartRelations,
   defaultAdminDraftOrdersFields,
   defaultAdminDraftOrdersRelations,
 } from "."
 
 import { DraftOrder } from "../../../.."
+import { cleanResponseData } from "../../../../utils/clean-response-data"
 
 /**
- * @oas [get] /draft-orders/{id}
+ * @oas [get] /admin/draft-orders/{id}
  * operationId: "GetDraftOrdersDraftOrder"
  * summary: "Get a Draft Order"
  * description: "Retrieves a Draft Order."
  * x-authenticated: true
  * parameters:
  *   - (path) id=* {string} The ID of the Draft Order.
+ * x-codegen:
+ *   method: retrieve
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -35,16 +39,14 @@ import { DraftOrder } from "../../../.."
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Draft Order
+ *   - Draft Orders
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             draft_order:
- *               $ref: "#/components/schemas/draft-order"
+ *           $ref: "#/components/schemas/AdminDraftOrdersRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -73,7 +75,10 @@ export default async (req, res) => {
 
   draftOrder.cart = await cartService.retrieveWithTotals(draftOrder.cart_id, {
     relations: defaultAdminDraftOrdersCartRelations,
+    select: defaultAdminDraftOrdersCartFields,
   })
 
-  res.json({ draft_order: draftOrder })
+  res.json({
+    draft_order: cleanResponseData(draftOrder, []),
+  })
 }

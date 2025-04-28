@@ -9,9 +9,9 @@ import {
 } from "../../../../types/order-edit"
 
 /**
- * @oas [post] /order-edits/{id}
+ * @oas [post] /admin/order-edits/{id}
  * operationId: "PostOrderEditsOrderEdit"
- * summary: "Updates an OrderEdit"
+ * summary: "Update an OrderEdit"
  * description: "Updates a OrderEdit."
  * x-authenticated: true
  * parameters:
@@ -20,10 +20,9 @@ import {
  *   content:
  *     application/json:
  *       schema:
- *         properties:
- *           internal_note:
- *             description: An optional note to create or update for the order edit.
- *             type: string
+ *         $ref: "#/components/schemas/AdminPostOrderEditsOrderEditReq"
+ * x-codegen:
+ *   method: update
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -50,16 +49,14 @@ import {
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - OrderEdit
+ *   - Order Edits
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             order_edit:
- *               $ref: "#/components/schemas/order_edit"
+ *           $ref: "#/components/schemas/AdminOrderEditsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -101,6 +98,14 @@ export default async (req: Request, res: Response) => {
   res.status(200).json({ order_edit: orderEdit })
 }
 
+/**
+ * @schema AdminPostOrderEditsOrderEditReq
+ * type: object
+ * properties:
+ *   internal_note:
+ *     description: An optional note to create or update for the order edit.
+ *     type: string
+ */
 export class AdminPostOrderEditsOrderEditReq {
   @IsOptional()
   @IsString()

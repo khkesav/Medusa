@@ -1,5 +1,1056 @@
 # Change Log
 
+## 1.8.0
+
+### Minor Changes
+
+- [#3041](https://github.com/medusajs/medusa/pull/3041) [`121b42acf`](https://github.com/medusajs/medusa/commit/121b42acfe98c12dd593f9b1f2072ff0f3b61724) Thanks [@riqwan](https://github.com/riqwan)! - chore(medusa): Typeorm fixes / enhancements
+
+  - upgrade typeorm from 0.2.51 to 0.3.11
+  - Plugin repository loader to work with Typeorm update
+
+- [#3554](https://github.com/medusajs/medusa/pull/3554) [`5fd74b38a`](https://github.com/medusajs/medusa/commit/5fd74b38ae1b4f7dced191983b78db83f7b1f71b) Thanks [@pKorsholm](https://github.com/pKorsholm)! - feat(medusa): remove reservations if cart completion fails after reservation creation
+
+- [#3257](https://github.com/medusajs/medusa/pull/3257) [`589d1c09b`](https://github.com/medusajs/medusa/commit/589d1c09b085dcaf9667061201ac9deff3047466) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa-payment-stripe): Implement payment processor API on stripe plugin and fix web hook issues
+
+- [#3552](https://github.com/medusajs/medusa/pull/3552) [`0695ff642`](https://github.com/medusajs/medusa/commit/0695ff642b5836e7c28d40118aafe7a769023d5a) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): remove limit of the number of levels to list when joining levels
+
+- [#3172](https://github.com/medusajs/medusa/pull/3172) [`5eb61fa0e`](https://github.com/medusajs/medusa/commit/5eb61fa0ef991b8a9fabb16c2c159e51b9541867) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Add inventory management to create-fulfillment flow
+
+- [#3586](https://github.com/medusajs/medusa/pull/3586) [`e359d3f85`](https://github.com/medusajs/medusa/commit/e359d3f85bc12fd3868fc4b563cd994366e899dd) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Fix(medusa): include quantities when listing admin products with an inventory module installed
+
+- [#3544](https://github.com/medusajs/medusa/pull/3544) [`5e405be02`](https://github.com/medusajs/medusa/commit/5e405be02cc94779222dc3d930e747027496d918) Thanks [@pKorsholm](https://github.com/pKorsholm)! - feat(medusa): remove reservations for all old line items when an order edit is accepted
+
+- [#3408](https://github.com/medusajs/medusa/pull/3408) [`54dcc1871`](https://github.com/medusajs/medusa/commit/54dcc1871c8f28bea962dbb9df6e79b038d56449) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Http Server Graceful Shutdown
+
+- [#3329](https://github.com/medusajs/medusa/pull/3329) [`77d46220c`](https://github.com/medusajs/medusa/commit/77d46220c23bfe19e575cbc445874eb6c22f3c73) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Inventory and Stock location modules supporting isolated connection
+
+- [#2599](https://github.com/medusajs/medusa/pull/2599) [`ef5ef9f5a`](https://github.com/medusajs/medusa/commit/ef5ef9f5a26febf0b64d9981606c1e59999ca76e) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa,event-bus-local,event-bus-redis): Event Bus module (Redis + Local)
+
+- [#3187](https://github.com/medusajs/medusa/pull/3187) [`f97b3d7cc`](https://github.com/medusajs/medusa/commit/f97b3d7ccee381d3491337ab5144bb44520382a7) Thanks [@fPolic](https://github.com/fPolic)! - feat(medusa, cache-redis, cache-inmemory): Added cache modules
+
+### Patch Changes
+
+- [#3350](https://github.com/medusajs/medusa/pull/3350) [`d6b1ad1cc`](https://github.com/medusajs/medusa/commit/d6b1ad1ccd9a8f91b169f30ff99492cf3adcccac) Thanks [@adrien2p](https://github.com/adrien2p)! - Chores(medusa): draft order create improvement perf (first step)
+
+- [#3345](https://github.com/medusajs/medusa/pull/3345) [`e143a8697`](https://github.com/medusajs/medusa/commit/e143a86976a5cc6a53b7a795e8486df4db1d1c09) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Plugin repository loader to work with Typeorm update
+
+- [#3374](https://github.com/medusajs/medusa/pull/3374) [`84e448968`](https://github.com/medusajs/medusa/commit/84e44896836b2c44017572ac5192ab1cd937048c) Thanks [@adrien2p](https://github.com/adrien2p)! - chore(medusa): Little improvement in draft order creation
+
+- [#3362](https://github.com/medusajs/medusa/pull/3362) [`33c6ccf05`](https://github.com/medusajs/medusa/commit/33c6ccf0591b8ef527f3b10a70b51e29751b4998) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medeusa): Transform query includes options should only be added to allowed props if there is already at least one allowed props
+
+- [#3676](https://github.com/medusajs/medusa/pull/3676) [`788ddc0f4`](https://github.com/medusajs/medusa/commit/788ddc0f43696df607f07133af15a04b29d5447d) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - fix(admin-ui, medusa-react, medusa): Minor fixes to GC domain in admin UI. Also fixes GC update payload type in medusa-react and medusa.
+
+- [#3462](https://github.com/medusajs/medusa/pull/3462) [`30a320364`](https://github.com/medusajs/medusa/commit/30a3203640be9993ba2f8447abfdecc0d3e2f9b6) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): Include location_id in fulfillment body
+
+- [#3391](https://github.com/medusajs/medusa/pull/3391) [`240d0ea7b`](https://github.com/medusajs/medusa/commit/240d0ea7b88ff494d0fe28c7c5348e958c14571f) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - fix(ci,oas) move oas ci script to a package under the oas workspace
+
+- [#3087](https://github.com/medusajs/medusa/pull/3087) [`6c0462472`](https://github.com/medusajs/medusa/commit/6c046247275c46d934f03d53471bdd555a19a9ad) Thanks [@fPolic](https://github.com/fPolic)! - chore(feature-flag): Remove PublishableAPIKeys feature flag
+
+- [#3414](https://github.com/medusajs/medusa/pull/3414) [`530740889`](https://github.com/medusajs/medusa/commit/53074088941719ac7ca435e76e3e64ba23fac200) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa-payment-paypal): Migrate to the new payment processor API
+
+- [#3483](https://github.com/medusajs/medusa/pull/3483) [`13f40d721`](https://github.com/medusajs/medusa/commit/13f40d721702fbcdf6c131354ec9a81322d4a662) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): declare x-expanded-relations - Admin
+
+- [#3644](https://github.com/medusajs/medusa/pull/3644) [`4342ac884`](https://github.com/medusajs/medusa/commit/4342ac884bc3fe473576ef10d291f3547e0ffc62) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - feat(admin-ui): Adds metadata forms to all applicable domains in the UI.
+  fix(medusa): Fixes an issue where metadata was not being set for order addresses using `setMetadata`.
+
+- [#3435](https://github.com/medusajs/medusa/pull/3435) [`fe9eea4c1`](https://github.com/medusajs/medusa/commit/fe9eea4c18b7e04ba91660716c92b11a49840a3c) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Add create-inventory-item endpoint
+
+- [#3670](https://github.com/medusajs/medusa/pull/3670) [`a5ad6c054`](https://github.com/medusajs/medusa/commit/a5ad6c05428e1bb090bbc5a51345a00821781c06) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Fix(admin-ui,medusa): Ensure stock locations are created with a name
+
+- [#3665](https://github.com/medusajs/medusa/pull/3665) [`748833383`](https://github.com/medusajs/medusa/commit/748833383f4bafd05109dac7afa1286fe851cba3) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): draft order adjustments for mw
+
+- [#3686](https://github.com/medusajs/medusa/pull/3686) [`7f87c4f2c`](https://github.com/medusajs/medusa/commit/7f87c4f2c8abb876213a595005e67d770be9cbe4) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa-react): Query key invalidation
+
+- [#3705](https://github.com/medusajs/medusa/pull/3705) [`e5a2e9c8d`](https://github.com/medusajs/medusa/commit/e5a2e9c8d237bbe4e3563f5a7a892ca41f01ba24) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): circular loading
+
+- [#3328](https://github.com/medusajs/medusa/pull/3328) [`0a02b70e5`](https://github.com/medusajs/medusa/commit/0a02b70e59cfbd8888fb58c29ee9aaf96eb8099a) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Register reservation endpoints + Fix a type issue for get variant inventory
+
+- [#3685](https://github.com/medusajs/medusa/pull/3685) [`8ddb3952c`](https://github.com/medusajs/medusa/commit/8ddb3952c045e6c05c8d0f6922f0d4ba30cf3bd4) Thanks [@olivermrbl](https://github.com/olivermrbl)! - chore: Fix RC package versions
+
+- [#3495](https://github.com/medusajs/medusa/pull/3495) [`fe4b8feb7`](https://github.com/medusajs/medusa/commit/fe4b8feb7e0af2ffc436ca77a769ecb37e16e652) Thanks [@davorbacic](https://github.com/davorbacic)! - feat(medusa): Add event emitter to ProductCollectionService
+
+- [#3352](https://github.com/medusajs/medusa/pull/3352) [`aa690beed`](https://github.com/medusajs/medusa/commit/aa690beed775646cbc86b445fb5dc90dcac087d5) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - feat(medusa): Modules initializer
+
+  ### Loading modules in a project
+
+  Example
+
+  ```typescript
+  import {
+    InventoryServiceInitializeOptions,
+    initialize,
+  } from "@medusajs/inventory"
+
+  const options: InventoryServiceInitializeOptions = {
+    database: {
+      type: "postgres",
+      url: DB_URL,
+    },
+  }
+
+  const inventoryService = await initialize(options)
+  const newInventoryItem = await inventoryService.createInventoryItem({
+    sku: "sku_123",
+  })
+  ```
+
+- [#3349](https://github.com/medusajs/medusa/pull/3349) [`f033711ad`](https://github.com/medusajs/medusa/commit/f033711ad649466d72dd9f673d75848c97c0861f) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Add Lifetime support on project/plugin services
+
+- [#3660](https://github.com/medusajs/medusa/pull/3660) [`eed784d7d`](https://github.com/medusajs/medusa/commit/eed784d7d0b58aeddc9f6f5ea56fe80c608b22f5) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(admin-ui, medusa): resolve bugs for orders with variants without inventory items
+
+- [#3555](https://github.com/medusajs/medusa/pull/3555) [`3171b0e51`](https://github.com/medusajs/medusa/commit/3171b0e518aebcaa31bbe5c6e914d65282873cda) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): if no headerkey is provided when initilizing idempotency key, no attempt is made at fetching the key
+
+- [#3688](https://github.com/medusajs/medusa/pull/3688) [`a0c919a8d`](https://github.com/medusajs/medusa/commit/a0c919a8d01ca5edf62336de48e9a112e3822f38) Thanks [@olivermrbl](https://github.com/olivermrbl)! - chore(medusa-cli): Add missing utils dep
+
+- [#3482](https://github.com/medusajs/medusa/pull/3482) [`522e306e2`](https://github.com/medusajs/medusa/commit/522e306e2e9abf4afce63f30714389eba32bef7f) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): declare x-expanded-relations - Store
+
+- [#3419](https://github.com/medusajs/medusa/pull/3419) [`80b95a230`](https://github.com/medusajs/medusa/commit/80b95a230056d9ed15f7302f248094f879516faf) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): Resolve on scope instead of req
+
+- [#3324](https://github.com/medusajs/medusa/pull/3324) [`a1e59313c`](https://github.com/medusajs/medusa/commit/a1e59313c964a944a287b54f6654d1d19ac8a59b) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Add filtering of stock locations based on sales channels
+
+- [#3460](https://github.com/medusajs/medusa/pull/3460) [`10bf05c14`](https://github.com/medusajs/medusa/commit/10bf05c147cb65a263465129790edd44a6d8948b) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Fix(inventory, medusa): ensure no orphaned reservations and invenotry levels on location removal
+
+- [#3323](https://github.com/medusajs/medusa/pull/3323) [`cbbf3ca05`](https://github.com/medusajs/medusa/commit/cbbf3ca054387a900c5777c2eb0218df2c72bae6) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Clean response data usage for admin and store fields/expand
+
+- [#3436](https://github.com/medusajs/medusa/pull/3436) [`9ba09ba4d`](https://github.com/medusajs/medusa/commit/9ba09ba4d753f132537f0447097fe9f54922c074) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa, medusa-js, medusa-react): Add store queries to react medusa
+
+- [#3110](https://github.com/medusajs/medusa/pull/3110) [`12d304307`](https://github.com/medusajs/medusa/commit/12d304307af87ea9287a41869eb33ef09f273d85) Thanks [@StephixOne](https://github.com/StephixOne)! - feat(medusa,medusa-js,medusa-react): Add inventory module endpoints
+
+- [#3622](https://github.com/medusajs/medusa/pull/3622) [`693015fde`](https://github.com/medusajs/medusa/commit/693015fde3218d67fb9c07eebeaea9950bf3f1f1) Thanks [@olivermrbl](https://github.com/olivermrbl)! - chore(medusa): EOL causing logging to hang
+
+- [#3314](https://github.com/medusajs/medusa/pull/3314) [`287c829c9`](https://github.com/medusajs/medusa/commit/287c829c9c5a9797fb8cd118b7a6066ad1935898) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): include `/admin` and `/store` in paths URLs
+
+- [#3510](https://github.com/medusajs/medusa/pull/3510) [`74bc4b16a`](https://github.com/medusajs/medusa/commit/74bc4b16a07f78668003ca930bf2a0d928897ceb) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa-plugin-algolia): Revamp Algolia search plugin
+
+- [#3684](https://github.com/medusajs/medusa/pull/3684) [`0cca13779`](https://github.com/medusajs/medusa/commit/0cca13779d0e84683193ad82ab163a10a807e903) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): inventory stocked quantity regulation
+
+- [#3514](https://github.com/medusajs/medusa/pull/3514) [`aed7805c0`](https://github.com/medusajs/medusa/commit/aed7805c0e64b884007148bde90cfce7bee8aad4) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): Error messages for reset tokens
+
+- [#3498](https://github.com/medusajs/medusa/pull/3498) [`0d1b63d77`](https://github.com/medusajs/medusa/commit/0d1b63d773ad91846757a6f0b81b78b0b97b3f2b) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): use get instead of indexing into map
+
+- [#3423](https://github.com/medusajs/medusa/pull/3423) [`4042beb10`](https://github.com/medusajs/medusa/commit/4042beb1026b9ad8b381aaa6e1a5214cd92db00f) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): add @schema OAS for address request payloads
+
+- [#3653](https://github.com/medusajs/medusa/pull/3653) [`809ab2e0e`](https://github.com/medusajs/medusa/commit/809ab2e0eb2d62054481fa6491d3f7cafbadab4f) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Rounding issues on line item adjustments
+
+- [#2978](https://github.com/medusajs/medusa/pull/2978) [`f43e9f0f2`](https://github.com/medusajs/medusa/commit/f43e9f0f20a8b0637252951b2bdfed4d42fb9f5e) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Load PaymentProcessors
+
+  - Add loading of PaymentProcessors
+  - Add PaymentProcessor support in the payment-provider
+  - Add backward compatibility for the PaymentService
+
+- [#3344](https://github.com/medusajs/medusa/pull/3344) [`842423679`](https://github.com/medusajs/medusa/commit/8424236799c3789f884285cd3c8a491e91aef2ca) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Update types to reflect actual return-type
+
+- [#3312](https://github.com/medusajs/medusa/pull/3312) [`935870e01`](https://github.com/medusajs/medusa/commit/935870e010af1ec884259b1f1328421e99acc3af) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - fix(oas): add missing x-codegen + fix schema naming and $ref
+
+- [#3403](https://github.com/medusajs/medusa/pull/3403) [`57d7728dd`](https://github.com/medusajs/medusa/commit/57d7728dd9d00df712e1a872899b8397955dfe46) Thanks [@StephixOne](https://github.com/StephixOne)! - feat(medusa): add get-variant endpoint
+
+- [#3395](https://github.com/medusajs/medusa/pull/3395) [`15f47baf5`](https://github.com/medusajs/medusa/commit/15f47baf56e6722b7821cfaa2fb468e582dfa2c1) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(admin-ui, medusa): Minor ui fixes relating to stock locations
+
+- [#3624](https://github.com/medusajs/medusa/pull/3624) [`999aeb116`](https://github.com/medusajs/medusa/commit/999aeb116c4742e5b5e0d80793af23f7727276f0) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): Fix hanging inventory item migration script
+
+- [#3522](https://github.com/medusajs/medusa/pull/3522) [`55c5fba0d`](https://github.com/medusajs/medusa/commit/55c5fba0d3dbd015c3ffd74d645a8057892d0f52) Thanks [@pKorsholm](https://github.com/pKorsholm)! - feat(medusa,admin): location_ids in swap and claim creation
+
+- [#3282](https://github.com/medusajs/medusa/pull/3282) [`38503fff5`](https://github.com/medusajs/medusa/commit/38503fff56bbceb092e396ac11432a56967b53e9) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): identify required fields in responses - store
+
+- [#3334](https://github.com/medusajs/medusa/pull/3334) [`40de54b01`](https://github.com/medusajs/medusa/commit/40de54b0101bdfd37f577d18c10ec9f1ab1ce8fe) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - feat(medusa,admin,admin-ui): Add new plugin to serve the admin dashboard from the server. Adds a new plugin injection step `setup`, code placed in the `setup` folder of a plugin will be run before any code from a plugin is injected into the Medusa server.
+
+- [#3416](https://github.com/medusajs/medusa/pull/3416) [`478d1af8d`](https://github.com/medusajs/medusa/commit/478d1af8d0df0af16baf4f130e19b0be34f5f295) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa, admin-ui, medusa-react): Improvements to product categories
+
+  - Adds name as required in category create form
+  - Adds name and handle as required in category edit form
+  - Updates message on create/update forms
+  - Adds category indicators for is_internal and is_active fields in the tree list
+  - Fixes bug where tree is not reset when update fails
+  - allow appending all category descendants with a param in list endpoint
+  - fix rank order changing on category update
+  - invalidate products query on category delete
+  - adds category ui for tree/list, edit, create, delete
+  - add product category queries and mutations
+  - category list API can return all descendant
+  - added breadcrumbs for categories on create/edit modal
+  - add empty state for product categories
+  - increase tree depth + scope categories on store + allow categories relation in products API
+  - categories can be ranked based on position
+  - seed command can create product categories
+  - hide categories in products behind feature flag
+  - fixes bug for mpath incorrectly updated for nested categories
+
+- [#3478](https://github.com/medusajs/medusa/pull/3478) [`6748877c6`](https://github.com/medusajs/medusa/commit/6748877c694c1433f666c6987f20af76b201b495) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - fix(oas,js,react): use AdminExtendedStoresRes instead of AdminStoresRes
+
+- [#3377](https://github.com/medusajs/medusa/pull/3377) [`7e17e0ddc`](https://github.com/medusajs/medusa/commit/7e17e0ddc2e6b2891e9ee1420b04a541899d2a9d) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa-plugin-meilisearch): Update + improve Meilisearch plugin
+
+  **What**
+
+  - Bumps `meilisearch` dep to latest major
+  - Migrates plugin to TypeScript
+  - Changes the way indexes are configured in `medusa-config.js`:
+
+  **Before**
+
+  ```
+  {
+      resolve: `medusa-plugin-meilisearch`,
+      options: {
+        config: { host: "...", apiKey: "..." },
+        settings: {
+          products: {
+            searchableAttributes: ["title"],
+            displayedAttributes: ["title"],
+          },
+        },
+      },
+    },
+  ```
+
+  **After**
+
+  ```
+  {
+      resolve: `medusa-plugin-meilisearch`,
+      options: {
+        config: { host: "...", apiKey: "..." },
+        settings: {
+          products: {
+            **indexSettings**: {
+              searchableAttributes: ["title"],
+              displayedAttributes: ["title"],
+            },
+          },
+        },
+      },
+    },
+  ```
+
+  This is done to allow for additional configuration of indexes, that are not necessarily passed on query-time.
+
+  We introduce two new settings:
+
+  ```
+  settings: {
+    products: {
+      indexSettings: {
+        searchableAttributes: ["title"],
+        displayedAttributes: ["title"],,
+      },
+      primaryKey: "id"
+      transformer: (document) => ({ id: "yo" })
+    },
+  },
+  ```
+
+  Meilisearch changed their primary key inference in the major release. Now we must be explicit when multiple properties end with `id`. Read more in their [docs](https://docs.meilisearch.com/learn/core_concepts/primary_key.html#primary-field).
+
+  The transformer allows developers to specify how their documents are stored in Meilisearch. It is configurable for each index.
+
+- [#3605](https://github.com/medusajs/medusa/pull/3605) [`bca1f80dd`](https://github.com/medusajs/medusa/commit/bca1f80dd501d878455e1ad4f5091cf20ef900ea) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Improved error message if default module is not installed
+
+- [#3534](https://github.com/medusajs/medusa/pull/3534) [`7f2223b65`](https://github.com/medusajs/medusa/commit/7f2223b6507b0a3c452977bfcdee92af2086fa29) Thanks [@riqwan](https://github.com/riqwan)! - fix(medusa): fix bug with parent not being saved correctly
+
+- [#3288](https://github.com/medusajs/medusa/pull/3288) [`7d585f5f8`](https://github.com/medusajs/medusa/commit/7d585f5f84a910c02d274df7a489dc3ff1ea273a) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - fix(oas): fix paths and fix schema names to match convention
+
+- [#3531](https://github.com/medusajs/medusa/pull/3531) [`4e9d257d3`](https://github.com/medusajs/medusa/commit/4e9d257d3bf76703ef5be8ca054cc9f0f7339def) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Remove dependency on @medusajs/medusa from Inventory and Stock-Location Modules
+
+- [#3541](https://github.com/medusajs/medusa/pull/3541) [`feaf8d2e1`](https://github.com/medusajs/medusa/commit/feaf8d2e19715585d154464d003759c3a1f4f322) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa, admin-ui): refine create-fulfillment flow
+
+- [#3451](https://github.com/medusajs/medusa/pull/3451) [`55a1f232a`](https://github.com/medusajs/medusa/commit/55a1f232a3746a22adb1fcd1844b2659077a59f9) Thanks [@pKorsholm](https://github.com/pKorsholm)! - feat(medusa,admin-ui): support location_id in
+
+- [#3411](https://github.com/medusajs/medusa/pull/3411) [`966aea65c`](https://github.com/medusajs/medusa/commit/966aea65c221403bf316ae7665cc8f73bccd9c38) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas-cli): combine admin + store + custom OAS
+
+- [#3278](https://github.com/medusajs/medusa/pull/3278) [`48ad2426a`](https://github.com/medusajs/medusa/commit/48ad2426aa7a604c226132e85ef3da5cce045f45) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): identify required fields in responses - admin
+  feat(medusa): Update transaction base service to expose an activeManager\_ getter
+  feat(admin-ui): move customs and shipping into manage inventory modal
+  Feat(medusa): fulfill swaps and claims with locations
+  fix(medusa): Issue when ordering with multiple columns
+  fix(medusa): Category seeding result in non null constraint error
+  fix(medusa): Account for multiple inventory items when getting inventory
+  feat(oas): pluralize OAS tags
+  feat(medusa): Improve store list products
+  feat(admin-ui): add errors and block receiving returns dependent on existing inventory item levels
+  feat(medusa): invalidate price selection caching within update request
+  feat(medusa): remove soft delete from categories + adds indexes for categories
+- Updated dependencies [[`121b42acf`](https://github.com/medusajs/medusa/commit/121b42acfe98c12dd593f9b1f2072ff0f3b61724), [`8ddb3952c`](https://github.com/medusajs/medusa/commit/8ddb3952c045e6c05c8d0f6922f0d4ba30cf3bd4), [`aa690beed`](https://github.com/medusajs/medusa/commit/aa690beed775646cbc86b445fb5dc90dcac087d5), [`a0c919a8d`](https://github.com/medusajs/medusa/commit/a0c919a8d01ca5edf62336de48e9a112e3822f38), [`cd54c7dca`](https://github.com/medusajs/medusa/commit/cd54c7dca9f7444dd2bfa91b4e3e3359dc6658cf), [`55e94d0b4`](https://github.com/medusajs/medusa/commit/55e94d0b45776776639d3970d4264b8f5c5385dd), [`74bc4b16a`](https://github.com/medusajs/medusa/commit/74bc4b16a07f78668003ca930bf2a0d928897ceb), [`54dcc1871`](https://github.com/medusajs/medusa/commit/54dcc1871c8f28bea962dbb9df6e79b038d56449), [`bd12a9508`](https://github.com/medusajs/medusa/commit/bd12a95083b69a70b83ad38578c5a68738c41b2b), [`77d46220c`](https://github.com/medusajs/medusa/commit/77d46220c23bfe19e575cbc445874eb6c22f3c73), [`bca1f80dd`](https://github.com/medusajs/medusa/commit/bca1f80dd501d878455e1ad4f5091cf20ef900ea), [`271844aed`](https://github.com/medusajs/medusa/commit/271844aedbe45c369e188b5d06458dbd6984cd39), [`4e9d257d3`](https://github.com/medusajs/medusa/commit/4e9d257d3bf76703ef5be8ca054cc9f0f7339def)]:
+  - medusa-core-utils@1.2.0
+  - medusa-interfaces@1.3.7
+  - medusa-test-utils@1.1.40
+  - @medusajs/modules-sdk@1.8.0
+  - @medusajs/types@1.8.0
+  - @medusajs/utils@1.8.0
+  - @medusajs/medusa-cli@1.3.9
+
+## 1.8.0-rc.8
+
+### Patch Changes
+
+- [#3713](https://github.com/medusajs/medusa/pull/3713) [`4488ec685`](https://github.com/medusajs/medusa/commit/4488ec68524f95f367cbd352e9e5eb1957d1d0d6) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Category seeding result in non null constraint error
+
+## 1.8.0-rc.7
+
+### Patch Changes
+
+- [#3665](https://github.com/medusajs/medusa/pull/3665) [`748833383`](https://github.com/medusajs/medusa/commit/748833383f4bafd05109dac7afa1286fe851cba3) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): draft order adjustments for mw
+
+- [#3705](https://github.com/medusajs/medusa/pull/3705) [`e5a2e9c8d`](https://github.com/medusajs/medusa/commit/e5a2e9c8d237bbe4e3563f5a7a892ca41f01ba24) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): circular loading
+
+## 1.8.0-rc.6
+
+### Patch Changes
+
+- [#3676](https://github.com/medusajs/medusa/pull/3676) [`788ddc0f4`](https://github.com/medusajs/medusa/commit/788ddc0f43696df607f07133af15a04b29d5447d) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - fix(admin-ui, medusa-react, medusa): Minor fixes to GC domain in admin UI. Also fixes GC update payload type in medusa-react and medusa.
+
+- [#3670](https://github.com/medusajs/medusa/pull/3670) [`a5ad6c054`](https://github.com/medusajs/medusa/commit/a5ad6c05428e1bb090bbc5a51345a00821781c06) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Fix(admin-ui,medusa): Ensure stock locations are created with a name
+
+- [#3686](https://github.com/medusajs/medusa/pull/3686) [`7f87c4f2c`](https://github.com/medusajs/medusa/commit/7f87c4f2c8abb876213a595005e67d770be9cbe4) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa-react): Query key invalidation
+
+- [#3660](https://github.com/medusajs/medusa/pull/3660) [`eed784d7d`](https://github.com/medusajs/medusa/commit/eed784d7d0b58aeddc9f6f5ea56fe80c608b22f5) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(admin-ui, medusa): resolve bugs for orders with variants without inventory items
+
+- [#3688](https://github.com/medusajs/medusa/pull/3688) [`a0c919a8d`](https://github.com/medusajs/medusa/commit/a0c919a8d01ca5edf62336de48e9a112e3822f38) Thanks [@olivermrbl](https://github.com/olivermrbl)! - chore(medusa-cli): Add missing utils dep
+
+- [#3684](https://github.com/medusajs/medusa/pull/3684) [`0cca13779`](https://github.com/medusajs/medusa/commit/0cca13779d0e84683193ad82ab163a10a807e903) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): inventory stocked quantity regulation
+
+- Updated dependencies [[`a0c919a8d`](https://github.com/medusajs/medusa/commit/a0c919a8d01ca5edf62336de48e9a112e3822f38), [`bd12a9508`](https://github.com/medusajs/medusa/commit/bd12a95083b69a70b83ad38578c5a68738c41b2b)]:
+  - @medusajs/medusa-cli@1.3.9-rc.2
+  - @medusajs/utils@0.0.2-rc.2
+  - @medusajs/modules-sdk@0.1.0-rc.4
+
+## 1.8.0-rc.5
+
+### Patch Changes
+
+- [#3644](https://github.com/medusajs/medusa/pull/3644) [`4342ac884`](https://github.com/medusajs/medusa/commit/4342ac884bc3fe473576ef10d291f3547e0ffc62) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - feat(admin-ui): Adds metadata forms to all applicable domains in the UI.
+  fix(medusa): Fixes an issue where metadata was not being set for order addresses using `setMetadata`.
+
+- [#3653](https://github.com/medusajs/medusa/pull/3653) [`809ab2e0e`](https://github.com/medusajs/medusa/commit/809ab2e0eb2d62054481fa6491d3f7cafbadab4f) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Rounding issues on line item adjustments
+
+## 1.8.0-rc.4
+
+### Minor Changes
+
+- [#3554](https://github.com/medusajs/medusa/pull/3554) [`5fd74b38a`](https://github.com/medusajs/medusa/commit/5fd74b38ae1b4f7dced191983b78db83f7b1f71b) Thanks [@pKorsholm](https://github.com/pKorsholm)! - feat(medusa): remove reservations if cart completion fails after reservation creation
+
+- [#3544](https://github.com/medusajs/medusa/pull/3544) [`5e405be02`](https://github.com/medusajs/medusa/commit/5e405be02cc94779222dc3d930e747027496d918) Thanks [@pKorsholm](https://github.com/pKorsholm)! - feat(medusa): remove reservations for all old line items when an order edit is accepted
+
+- [#3591](https://github.com/medusajs/medusa/pull/3591) [`a7e3f2d34`](https://github.com/medusajs/medusa/commit/a7e3f2d343c4059ba83022ec5c09f8101b251297) Thanks [@pKorsholm](https://github.com/pKorsholm)! - feat(admin-ui): move customs and shipping into manage inventory modal
+
+### Patch Changes
+
+- [#3624](https://github.com/medusajs/medusa/pull/3624) [`999aeb116`](https://github.com/medusajs/medusa/commit/999aeb116c4742e5b5e0d80793af23f7727276f0) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): Fix hanging inventory item migration script
+
+## 1.8.0-rc.3
+
+### Minor Changes
+
+- [#3552](https://github.com/medusajs/medusa/pull/3552) [`0695ff642`](https://github.com/medusajs/medusa/commit/0695ff642b5836e7c28d40118aafe7a769023d5a) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): remove limit of the number of levels to list when joining levels
+
+### Patch Changes
+
+- [#3622](https://github.com/medusajs/medusa/pull/3622) [`693015fde`](https://github.com/medusajs/medusa/commit/693015fde3218d67fb9c07eebeaea9950bf3f1f1) Thanks [@olivermrbl](https://github.com/olivermrbl)! - chore(medusa): EOL causing logging to hang
+
+- Updated dependencies [[`cd54c7dca`](https://github.com/medusajs/medusa/commit/cd54c7dca9f7444dd2bfa91b4e3e3359dc6658cf), [`55e94d0b4`](https://github.com/medusajs/medusa/commit/55e94d0b45776776639d3970d4264b8f5c5385dd)]:
+  - @medusajs/medusa-cli@1.3.9-rc.1
+  - @medusajs/modules-sdk@0.1.0-rc.3
+
+## 1.8.0-rc.2
+
+### Patch Changes
+
+- chore: Fix RC package versions
+
+- Updated dependencies []:
+  - @medusajs/modules-sdk@0.1.0-rc.2
+  - @medusajs/types@0.0.2-rc.1
+  - @medusajs/utils@0.0.2-rc.1
+
+## 1.8.0-rc.1
+
+### Minor Changes
+
+- [#3586](https://github.com/medusajs/medusa/pull/3586) [`e359d3f85`](https://github.com/medusajs/medusa/commit/e359d3f85bc12fd3868fc4b563cd994366e899dd) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Fix(medusa): include quantities when listing admin products with an inventory module installed
+
+### Patch Changes
+
+- [#3414](https://github.com/medusajs/medusa/pull/3414) [`530740889`](https://github.com/medusajs/medusa/commit/53074088941719ac7ca435e76e3e64ba23fac200) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa-payment-paypal): Migrate to the new payment processor API
+
+- [#3605](https://github.com/medusajs/medusa/pull/3605) [`bca1f80dd`](https://github.com/medusajs/medusa/commit/bca1f80dd501d878455e1ad4f5091cf20ef900ea) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Improved error message if default module is not installed
+
+- [#3589](https://github.com/medusajs/medusa/pull/3589) [`5f41cd9a6`](https://github.com/medusajs/medusa/commit/5f41cd9a67eb0962f999291594c0aac5e38eb916) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): remove soft delete from categories + adds indexes for categories
+
+- [#3553](https://github.com/medusajs/medusa/pull/3553) [`1ce3cc5ae`](https://github.com/medusajs/medusa/commit/1ce3cc5ae4e4cb16eb03be49c9287503f759fc60) Thanks [@fPolic](https://github.com/fPolic)! - feat(medusa): invalidate price selection caching within update request
+
+- [#3473](https://github.com/medusajs/medusa/pull/3473) [`332a9b686`](https://github.com/medusajs/medusa/commit/332a9b686bd0d224855215213dd11b4704283f62) Thanks [@pKorsholm](https://github.com/pKorsholm)! - feat(admin-ui): add errors and block receiving returns dependent on existing inventory item levels
+
+- [#3541](https://github.com/medusajs/medusa/pull/3541) [`feaf8d2e1`](https://github.com/medusajs/medusa/commit/feaf8d2e19715585d154464d003759c3a1f4f322) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa, admin-ui): refine create-fulfillment flow
+
+- Updated dependencies [[`bca1f80dd`](https://github.com/medusajs/medusa/commit/bca1f80dd501d878455e1ad4f5091cf20ef900ea)]:
+  - @medusajs/modules-sdk@0.1.0-rc.1
+
+## 1.8.0-rc.0
+
+### Minor Changes
+
+- [#3041](https://github.com/medusajs/medusa/pull/3041) [`121b42acf`](https://github.com/medusajs/medusa/commit/121b42acfe98c12dd593f9b1f2072ff0f3b61724) Thanks [@riqwan](https://github.com/riqwan)! - chore(medusa): Typeorm fixes / enhancements
+
+  - upgrade typeorm from 0.2.51 to 0.3.11
+  - Plugin repository loader to work with Typeorm update
+
+- [#3257](https://github.com/medusajs/medusa/pull/3257) [`589d1c09b`](https://github.com/medusajs/medusa/commit/589d1c09b085dcaf9667061201ac9deff3047466) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa-payment-stripe): Implement payment processor API on stripe plugin and fix web hook issues
+
+- [#3172](https://github.com/medusajs/medusa/pull/3172) [`5eb61fa0e`](https://github.com/medusajs/medusa/commit/5eb61fa0ef991b8a9fabb16c2c159e51b9541867) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Add inventory management to create-fulfillment flow
+
+- [#3408](https://github.com/medusajs/medusa/pull/3408) [`54dcc1871`](https://github.com/medusajs/medusa/commit/54dcc1871c8f28bea962dbb9df6e79b038d56449) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Http Server Graceful Shutdown
+
+- [#3329](https://github.com/medusajs/medusa/pull/3329) [`77d46220c`](https://github.com/medusajs/medusa/commit/77d46220c23bfe19e575cbc445874eb6c22f3c73) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Inventory and Stock location modules supporting isolated connection
+
+- [#2599](https://github.com/medusajs/medusa/pull/2599) [`ef5ef9f5a`](https://github.com/medusajs/medusa/commit/ef5ef9f5a26febf0b64d9981606c1e59999ca76e) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa,event-bus-local,event-bus-redis): Event Bus module (Redis + Local)
+
+- [#3187](https://github.com/medusajs/medusa/pull/3187) [`f97b3d7cc`](https://github.com/medusajs/medusa/commit/f97b3d7ccee381d3491337ab5144bb44520382a7) Thanks [@fPolic](https://github.com/fPolic)! - feat(medusa, cache-redis, cache-inmemory): Added cache modules
+
+### Patch Changes
+
+- [#3350](https://github.com/medusajs/medusa/pull/3350) [`d6b1ad1cc`](https://github.com/medusajs/medusa/commit/d6b1ad1ccd9a8f91b169f30ff99492cf3adcccac) Thanks [@adrien2p](https://github.com/adrien2p)! - Chores(medusa): draft order create improvement perf (first step)
+
+- [#3345](https://github.com/medusajs/medusa/pull/3345) [`e143a8697`](https://github.com/medusajs/medusa/commit/e143a86976a5cc6a53b7a795e8486df4db1d1c09) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Plugin repository loader to work with Typeorm update
+
+- [#3374](https://github.com/medusajs/medusa/pull/3374) [`84e448968`](https://github.com/medusajs/medusa/commit/84e44896836b2c44017572ac5192ab1cd937048c) Thanks [@adrien2p](https://github.com/adrien2p)! - chore(medusa): Little improvement in draft order creation
+
+- [#3362](https://github.com/medusajs/medusa/pull/3362) [`33c6ccf05`](https://github.com/medusajs/medusa/commit/33c6ccf0591b8ef527f3b10a70b51e29751b4998) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medeusa): Transform query includes options should only be added to allowed props if there is already at least one allowed props
+
+- [#3462](https://github.com/medusajs/medusa/pull/3462) [`30a320364`](https://github.com/medusajs/medusa/commit/30a3203640be9993ba2f8447abfdecc0d3e2f9b6) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): Include location_id in fulfillment body
+
+- [#3391](https://github.com/medusajs/medusa/pull/3391) [`240d0ea7b`](https://github.com/medusajs/medusa/commit/240d0ea7b88ff494d0fe28c7c5348e958c14571f) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - fix(ci,oas) move oas ci script to a package under the oas workspace
+
+- [#3087](https://github.com/medusajs/medusa/pull/3087) [`6c0462472`](https://github.com/medusajs/medusa/commit/6c046247275c46d934f03d53471bdd555a19a9ad) Thanks [@fPolic](https://github.com/fPolic)! - chore(feature-flag): Remove PublishableAPIKeys feature flag
+
+- [#3483](https://github.com/medusajs/medusa/pull/3483) [`13f40d721`](https://github.com/medusajs/medusa/commit/13f40d721702fbcdf6c131354ec9a81322d4a662) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): declare x-expanded-relations - Admin
+
+- [#3435](https://github.com/medusajs/medusa/pull/3435) [`fe9eea4c1`](https://github.com/medusajs/medusa/commit/fe9eea4c18b7e04ba91660716c92b11a49840a3c) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Add create-inventory-item endpoint
+
+- [#3328](https://github.com/medusajs/medusa/pull/3328) [`0a02b70e5`](https://github.com/medusajs/medusa/commit/0a02b70e59cfbd8888fb58c29ee9aaf96eb8099a) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Register reservation endpoints + Fix a type issue for get variant inventory
+
+- [#3495](https://github.com/medusajs/medusa/pull/3495) [`fe4b8feb7`](https://github.com/medusajs/medusa/commit/fe4b8feb7e0af2ffc436ca77a769ecb37e16e652) Thanks [@davorbacic](https://github.com/davorbacic)! - feat(medusa): Add event emitter to ProductCollectionService
+
+- [#3352](https://github.com/medusajs/medusa/pull/3352) [`aa690beed`](https://github.com/medusajs/medusa/commit/aa690beed775646cbc86b445fb5dc90dcac087d5) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - feat(medusa): Modules initializer
+
+  ### Loading modules in a project
+
+  Example
+
+  ```typescript
+  import {
+    InventoryServiceInitializeOptions,
+    initialize,
+  } from "@medusajs/inventory"
+
+  const options: InventoryServiceInitializeOptions = {
+    database: {
+      type: "postgres",
+      url: DB_URL,
+    },
+  }
+
+  const inventoryService = await initialize(options)
+  const newInventoryItem = await inventoryService.createInventoryItem({
+    sku: "sku_123",
+  })
+  ```
+
+- [#3349](https://github.com/medusajs/medusa/pull/3349) [`f033711ad`](https://github.com/medusajs/medusa/commit/f033711ad649466d72dd9f673d75848c97c0861f) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Add Lifetime support on project/plugin services
+
+- [#3555](https://github.com/medusajs/medusa/pull/3555) [`3171b0e51`](https://github.com/medusajs/medusa/commit/3171b0e518aebcaa31bbe5c6e914d65282873cda) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): if no headerkey is provided when initilizing idempotency key, no attempt is made at fetching the key
+
+- [#3482](https://github.com/medusajs/medusa/pull/3482) [`522e306e2`](https://github.com/medusajs/medusa/commit/522e306e2e9abf4afce63f30714389eba32bef7f) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): declare x-expanded-relations - Store
+
+- [#3419](https://github.com/medusajs/medusa/pull/3419) [`80b95a230`](https://github.com/medusajs/medusa/commit/80b95a230056d9ed15f7302f248094f879516faf) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): Resolve on scope instead of req
+
+- [#3324](https://github.com/medusajs/medusa/pull/3324) [`a1e59313c`](https://github.com/medusajs/medusa/commit/a1e59313c964a944a287b54f6654d1d19ac8a59b) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Add filtering of stock locations based on sales channels
+
+- [#3460](https://github.com/medusajs/medusa/pull/3460) [`10bf05c14`](https://github.com/medusajs/medusa/commit/10bf05c147cb65a263465129790edd44a6d8948b) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Fix(inventory, medusa): ensure no orphaned reservations and invenotry levels on location removal
+
+- [#3323](https://github.com/medusajs/medusa/pull/3323) [`cbbf3ca05`](https://github.com/medusajs/medusa/commit/cbbf3ca054387a900c5777c2eb0218df2c72bae6) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Clean response data usage for admin and store fields/expand
+
+- [#3436](https://github.com/medusajs/medusa/pull/3436) [`9ba09ba4d`](https://github.com/medusajs/medusa/commit/9ba09ba4d753f132537f0447097fe9f54922c074) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa, medusa-js, medusa-react): Add store queries to react medusa
+
+- [#3110](https://github.com/medusajs/medusa/pull/3110) [`12d304307`](https://github.com/medusajs/medusa/commit/12d304307af87ea9287a41869eb33ef09f273d85) Thanks [@StephixOne](https://github.com/StephixOne)! - feat(medusa,medusa-js,medusa-react): Add inventory module endpoints
+
+- [#3314](https://github.com/medusajs/medusa/pull/3314) [`287c829c9`](https://github.com/medusajs/medusa/commit/287c829c9c5a9797fb8cd118b7a6066ad1935898) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): include `/admin` and `/store` in paths URLs
+
+- [#3510](https://github.com/medusajs/medusa/pull/3510) [`74bc4b16a`](https://github.com/medusajs/medusa/commit/74bc4b16a07f78668003ca930bf2a0d928897ceb) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa-plugin-algolia): Revamp Algolia search plugin
+
+- [#3514](https://github.com/medusajs/medusa/pull/3514) [`aed7805c0`](https://github.com/medusajs/medusa/commit/aed7805c0e64b884007148bde90cfce7bee8aad4) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): Error messages for reset tokens
+
+- [#3498](https://github.com/medusajs/medusa/pull/3498) [`0d1b63d77`](https://github.com/medusajs/medusa/commit/0d1b63d773ad91846757a6f0b81b78b0b97b3f2b) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): use get instead of indexing into map
+
+- [#3423](https://github.com/medusajs/medusa/pull/3423) [`4042beb10`](https://github.com/medusajs/medusa/commit/4042beb1026b9ad8b381aaa6e1a5214cd92db00f) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): add @schema OAS for address request payloads
+
+- [#2978](https://github.com/medusajs/medusa/pull/2978) [`f43e9f0f2`](https://github.com/medusajs/medusa/commit/f43e9f0f20a8b0637252951b2bdfed4d42fb9f5e) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Load PaymentProcessors
+
+  - Add loading of PaymentProcessors
+  - Add PaymentProcessor support in the payment-provider
+  - Add backward compatibility for the PaymentService
+
+- [#3344](https://github.com/medusajs/medusa/pull/3344) [`842423679`](https://github.com/medusajs/medusa/commit/8424236799c3789f884285cd3c8a491e91aef2ca) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Update types to reflect actual return-type
+
+- [#3312](https://github.com/medusajs/medusa/pull/3312) [`935870e01`](https://github.com/medusajs/medusa/commit/935870e010af1ec884259b1f1328421e99acc3af) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - fix(oas): add missing x-codegen + fix schema naming and $ref
+
+- [#3403](https://github.com/medusajs/medusa/pull/3403) [`57d7728dd`](https://github.com/medusajs/medusa/commit/57d7728dd9d00df712e1a872899b8397955dfe46) Thanks [@StephixOne](https://github.com/StephixOne)! - feat(medusa): add get-variant endpoint
+
+- [#3395](https://github.com/medusajs/medusa/pull/3395) [`15f47baf5`](https://github.com/medusajs/medusa/commit/15f47baf56e6722b7821cfaa2fb468e582dfa2c1) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(admin-ui, medusa): Minor ui fixes relating to stock locations
+
+- [#3522](https://github.com/medusajs/medusa/pull/3522) [`55c5fba0d`](https://github.com/medusajs/medusa/commit/55c5fba0d3dbd015c3ffd74d645a8057892d0f52) Thanks [@pKorsholm](https://github.com/pKorsholm)! - feat(medusa,admin): location_ids in swap and claim creation
+
+- [#3282](https://github.com/medusajs/medusa/pull/3282) [`38503fff5`](https://github.com/medusajs/medusa/commit/38503fff56bbceb092e396ac11432a56967b53e9) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): identify required fields in responses - store
+
+- [#3334](https://github.com/medusajs/medusa/pull/3334) [`40de54b01`](https://github.com/medusajs/medusa/commit/40de54b0101bdfd37f577d18c10ec9f1ab1ce8fe) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - feat(medusa,admin,admin-ui): Add new plugin to serve the admin dashboard from the server. Adds a new plugin injection step `setup`, code placed in the `setup` folder of a plugin will be run before any code from a plugin is injected into the Medusa server.
+
+- [#3416](https://github.com/medusajs/medusa/pull/3416) [`478d1af8d`](https://github.com/medusajs/medusa/commit/478d1af8d0df0af16baf4f130e19b0be34f5f295) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa, admin-ui, medusa-react): Improvements to product categories
+
+  - Adds name as required in category create form
+  - Adds name and handle as required in category edit form
+  - Updates message on create/update forms
+  - Adds category indicators for is_internal and is_active fields in the tree list
+  - Fixes bug where tree is not reset when update fails
+  - allow appending all category descendants with a param in list endpoint
+  - fix rank order changing on category update
+  - invalidate products query on category delete
+  - adds category ui for tree/list, edit, create, delete
+  - add product category queries and mutations
+  - category list API can return all descendant
+  - added breadcrumbs for categories on create/edit modal
+  - add empty state for product categories
+  - increase tree depth + scope categories on store + allow categories relation in products API
+  - categories can be ranked based on position
+  - seed command can create product categories
+  - hide categories in products behind feature flag
+  - fixes bug for mpath incorrectly updated for nested categories
+
+- [#3478](https://github.com/medusajs/medusa/pull/3478) [`6748877c6`](https://github.com/medusajs/medusa/commit/6748877c694c1433f666c6987f20af76b201b495) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - fix(oas,js,react): use AdminExtendedStoresRes instead of AdminStoresRes
+
+- [#3377](https://github.com/medusajs/medusa/pull/3377) [`7e17e0ddc`](https://github.com/medusajs/medusa/commit/7e17e0ddc2e6b2891e9ee1420b04a541899d2a9d) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa-plugin-meilisearch): Update + improve Meilisearch plugin
+
+  **What**
+
+  - Bumps `meilisearch` dep to latest major
+  - Migrates plugin to TypeScript
+  - Changes the way indexes are configured in `medusa-config.js`:
+
+  **Before**
+
+  ```
+  {
+      resolve: `medusa-plugin-meilisearch`,
+      options: {
+        config: { host: "...", apiKey: "..." },
+        settings: {
+          products: {
+            searchableAttributes: ["title"],
+            displayedAttributes: ["title"],
+          },
+        },
+      },
+    },
+  ```
+
+  **After**
+
+  ```
+  {
+      resolve: `medusa-plugin-meilisearch`,
+      options: {
+        config: { host: "...", apiKey: "..." },
+        settings: {
+          products: {
+            **indexSettings**: {
+              searchableAttributes: ["title"],
+              displayedAttributes: ["title"],
+            },
+          },
+        },
+      },
+    },
+  ```
+
+  This is done to allow for additional configuration of indexes, that are not necessarily passed on query-time.
+
+  We introduce two new settings:
+
+  ```
+  settings: {
+    products: {
+      indexSettings: {
+        searchableAttributes: ["title"],
+        displayedAttributes: ["title"],,
+      },
+      primaryKey: "id"
+      transformer: (document) => ({ id: "yo" })
+    },
+  },
+  ```
+
+  Meilisearch changed their primary key inference in the major release. Now we must be explicit when multiple properties end with `id`. Read more in their [docs](https://docs.meilisearch.com/learn/core_concepts/primary_key.html#primary-field).
+
+  The transformer allows developers to specify how their documents are stored in Meilisearch. It is configurable for each index.
+
+- [#3534](https://github.com/medusajs/medusa/pull/3534) [`7f2223b65`](https://github.com/medusajs/medusa/commit/7f2223b6507b0a3c452977bfcdee92af2086fa29) Thanks [@riqwan](https://github.com/riqwan)! - fix(medusa): fix bug with parent not being saved correctly
+
+- [#3288](https://github.com/medusajs/medusa/pull/3288) [`7d585f5f8`](https://github.com/medusajs/medusa/commit/7d585f5f84a910c02d274df7a489dc3ff1ea273a) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - fix(oas): fix paths and fix schema names to match convention
+
+- [#3531](https://github.com/medusajs/medusa/pull/3531) [`4e9d257d3`](https://github.com/medusajs/medusa/commit/4e9d257d3bf76703ef5be8ca054cc9f0f7339def) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Remove dependency on @medusajs/medusa from Inventory and Stock-Location Modules
+
+- [#3252](https://github.com/medusajs/medusa/pull/3252) [`46547f29c`](https://github.com/medusajs/medusa/commit/46547f29c755719e22d2977c5e5f8ab8a4a7fcae) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Improve store list products
+
+- [#3315](https://github.com/medusajs/medusa/pull/3315) [`f3bf351d2`](https://github.com/medusajs/medusa/commit/f3bf351d21d1c2a67ed2d603c8b7ed4ae5cbd366) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): pluralize OAS tags
+
+- [#3094](https://github.com/medusajs/medusa/pull/3094) [`d61d6c7b7`](https://github.com/medusajs/medusa/commit/d61d6c7b7f8549996090f5315597d22d2af968f9) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): Account for multiple inventory items when getting inventory
+
+- [#3451](https://github.com/medusajs/medusa/pull/3451) [`55a1f232a`](https://github.com/medusajs/medusa/commit/55a1f232a3746a22adb1fcd1844b2659077a59f9) Thanks [@pKorsholm](https://github.com/pKorsholm)! - feat(medusa,admin-ui): support location_id in
+
+- [#3385](https://github.com/medusajs/medusa/pull/3385) [`53eda215e`](https://github.com/medusajs/medusa/commit/53eda215e00509eb63e571f1b38b9c8884b8e6d5) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Issue when ordering with multiple columns
+
+- [#3518](https://github.com/medusajs/medusa/pull/3518) [`026bdab05`](https://github.com/medusajs/medusa/commit/026bdab05d4da054d3ffd07b8cce8ccb1bded95d) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Feat(medusa): fulfill swaps and claims with locations
+
+- [#3256](https://github.com/medusajs/medusa/pull/3256) [`aefe5aa13`](https://github.com/medusajs/medusa/commit/aefe5aa133ea3ab98eb3c1ecd0ba51fb76c173de) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Update transaction base service to expose an activeManager\_ getter
+
+- [#3411](https://github.com/medusajs/medusa/pull/3411) [`966aea65c`](https://github.com/medusajs/medusa/commit/966aea65c221403bf316ae7665cc8f73bccd9c38) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas-cli): combine admin + store + custom OAS
+
+- [#3278](https://github.com/medusajs/medusa/pull/3278) [`48ad2426a`](https://github.com/medusajs/medusa/commit/48ad2426aa7a604c226132e85ef3da5cce045f45) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): identify required fields in responses - admin
+
+- Updated dependencies [[`121b42acf`](https://github.com/medusajs/medusa/commit/121b42acfe98c12dd593f9b1f2072ff0f3b61724), [`aa690beed`](https://github.com/medusajs/medusa/commit/aa690beed775646cbc86b445fb5dc90dcac087d5), [`74bc4b16a`](https://github.com/medusajs/medusa/commit/74bc4b16a07f78668003ca930bf2a0d928897ceb), [`54dcc1871`](https://github.com/medusajs/medusa/commit/54dcc1871c8f28bea962dbb9df6e79b038d56449), [`77d46220c`](https://github.com/medusajs/medusa/commit/77d46220c23bfe19e575cbc445874eb6c22f3c73), [`271844aed`](https://github.com/medusajs/medusa/commit/271844aedbe45c369e188b5d06458dbd6984cd39), [`4e9d257d3`](https://github.com/medusajs/medusa/commit/4e9d257d3bf76703ef5be8ca054cc9f0f7339def)]:
+  - medusa-core-utils@1.2.0-rc.0
+  - medusa-interfaces@1.3.7-rc.0
+  - medusa-test-utils@1.1.40-rc.0
+  - @medusajs/types@0.0.2-rc.0
+  - @medusajs/utils@0.0.2-rc.0
+  - @medusajs/modules-sdk@0.1.0-rc.0
+  - @medusajs/medusa-cli@1.3.9-rc.0
+
+## 1.7.15
+
+### Patch Changes
+
+- [#3539](https://github.com/medusajs/medusa/pull/3539) [`98fe8fd00`](https://github.com/medusajs/medusa/commit/98fe8fd00a1912fde1d2a93b434bda500a213c14) Thanks [@adrien2p](https://github.com/adrien2p)! - Fix(medusa): Variant update should include the id for the listeners to be able to identify the entity
+
+- [#3491](https://github.com/medusajs/medusa/pull/3491) [`2869763ea`](https://github.com/medusajs/medusa/commit/2869763ea9673cf5c5a3aa10b58f61b8e830ce21) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Fix eventBus.emit using redis mock
+
+## 1.7.14
+
+### Patch Changes
+
+- [`902ed3c0b`](https://github.com/medusajs/medusa/commit/902ed3c0b21cd525d9975e59b7a8120ae5f7a895) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Issue with fixed total discount with tax-inclusive pricing enabled
+
+- [#3417](https://github.com/medusajs/medusa/pull/3417) [`fa4049cb5`](https://github.com/medusajs/medusa/commit/fa4049cb51232b2ed7091b1322c3fc14cd23e451) Thanks [@adrien2p](https://github.com/adrien2p)! - chores(medusa): Refactoring product update flow to improve handling and performances
+
+- Updated dependencies [[`fa4049cb5`](https://github.com/medusajs/medusa/commit/fa4049cb51232b2ed7091b1322c3fc14cd23e451)]:
+  - medusa-test-utils@1.1.40
+
+## 1.7.13
+
+### Patch Changes
+
+- [#3431](https://github.com/medusajs/medusa/pull/3431) [`601d20e7a`](https://github.com/medusajs/medusa/commit/601d20e7ab293728cd81f0723805841016812120) Thanks [@adrien2p](https://github.com/adrien2p)! - chores(medusa): Improve draft order creation perf flow
+
+- [#3407](https://github.com/medusajs/medusa/pull/3407) [`f0a1355fe`](https://github.com/medusajs/medusa/commit/f0a1355feb5160ff7de1f3d3da769efe29d0d8ed) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Bulk emit events
+
+- Updated dependencies [[`f0a1355fe`](https://github.com/medusajs/medusa/commit/f0a1355feb5160ff7de1f3d3da769efe29d0d8ed)]:
+  - medusa-test-utils@1.1.39
+
+## 1.7.12
+
+### Patch Changes
+
+- [#3394](https://github.com/medusajs/medusa/pull/3394) [`ce577f269`](https://github.com/medusajs/medusa/commit/ce577f2696aa2181bef8f3096b1a639feabe2714) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa): Add global job options for events
+
+- [#3388](https://github.com/medusajs/medusa/pull/3388) [`aa0d1f321`](https://github.com/medusajs/medusa/commit/aa0d1f32153f82c6219efe5cfc08862db5e5a129) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Remove default job age option from EventBus
+
+- [#3384](https://github.com/medusajs/medusa/pull/3384) [`9f508c8bd`](https://github.com/medusajs/medusa/commit/9f508c8bd8bee63677504cc8b86f1643579945d8) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Fix(medusa): Column naming on migrations
+
+## 1.7.11
+
+### Patch Changes
+
+- [#3357](https://github.com/medusajs/medusa/pull/3357) [`c43248131`](https://github.com/medusajs/medusa/commit/c432481319cc205938081c3fcf60e75053b659ca) Thanks [@riqwan](https://github.com/riqwan)! - fix(medusa): fix error on creating product without FF sales channel
+
+## 1.7.10
+
+### Patch Changes
+
+- [#3346](https://github.com/medusajs/medusa/pull/3346) [`b458615ed`](https://github.com/medusajs/medusa/commit/b458615ed50a7c637e9e77f29f21c7ab300ed5d8) Thanks [@adrien2p](https://github.com/adrien2p)! - Fix(medusa): All payment sessions should be removed if cart total reach 0
+
+- [#3351](https://github.com/medusajs/medusa/pull/3351) [`4b114cc41`](https://github.com/medusajs/medusa/commit/4b114cc4191ba20832b66072ec82386b22a3533c) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa): Use Bull `jobId` option to identify duplicates
+
+## 1.7.9
+
+### Patch Changes
+
+- [#3335](https://github.com/medusajs/medusa/pull/3335) [`370bd472e`](https://github.com/medusajs/medusa/commit/370bd472ed8c9038f66defd012a886e0f83c32cf) Thanks [@pepijn-vanvlaanderen](https://github.com/pepijn-vanvlaanderen)! - fix(medusa): Fix regression in job scheduler service
+
+## 1.7.8
+
+### Patch Changes
+
+- [#3285](https://github.com/medusajs/medusa/pull/3285) [`9690f07bc`](https://github.com/medusajs/medusa/commit/9690f07bc062c85fcf8b7f0f35a162b930944183) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - fix(oas): patch circular references in docs
+
+- [#3298](https://github.com/medusajs/medusa/pull/3298) [`5301a1e9d`](https://github.com/medusajs/medusa/commit/5301a1e9d632ddac94e7864fecfdc860a4c2a66d) Thanks [@adrien2p](https://github.com/adrien2p)! - chore(medusa): Remove payment service deprecation temporarely
+
+- [#3276](https://github.com/medusajs/medusa/pull/3276) [`d11ab924b`](https://github.com/medusajs/medusa/commit/d11ab924b88211bc18ed019ca300f6d452972167) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Configurable returnable_items on order decorate totals
+
+- [#3267](https://github.com/medusajs/medusa/pull/3267) [`f88af0c28`](https://github.com/medusajs/medusa/commit/f88af0c28d3fa574cdeea3694607d4df563cb88d) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Received quantity on return lines
+
+## 1.7.7
+
+### Patch Changes
+
+- [#3210](https://github.com/medusajs/medusa/pull/3210) [`507ad00be`](https://github.com/medusajs/medusa/commit/507ad00bec74bb63b17eae8a4a3313eb6e0d2503) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas) - accurate model OAS representation - F to O
+
+- [#3222](https://github.com/medusajs/medusa/pull/3222) [`6e443dc70`](https://github.com/medusajs/medusa/commit/6e443dc708ffe20bf96d45ddc207ed274c28e344) Thanks [@adrien2p](https://github.com/adrien2p)! - chore(medusa): Improve addShippingMethod on store cart route to use new totals calculation algo
+
+- [#3220](https://github.com/medusajs/medusa/pull/3220) [`eee928381`](https://github.com/medusajs/medusa/commit/eee9283818b1717f37f084c319201ea7144fdf8a) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Allow empty fields/expand
+
+- [#3244](https://github.com/medusajs/medusa/pull/3244) [`4cb44a3a2`](https://github.com/medusajs/medusa/commit/4cb44a3a2ec5bcf3d90e3b6a0e1f6bb9ff45e2b6) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Discount allocation precision issues
+
+- [#3224](https://github.com/medusajs/medusa/pull/3224) [`472f96d7f`](https://github.com/medusajs/medusa/commit/472f96d7fb8668a15df6e6f9ea31291891b3e688) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Missing refund amount when creating claim
+
+- [#3219](https://github.com/medusajs/medusa/pull/3219) [`61b0b2f3a`](https://github.com/medusajs/medusa/commit/61b0b2f3aa1d54d539b216a99032549485136a82) Thanks [@fPolic](https://github.com/fPolic)! - fix(medusa): use transformer middleware config when querying store products and store orders endpoints
+
+- [#3249](https://github.com/medusajs/medusa/pull/3249) [`80452332d`](https://github.com/medusajs/medusa/commit/80452332d852ad7d33d74e1f08f12f45d7a35503) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - fix(medusa): default sales channel on product create
+
+- [#3246](https://github.com/medusajs/medusa/pull/3246) [`bbbb3d888`](https://github.com/medusajs/medusa/commit/bbbb3d888292391976355c88ecb0fcf8a7c115bc) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Get cart missing transaction on update
+
+- [#3254](https://github.com/medusajs/medusa/pull/3254) [`10ff72c30`](https://github.com/medusajs/medusa/commit/10ff72c30ae59d2174d876b0c4141aad135d9a1c) Thanks [@josetr](https://github.com/josetr)! - fix(medusa): Add missing scoped transaction on update currency endpoint
+
+- [#3237](https://github.com/medusajs/medusa/pull/3237) [`968eb8fc6`](https://github.com/medusajs/medusa/commit/968eb8fc6b7ccd7221f88f42d75717f3a0547861) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Refund amount on returns in claim flow
+
+- [#3223](https://github.com/medusajs/medusa/pull/3223) [`a59bd84e4`](https://github.com/medusajs/medusa/commit/a59bd84e41fb5d8fc2edc7bdc43d3cbf74d9d7dc) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas) - accurate model OAS representation - PA to PU
+
+- [#3217](https://github.com/medusajs/medusa/pull/3217) [`8c5219a31`](https://github.com/medusajs/medusa/commit/8c5219a31ef76ee571fbce84d7d57a63abe56eb0) Thanks [@adrien2p](https://github.com/adrien2p)! - chore: Fix npm packages files included
+
+- [#3250](https://github.com/medusajs/medusa/pull/3250) [`cac13a88d`](https://github.com/medusajs/medusa/commit/cac13a88da42fa986bd7352fbc12a318b566d98f) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas) - accurate model OAS representation - R to U
+
+- [#3247](https://github.com/medusajs/medusa/pull/3247) [`a2cc084db`](https://github.com/medusajs/medusa/commit/a2cc084db817f8f7699e9b0daceda274b5f0e0c0) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Generate adjustment missing transaction on calculateDiscountForLineItem
+
+- [#3238](https://github.com/medusajs/medusa/pull/3238) [`8194d19b0`](https://github.com/medusajs/medusa/commit/8194d19b0e933310fdc65af25300da5dd185e669) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa-plugin-sendgrid): Undefined order
+
+- Updated dependencies [[`8c5219a31`](https://github.com/medusajs/medusa/commit/8c5219a31ef76ee571fbce84d7d57a63abe56eb0)]:
+  - @medusajs/medusa-cli@1.3.8
+  - medusa-core-utils@1.1.39
+  - medusa-interfaces@1.3.6
+
+## 1.7.6
+
+### Patch Changes
+
+- [#3011](https://github.com/medusajs/medusa/pull/3011) [`ce866475b`](https://github.com/medusajs/medusa/commit/ce866475b4b6c8b453638000f7b1df7a27daf45d) Thanks [@adrien2p](https://github.com/adrien2p)! - chore(_-payment-_): cleanup payment provider plugins
+
+- [#3198](https://github.com/medusajs/medusa/pull/3198) [`53532df8d`](https://github.com/medusajs/medusa/commit/53532df8d597ed5471c07296981b6959cba4ddc3) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(OAS): sanitize circular reference for Redocly
+
+- [#2599](https://github.com/medusajs/medusa/pull/2599) [`d8ffbe25b`](https://github.com/medusajs/medusa/commit/d8ffbe25b047fda0f644240c9f518f95e74f03cb) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(oas): declare x-codegen on Admin routes - S to V
+
+- [#3065](https://github.com/medusajs/medusa/pull/3065) [`2d525237b`](https://github.com/medusajs/medusa/commit/2d525237b682e89495b6cc8e3aa677bfad4d0726) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Fix (stock-location): stock location address required
+
+- [#3085](https://github.com/medusajs/medusa/pull/3085) [`5b63533c7`](https://github.com/medusajs/medusa/commit/5b63533c77528cab31755cedab9e768f7461f373) Thanks [@fPolic](https://github.com/fPolic)! - feat(medusa): preserve custom adjustments when refreshing adjustments
+
+- [#3090](https://github.com/medusajs/medusa/pull/3090) [`09dc9c667`](https://github.com/medusajs/medusa/commit/09dc9c6677c0d64cf765b27290e707ea75edd4aa) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): declare x-codegen on Admin routes - A to D
+
+- [#3155](https://github.com/medusajs/medusa/pull/3155) [`4105405f2`](https://github.com/medusajs/medusa/commit/4105405f28c3f3e54a6077c95a575a268fb5569f) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): Filter products by category params in store/admin
+
+- [#3114](https://github.com/medusajs/medusa/pull/3114) [`ee42b60a2`](https://github.com/medusajs/medusa/commit/ee42b60a20db2afc5e9b6b958502f9e86ec37d80) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): add or remove categories from products
+
+- [#3154](https://github.com/medusajs/medusa/pull/3154) [`d0adaf57e`](https://github.com/medusajs/medusa/commit/d0adaf57ed1018f29bebf01e5cffde5f7192f89f) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - fix(medusa): Fixes payloads associated with shipping profile requests, as well as fixes to the shippingProfileService. Also adds test suite for shipping profiles.
+
+- [#2971](https://github.com/medusajs/medusa/pull/2971) [`f65f590a2`](https://github.com/medusajs/medusa/commit/f65f590a2771d6e526d7dfc7ca721be74c8f79a9) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Adding inventory items api
+
+- [#3141](https://github.com/medusajs/medusa/pull/3141) [`5ec6d438f`](https://github.com/medusajs/medusa/commit/5ec6d438fb1f909be925461c788f3a3a958528e4) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): batch remove products from a category
+
+- [#2989](https://github.com/medusajs/medusa/pull/2989) [`5c1d2a5e8`](https://github.com/medusajs/medusa/commit/5c1d2a5e83c3654ae468d17c900892c32ef76060) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa): Option to override existing cron job
+
+- [#3092](https://github.com/medusajs/medusa/pull/3092) [`8e41c6996`](https://github.com/medusajs/medusa/commit/8e41c6996601142661bde877b9ee1d80b8325f5f) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): declare x-codegen on Admin routes - D to PRI
+
+- [#3097](https://github.com/medusajs/medusa/pull/3097) [`d50db84a3`](https://github.com/medusajs/medusa/commit/d50db84a336da2de9c06a59aa79f2a5e9aa558f1) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - ProductService.update no longer create product variants. It was moved to the endpoint handler update-product.ts
+
+- [#3046](https://github.com/medusajs/medusa/pull/3046) [`82da3605f`](https://github.com/medusajs/medusa/commit/82da3605fb50cef182699900552109ad654f0df2) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa-payment-stripe): Avoid unnecessary customer update if the stripe id already exists
+
+- [#3153](https://github.com/medusajs/medusa/pull/3153) [`b242e2232`](https://github.com/medusajs/medusa/commit/b242e22326ce74d5437d0da6863f22facbb5964c) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Upsert addresses on Orders
+
+- [#3184](https://github.com/medusajs/medusa/pull/3184) [`4339d47e1`](https://github.com/medusajs/medusa/commit/4339d47e1f6c9f6c8f100b3ac72c8a394b6dd44d) Thanks [@pevey](https://github.com/pevey)! - feat(medusa): Include `rolling` in session options config with default of false
+
+- [#3083](https://github.com/medusajs/medusa/pull/3083) [`2e7e16b91`](https://github.com/medusajs/medusa/commit/2e7e16b9173e2779946776b9b07ce7232c683f36) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): Added models + repo for products in multiple categories
+
+- [#3162](https://github.com/medusajs/medusa/pull/3162) [`9ebb50104`](https://github.com/medusajs/medusa/commit/9ebb50104cc1f6c8ef1cea446ae595fb2eb532a2) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa): Expose session options
+
+- [#3185](https://github.com/medusajs/medusa/pull/3185) [`08324355a`](https://github.com/medusajs/medusa/commit/08324355a4466b017a0bc7ab1d333ee3cd27b8c4) Thanks [@olivermrbl](https://github.com/olivermrbl)! - chore: Patches all dependencies + minor bumps `winston` to include a [fix for a significant memory leak](https://github.com/winstonjs/winston/pull/2057)
+
+- [#2980](https://github.com/medusajs/medusa/pull/2980) [`e22a383f4`](https://github.com/medusajs/medusa/commit/e22a383f4738e8bc80394ccaba3ac9a4ae678955) Thanks [@fPolic](https://github.com/fPolic)! - fix(medusa): `fields` param in store products/orders endpoints
+
+- [#2040](https://github.com/medusajs/medusa/pull/2040) [`dc156861d`](https://github.com/medusajs/medusa/commit/dc156861d413ecfe3fd264bcd5ad736d83d8a08e) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): ShippingOption type on `listAndCount`
+
+- [#2970](https://github.com/medusajs/medusa/pull/2970) [`8f4c84121`](https://github.com/medusajs/medusa/commit/8f4c84121bd9b8c7067d72f03125e13afe4d2571) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Feat(medusa): Add multi warehouse to create-variant and add list-inventory for variant endpoints
+
+- [#3197](https://github.com/medusajs/medusa/pull/3197) [`bfa33f444`](https://github.com/medusajs/medusa/commit/bfa33f444cd225906149777c5c6e842685f3dd7c) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Applying Discounts (with Conditions) on DraftOrders and Carts
+
+- [#3109](https://github.com/medusajs/medusa/pull/3109) [`f776ed234`](https://github.com/medusajs/medusa/commit/f776ed234fcfccf23041ffebecbae6c9a8b7e922) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - feat(medusa): Run shared module migrations
+
+- [#3108](https://github.com/medusajs/medusa/pull/3108) [`4d6e63d68`](https://github.com/medusajs/medusa/commit/4d6e63d68f4e64c365ecbba133876d95e6528763) Thanks [@fPolic](https://github.com/fPolic)! - feat(medusa): decorate order edit line items with totals
+
+- [#3055](https://github.com/medusajs/medusa/pull/3055) [`fcba70570`](https://github.com/medusajs/medusa/commit/fcba705701b8013183fafb39e8dda4a85718080a) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - fix(medusa): Allow users to unset metadata fields in updates.
+
+- [#3123](https://github.com/medusajs/medusa/pull/3123) [`4f0d8992a`](https://github.com/medusajs/medusa/commit/4f0d8992a091a05e93dd5be3762dfa47f074610e) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): Products can be added to categories in batch request
+
+- [#3093](https://github.com/medusajs/medusa/pull/3093) [`d25a53104`](https://github.com/medusajs/medusa/commit/d25a531045143d3be68d3cd3b5764bbbc792ee3a) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas): declare x-codegen on Admin routes - PRO to R
+
+- [#3152](https://github.com/medusajs/medusa/pull/3152) [`86c87c7b1`](https://github.com/medusajs/medusa/commit/86c87c7b1020ab6bb02f931e1ee113f2857cf527) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - fix(medusa): findVariantPricesNotIn now finds obsolete prices to delete
+
+- [#3186](https://github.com/medusajs/medusa/pull/3186) [`78650ea66`](https://github.com/medusajs/medusa/commit/78650ea66517b0a77100228615d8122f84ad235b) Thanks [@pevey](https://github.com/pevey)! - feat(medusa): Include `name` in session options
+
+- [#3205](https://github.com/medusajs/medusa/pull/3205) [`b9bda3bf4`](https://github.com/medusajs/medusa/commit/b9bda3bf4e0f95675041085cea5008268c37edd5) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - fix(medusa): Allows passing data object on shipping methods during claim creation and updates
+
+- [#3126](https://github.com/medusajs/medusa/pull/3126) [`e581d3bd9`](https://github.com/medusajs/medusa/commit/e581d3bd90f9bc40105e7eaf34e0c94d4f657f7a) Thanks [@adrien2p](https://github.com/adrien2p)! - chore: fix flaky tests
+
+- [#3203](https://github.com/medusajs/medusa/pull/3203) [`4d3210bfb`](https://github.com/medusajs/medusa/commit/4d3210bfbb84877d951f7319d2e87c1acbdd6aad) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - feat(oas) - accurate model OAS representation - A to D
+
+- Updated dependencies [[`08324355a`](https://github.com/medusajs/medusa/commit/08324355a4466b017a0bc7ab1d333ee3cd27b8c4)]:
+  - @medusajs/medusa-cli@1.3.7
+  - medusa-core-utils@1.1.38
+  - medusa-interfaces@1.3.5
+
+## 1.7.5
+
+### Patch Changes
+
+- [#3069](https://github.com/medusajs/medusa/pull/3069) [`9c2169422`](https://github.com/medusajs/medusa/commit/9c2169422dd51be727118fa4830dadc58c24568a) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Only add SC relation when enabled
+
+- [#3067](https://github.com/medusajs/medusa/pull/3067) [`9427bc7f2`](https://github.com/medusajs/medusa/commit/9427bc7f256c563befe3035bc3d67380066f304b) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Move migration to correct folder
+
+## 1.7.4
+
+### Patch Changes
+
+- [#2997](https://github.com/medusajs/medusa/pull/2997) [`9dbccd9ca`](https://github.com/medusajs/medusa/commit/9dbccd9ca78b8b66f9a21947bb863622e7ff326b) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - feat(medusa, stock-location, inventory): Allow modules to integrate with core
+
+- [#3043](https://github.com/medusajs/medusa/pull/3043) [`542daeead`](https://github.com/medusajs/medusa/commit/542daeeadd78d939f5144c690e8907374da6d085) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - chore(oas): replace response with $ref class JSDoc (Store A-PAY)
+
+- [#3027](https://github.com/medusajs/medusa/pull/3027) [`8c08d0031`](https://github.com/medusajs/medusa/commit/8c08d003198b94c00f8428a51c0e79d2ca9d1dc7) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Legacy total service should accept custom items
+
+- [#2861](https://github.com/medusajs/medusa/pull/2861) [`017538883`](https://github.com/medusajs/medusa/commit/017538883588792e1ff37abcab0fd2872c9af932) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - feat(medusa): Transaction Orchestrator
+
+- [#3004](https://github.com/medusajs/medusa/pull/3004) [`b2839e2e4`](https://github.com/medusajs/medusa/commit/b2839e2e4dc0d9344fa2ac8d4d16b796def4c56d) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): create a store endpoint to retrieve a product category
+
+- [#3040](https://github.com/medusajs/medusa/pull/3040) [`76d175231`](https://github.com/medusajs/medusa/commit/76d17523105d3860028a90a45b6038a64040e5ce) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Fix inventory adjustments
+
+- [#3006](https://github.com/medusajs/medusa/pull/3006) [`9e3beaf53`](https://github.com/medusajs/medusa/commit/9e3beaf5319dc785cf84b856cfcc8193df90c3a4) Thanks [@olivermrbl](https://github.com/olivermrbl)! - chore(feature-flags): Remove OrderEditing feature flag
+
+- [#3023](https://github.com/medusajs/medusa/pull/3023) [`7d4b8b9cc`](https://github.com/medusajs/medusa/commit/7d4b8b9cc59672d01cdf0c6f331bc3d1eeec9bee) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): store - added category list endpoint
+
+- [#2986](https://github.com/medusajs/medusa/pull/2986) [`aab163bab`](https://github.com/medusajs/medusa/commit/aab163babb91759a05b852d34c299cdfac96d800) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): added admin endpoint to update product categories
+
+- [#3030](https://github.com/medusajs/medusa/pull/3030) [`a0c4cfe0f`](https://github.com/medusajs/medusa/commit/a0c4cfe0f74cf30c45956c32c2fb22bf833bea68) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - chore(oas): replace response with $ref class JSDoc (Admin PR0-SAL)
+
+- [#3031](https://github.com/medusajs/medusa/pull/3031) [`27a29ef24`](https://github.com/medusajs/medusa/commit/27a29ef24e5ea1ba2bc0be8ecb7dd747d4c7c65b) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - chore(oas): replace response with $ref class JSDoc (Admin SHI-V)
+
+- [#3003](https://github.com/medusajs/medusa/pull/3003) [`aef842123`](https://github.com/medusajs/medusa/commit/aef8421235d8fff68d7d4f8b73f77484073311a5) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): emit events on product category mutation
+
+- [#2963](https://github.com/medusajs/medusa/pull/2963) [`1dc79590b`](https://github.com/medusajs/medusa/commit/1dc79590b3539af09dbc8fbf931d9b5ee225fb0d) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Fix(medusa): rename variant inventory item quantity to required_quantity
+
+- [#2995](https://github.com/medusajs/medusa/pull/2995) [`9c4647383`](https://github.com/medusajs/medusa/commit/9c4647383ebf0a183ccc566636bcf7af06409060) Thanks [@pKorsholm](https://github.com/pKorsholm)! - add reservation endpoints
+
+- [#3030](https://github.com/medusajs/medusa/pull/3030) [`a0c4cfe0f`](https://github.com/medusajs/medusa/commit/a0c4cfe0f74cf30c45956c32c2fb22bf833bea68) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - chore(oas): replace response with $ref class JSDoc (Admin PR0-SAL)
+
+- [#3007](https://github.com/medusajs/medusa/pull/3007) [`b80124d32`](https://github.com/medusajs/medusa/commit/b80124d32d950790c2a01b49e8c34d562b1d57f4) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa): Allow custom created_by on order edits
+
+- [#3044](https://github.com/medusajs/medusa/pull/3044) [`cb1ec0076`](https://github.com/medusajs/medusa/commit/cb1ec0076b4fd932c686d6027e8b060ceded3a64) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - chore(oas): replace response with $ref class JSDoc (Store PRO-V)
+
+- [#3010](https://github.com/medusajs/medusa/pull/3010) [`142c8aa70`](https://github.com/medusajs/medusa/commit/142c8aa70f583d9b11a6add2b8f988e9ba4cf979) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Payment collection should provider the region_id, total and id in the partial cart data
+
+- [#3033](https://github.com/medusajs/medusa/pull/3033) [`1547dd814`](https://github.com/medusajs/medusa/commit/1547dd8143889fc30045fc3d0241de8e69acb76e) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Add module options to transaction base service to use in modules
+
+- [#3013](https://github.com/medusajs/medusa/pull/3013) [`d2c692aa9`](https://github.com/medusajs/medusa/commit/d2c692aa96ea89c053f9a694a9ae6dba77e89b14) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Add default sales channel to product in seeding
+
+- [#3051](https://github.com/medusajs/medusa/pull/3051) [`150696de9`](https://github.com/medusajs/medusa/commit/150696de99fc852c5d72a746f168b6f62b2086ed) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - feat(medusa, medusa-js, medusa-react): Add endpoint to retrieve Product Tags through the Storefront API
+
+- [#3025](https://github.com/medusajs/medusa/pull/3025) [`93d0dc1bd`](https://github.com/medusajs/medusa/commit/93d0dc1bdcb54cf6e87428a7bb9b0dac196b4de2) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): test, build and watch scripts
+
+- [#3008](https://github.com/medusajs/medusa/pull/3008) [`b3e4be720`](https://github.com/medusajs/medusa/commit/b3e4be72087d0b528c3cce322edf9325b855c8ae) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Draft order totals not working with custom items
+
+- Updated dependencies [[`93d0dc1bd`](https://github.com/medusajs/medusa/commit/93d0dc1bdcb54cf6e87428a7bb9b0dac196b4de2)]:
+  - @medusajs/medusa-cli@1.3.6
+  - medusa-interfaces@1.3.4
+  - medusa-telemetry@0.0.16
+
+## 1.7.3
+
+### Patch Changes
+
+- [#2976](https://github.com/medusajs/medusa/pull/2976) [`1817b810f`](https://github.com/medusajs/medusa/commit/1817b810fc8563a08119b74b86ec0587d9e443a1) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Cancel order missing refunds relation
+
+- [#2965](https://github.com/medusajs/medusa/pull/2965) [`28bec599a`](https://github.com/medusajs/medusa/commit/28bec599ae34d29b626b1dc36f762fc0b2fe8f17) Thanks [@adrien2p](https://github.com/adrien2p)! - fix: Repository util mention of entity specifics
+
+- [#2945](https://github.com/medusajs/medusa/pull/2945) [`3f44abe01`](https://github.com/medusajs/medusa/commit/3f44abe01a7807adf0e807811d4bc52b713cd6b5) Thanks [@riqwan](https://github.com/riqwan)! - feat(nested-categories): Introduces a model and migration to create category table that can be nested
+
+- [#2985](https://github.com/medusajs/medusa/pull/2985) [`8ed4eab73`](https://github.com/medusajs/medusa/commit/8ed4eab73a2b067e19da5a1c8498cbff7125ea8d) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): added admin create endpoint for product categories
+
+- [#2913](https://github.com/medusajs/medusa/pull/2913) [`645e0d0ec`](https://github.com/medusajs/medusa/commit/645e0d0ec5e2e49048887c62db662427c8a39cdf) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Make orders queryable by customer fields
+
+- [#2961](https://github.com/medusajs/medusa/pull/2961) [`47d075351`](https://github.com/medusajs/medusa/commit/47d075351fa4fdeaf32d48f2bd7e72943a293d9b) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): Admin API endpoint to fetch a Product Category
+
+- [#2947](https://github.com/medusajs/medusa/pull/2947) [`32b038fc3`](https://github.com/medusajs/medusa/commit/32b038fc3fb5f8fab09a7d23f881847c7ae02c0c) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa): "Idempotent" retries of job subscribers
+
+- [#2928](https://github.com/medusajs/medusa/pull/2928) [`3d200c41f`](https://github.com/medusajs/medusa/commit/3d200c41f953c3c979a1586f6425a2fbdf159e7e) Thanks [@adrien2p](https://github.com/adrien2p)! - chore: refactor payment collection setPaymentSession
+
+- [#2931](https://github.com/medusajs/medusa/pull/2931) [`16716f5a4`](https://github.com/medusajs/medusa/commit/16716f5a4f94cb6bc1dcea278d1789da760f2767) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Multi Warehouse: Add locations for fulfillments
+
+- [#2975](https://github.com/medusajs/medusa/pull/2975) [`71fa60892`](https://github.com/medusajs/medusa/commit/71fa60892cd7c00dd9cb8c222a1794ad6577fc1b) Thanks [@riqwan](https://github.com/riqwan)! - feat(medusa): added admin delete category endpoint
+
+- [#2498](https://github.com/medusajs/medusa/pull/2498) [`cc10c20f3`](https://github.com/medusajs/medusa/commit/cc10c20f356d4fe98336d879f8c9523bb63e9e48) Thanks [@chiubaca](https://github.com/chiubaca)! - Include optional `external_id` property for CreateProductInput type
+
+- [#2909](https://github.com/medusajs/medusa/pull/2909) [`eda26f6e8`](https://github.com/medusajs/medusa/commit/eda26f6e818a56672cdcce1d794c307c5490f956) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Add tax inclusive flag to return lines from line item
+
+- [#2953](https://github.com/medusajs/medusa/pull/2953) [`077e4d960`](https://github.com/medusajs/medusa/commit/077e4d960687a909fd254cd69f4dd5b3e0bad204) Thanks [@pKorsholm](https://github.com/pKorsholm)! - OAS update
+
+- [#2973](https://github.com/medusajs/medusa/pull/2973) [`f3ced106a`](https://github.com/medusajs/medusa/commit/f3ced106ad24fe21f099e10bee5666e1f65a9fc7) Thanks [@riqwan](https://github.com/riqwan)! - feat(nested-categories) adds a list endpoint to admin nested categories
+
+- [#2958](https://github.com/medusajs/medusa/pull/2958) [`baeacd1cc`](https://github.com/medusajs/medusa/commit/baeacd1cc52c548eef6896fd83e606c858cf2165) Thanks [@adrien2p](https://github.com/adrien2p)! - feat: Deactivate search service product subscribers when search engine not enabled
+
+- [#2962](https://github.com/medusajs/medusa/pull/2962) [`e4af96853`](https://github.com/medusajs/medusa/commit/e4af9685313077ece7e3fb7bd27053108cd9d5f8) Thanks [@adrien2p](https://github.com/adrien2p)! - fix: Custom repository take/skip wrongly applied when there is no relations in the findWihtRelationAndCount
+
+- [#2937](https://github.com/medusajs/medusa/pull/2937) [`cac81749e`](https://github.com/medusajs/medusa/commit/cac81749eaa06b3b00ac5494591c96a0fcd7bf57) Thanks [@adrien2p](https://github.com/adrien2p)! - chore: Update cart payment session management
+
+- [#2737](https://github.com/medusajs/medusa/pull/2737) [`4a50786fb`](https://github.com/medusajs/medusa/commit/4a50786fbc78b36147f1f45d77c55dc0a582caba) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Payment Processor API
+
+- [#2907](https://github.com/medusajs/medusa/pull/2907) [`c07ffb616`](https://github.com/medusajs/medusa/commit/c07ffb61658b0cdbff00461d1fa267c6be2d1967) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - Stock locations module added
+
+- [#2707](https://github.com/medusajs/medusa/pull/2707) [`8ba0addea`](https://github.com/medusajs/medusa/commit/8ba0addea3997c27efe4a50733b02a31e02f55e5) Thanks [@olivermrbl](https://github.com/olivermrbl)! - tests(integration-tests): Add integration test suite for database options
+
+- [#2883](https://github.com/medusajs/medusa/pull/2883) [`b9680b641`](https://github.com/medusajs/medusa/commit/b9680b641f2984eddbc1f49a37c050499fbaff69) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Add services:
+  - `sales-channel-inventory`
+  - `sales-channel-location`
+  - `product-variant-inventory`
+- Updated dependencies [[`47d075351`](https://github.com/medusajs/medusa/commit/47d075351fa4fdeaf32d48f2bd7e72943a293d9b)]:
+  - medusa-test-utils@1.1.38
+
+## 1.7.2
+
+### Patch Changes
+
+- [#2889](https://github.com/medusajs/medusa/pull/2889) [`d843bc102`](https://github.com/medusajs/medusa/commit/d843bc10235f33db9eecb72d74018966e43c26d6) Thanks [@olivermrbl](https://github.com/olivermrbl)! - Assign jobSchedulerService in EventBusService
+
+## 1.7.1
+
+### Patch Changes
+
+- [#2783](https://github.com/medusajs/medusa/pull/2783) [`7cced6006`](https://github.com/medusajs/medusa/commit/7cced6006a9a6f9108009e9f3e191e9f3ba1b168) Thanks [@adrien2p](https://github.com/adrien2p)! - fix: getConfigFile typings
+
+- [#2815](https://github.com/medusajs/medusa/pull/2815) [`463f83ffd`](https://github.com/medusajs/medusa/commit/463f83ffdd450d5325a57fe742b68bfb32ef1a42) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Order products on retrieval
+
+- [#2772](https://github.com/medusajs/medusa/pull/2772) [`17c3f34e3`](https://github.com/medusajs/medusa/commit/17c3f34e3df0a4c3656ad8909608331e207155f1) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - fix: add missing medusa-telemetry dependency to package.json
+
+- [#2811](https://github.com/medusajs/medusa/pull/2811) [`c16522d6c`](https://github.com/medusajs/medusa/commit/c16522d6ce806aa6289d626b868818409f41c66e) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Add has_account to filter only registered or unregistered customer in the admin
+
+- [#2819](https://github.com/medusajs/medusa/pull/2819) [`2e5ceb795`](https://github.com/medusajs/medusa/commit/2e5ceb795008fbf53d19bb79ac561561dd11311e) Thanks [@josetr](https://github.com/josetr)! - Allow custom database schema
+
+- [#2802](https://github.com/medusajs/medusa/pull/2802) [`71b536e01`](https://github.com/medusajs/medusa/commit/71b536e01e32e3ab3fb5d295df9d67497a8bbe6d) Thanks [@adrien2p](https://github.com/adrien2p)! - chore: Replace all usage of redis for the cache in favour of the cache service
+
+- [#2813](https://github.com/medusajs/medusa/pull/2813) [`9e05fef4b`](https://github.com/medusajs/medusa/commit/9e05fef4b973ceb60a2b975c839de96ca743597b) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - Fixes a bug where using the q param with the endpoint /admin/price-lists/:id/products would also return products not associated with the price list.
+
+- [#2719](https://github.com/medusajs/medusa/pull/2719) [`3113d8024`](https://github.com/medusajs/medusa/commit/3113d8024fdeb09230675c2053fcefe811e575fd) Thanks [@josetr](https://github.com/josetr)! - feat(medusa): Create draft orders without items
+
+- [#2869](https://github.com/medusajs/medusa/pull/2869) [`e27b1940c`](https://github.com/medusajs/medusa/commit/e27b1940c7249e835404ac5490cf39e93053d2bb) Thanks [@adrien2p](https://github.com/adrien2p)! - fix: Order with totals should include the variant relation to the items
+
+- [#2812](https://github.com/medusajs/medusa/pull/2812) [`5e4decbc1`](https://github.com/medusajs/medusa/commit/5e4decbc1c4cc25cb1adb1f63b2f8ea8669d352e) Thanks [@adrien2p](https://github.com/adrien2p)! - fix: Batch job not saving the errors properly
+
+- [#2867](https://github.com/medusajs/medusa/pull/2867) [`b700c6ba5`](https://github.com/medusajs/medusa/commit/b700c6ba5b323c7c5e200f721f0335f40b3e357a) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - chore(oas): replace requestBody with $ref to req class JSDoc OAS
+
+- [#2777](https://github.com/medusajs/medusa/pull/2777) [`8a60a7338`](https://github.com/medusajs/medusa/commit/8a60a73389c1b5c8abf96fbbcc7be7c4d427041d) Thanks [@riqwan](https://github.com/riqwan)! - fix: Gift cart tax claculation wrongly calculated
+
+  Adds tax_rate column to gift_card table to calculate tax accurately for a gift card. This change includes a backfill migration to update gift cards that were already created.
+
+- [#2821](https://github.com/medusajs/medusa/pull/2821) [`ba6bb3e54`](https://github.com/medusajs/medusa/commit/ba6bb3e54b9989cecf476c7411c406a43562efe1) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa): Extract cron jobs logic from the EventBusService to its own service JobSchedulerService
+
+- [#2810](https://github.com/medusajs/medusa/pull/2810) [`ea460b4e0`](https://github.com/medusajs/medusa/commit/ea460b4e0b1a9aa0fe1ab66bc21a8c40f76a65b3) Thanks [@fPolic](https://github.com/fPolic)! - feat(medusa): add `q` param to PKs sales channels retrieval
+
+- [#2743](https://github.com/medusajs/medusa/pull/2743) [`c8724da50`](https://github.com/medusajs/medusa/commit/c8724da50300b94255c5fb4ffe9904be279b5923) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa,medusa-payment-stripe): Move database mutation from plugin to core
+
+- [#2738](https://github.com/medusajs/medusa/pull/2738) [`8dcc805cc`](https://github.com/medusajs/medusa/commit/8dcc805ccf8da619549e77f009d6c4d7b2b6c99a) Thanks [@carlos-r-l-rodrigues](https://github.com/carlos-r-l-rodrigues)! - chore(medusa): Validate required id in `[someService].retrieve`
+
+- [#2847](https://github.com/medusajs/medusa/pull/2847) [`a027d5ff9`](https://github.com/medusajs/medusa/commit/a027d5ff9eb821a1c8728476e4f8bf5f4dd102c8) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - chore(oas): PascalCase for schemas + remove x-resourceId
+
+- Updated dependencies [[`7cced6006`](https://github.com/medusajs/medusa/commit/7cced6006a9a6f9108009e9f3e191e9f3ba1b168)]:
+  - medusa-core-utils@1.1.37
+
+## 1.7.0
+
+### Minor Changes
+
+- [#2710](https://github.com/medusajs/medusa/pull/2710) [`a6243618f`](https://github.com/medusajs/medusa/commit/a6243618fef5f9dd51ccba9e07e7849dd177202c) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Feat: allow customers to claim orders
+
+  BREAKING CHANGE: `customerService.retrieveByEmail` is being deprecated in favor of two methods: `customerService.retrieveRegisteredByEmail` and `customerService.retrieveUnRegisteredByEmail`. Please use `customerService.list({ email: <customer email> })` in the future
+
+### Patch Changes
+
+- [#2701](https://github.com/medusajs/medusa/pull/2701) [`198fe78c1`](https://github.com/medusajs/medusa/commit/198fe78c138455f16d02406234fcfb05c4581372) Thanks [@srindom](https://github.com/srindom)! - fix(medusa): allow passing idempotency key to service layer create
+
+- [#2747](https://github.com/medusajs/medusa/pull/2747) [`72f70bc78`](https://github.com/medusajs/medusa/commit/72f70bc789e7c4a9df512745f7fc809595a3b503) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - Decorate orders returned by /store/orders/:id with totals.
+
+- [#2761](https://github.com/medusajs/medusa/pull/2761) [`e63777e3c`](https://github.com/medusajs/medusa/commit/e63777e3c52fe34ed502c3b0ceb82e3e1e993474) Thanks [@adrien2p](https://github.com/adrien2p)! - fix: cart completion strategy tax lines management
+
+- [#2687](https://github.com/medusajs/medusa/pull/2687) [`70a8d3450`](https://github.com/medusajs/medusa/commit/70a8d3450fb8551bb25a3e50be4ef74dc361c946) Thanks [@pKorsholm](https://github.com/pKorsholm)! - fix(medusa): Use requireCustomerAuthentication middleware in get-session
+
+- [#2670](https://github.com/medusajs/medusa/pull/2670) [`1b21af87a`](https://github.com/medusajs/medusa/commit/1b21af87ab80c18013f0f44434e59b873c2313aa) Thanks [@adrien2p](https://github.com/adrien2p)! - chore(medusa-core-utils): Migrate to TS
+
+- [#2667](https://github.com/medusajs/medusa/pull/2667) [`ed121922b`](https://github.com/medusajs/medusa/commit/ed121922b04e2e2af672fa6ab5ad69cd3cf17040) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Order service legacy decorate totals should still apply the totals to the items
+
+- [#2770](https://github.com/medusajs/medusa/pull/2770) [`346461755`](https://github.com/medusajs/medusa/commit/3464617553770353a5d781caea8bdf880c72909f) Thanks [@fPolic](https://github.com/fPolic)! - Properly setting "refunded" and "partially refunded" statuses on orders
+
+- [#2668](https://github.com/medusajs/medusa/pull/2668) [`e18b59de6`](https://github.com/medusajs/medusa/commit/e18b59de66ef52698d3f6b5ebec9f212a52fce02) Thanks [@adrien2p](https://github.com/adrien2p)! - chore: update awilix to v8
+
+- [#2648](https://github.com/medusajs/medusa/pull/2648) [`42d9c7222`](https://github.com/medusajs/medusa/commit/42d9c7222b05ea231a920ea0694f6be8c13a956a) Thanks [@adrien2p](https://github.com/adrien2p)! - Feat(medusa): Optimize the cart creation with time line and therefore the response time
+
+- [#2683](https://github.com/medusajs/medusa/pull/2683) [`33aa3edb8`](https://github.com/medusajs/medusa/commit/33aa3edb805c217cf8e024af4c5be1835eb397dd) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - fix: Fixes a bug where `country_code` was dropped when partially updating a shipping and/or billing address on a cart.
+
+- [#2712](https://github.com/medusajs/medusa/pull/2712) [`1dc816039`](https://github.com/medusajs/medusa/commit/1dc816039cdd332d50e3d979f78c5ee0f820db97) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - chore(oas): explicitly declare type:object on schemas with properties
+
+- [#2729](https://github.com/medusajs/medusa/pull/2729) [`cb2a32a82`](https://github.com/medusajs/medusa/commit/cb2a32a82b2a4d89e57a120262a9eee002ee29a9) Thanks [@riqwan](https://github.com/riqwan)! - Enforces a validation for discounts that makes regions a required parameter
+
+- [#2771](https://github.com/medusajs/medusa/pull/2771) [`c2c38dd09`](https://github.com/medusajs/medusa/commit/c2c38dd091dd0938c8be63e515ccbc3158f72378) Thanks [@kasperkristensen](https://github.com/kasperkristensen)! - Adds appropriate optional type to several endpoint fields related to products. Also fixes the use of wrong payload type for `useAdminUpdateVariant` hook in `medusa-react`.
+
+- [#2764](https://github.com/medusajs/medusa/pull/2764) [`424efff91`](https://github.com/medusajs/medusa/commit/424efff91943dad3982b44a8549e828678c3e1b4) Thanks [@adrien2p](https://github.com/adrien2p)! - feat: Allow to assign a collection to a product during the import
+
+- [#2628](https://github.com/medusajs/medusa/pull/2628) [`b2ea8b7d4`](https://github.com/medusajs/medusa/commit/b2ea8b7d45e91f671cd8c20fe9270c0e9c5f94cc) Thanks [@olivermrbl](https://github.com/olivermrbl)! - fix(medusa): Throw on flat rate shipping options with no amount
+
+- [#1935](https://github.com/medusajs/medusa/pull/1935) [`b5d6682db`](https://github.com/medusajs/medusa/commit/b5d6682db66a7e4f6729c24fbec075a2faef87c4) Thanks [@adrien2p](https://github.com/adrien2p)! - Allow regular expression in CORS configuration
+
+- [#2751](https://github.com/medusajs/medusa/pull/2751) [`d68e81fb3`](https://github.com/medusajs/medusa/commit/d68e81fb3df116af70738eef93e227f41b72d80b) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Should update the adjustments upon cart discount removal
+
+- Updated dependencies [[`1b21af87a`](https://github.com/medusajs/medusa/commit/1b21af87ab80c18013f0f44434e59b873c2313aa)]:
+  - medusa-core-utils@1.1.36
+
+## 1.6.5
+
+### Patch Changes
+
+- [#2594](https://github.com/medusajs/medusa/pull/2594) [`f60267a49`](https://github.com/medusajs/medusa/commit/f60267a494f95d85b6007e617a1f9b0146854bae) Thanks [@pKorsholm](https://github.com/pKorsholm)! - Update staging action for automatic releases
+
+- [#2579](https://github.com/medusajs/medusa/pull/2579) [`022a84691`](https://github.com/medusajs/medusa/commit/022a84691eb84f408bcc36921d23703d498c847f) Thanks [@patrick-medusajs](https://github.com/patrick-medusajs)! - fix(draft-order): create tax-inclusive with discount
+
+- [#2632](https://github.com/medusajs/medusa/pull/2632) [`5d977a8f5`](https://github.com/medusajs/medusa/commit/5d977a8f57552af02eae0a44016b2213609b6d92) Thanks [@adrien2p](https://github.com/adrien2p)! - feat(medusa): Performance improvements of listing shipping options
+
+- [#2607](https://github.com/medusajs/medusa/pull/2607) [`e09f6e8a1`](https://github.com/medusajs/medusa/commit/e09f6e8a1e4a759fe70664bea0538c61b7cea70a) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa-payment-stripe): handle webhook sirialization failure
+
+- [#2603](https://github.com/medusajs/medusa/pull/2603) [`9e91a50df`](https://github.com/medusajs/medusa/commit/9e91a50df17b4f542db8d9678b5f489218511adb) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa-payment-stripe): missing transaction on create payment
+
+- [#2612](https://github.com/medusajs/medusa/pull/2612) [`a77780671`](https://github.com/medusajs/medusa/commit/a77780671aadc311c0e8a541104cbff1ea769ac7) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): Transaction lock issues on create/update cart items
+
+- [#2597](https://github.com/medusajs/medusa/pull/2597) [`d7997ef25`](https://github.com/medusajs/medusa/commit/d7997ef256b7fd98d96be720c9aec694e426f92f) Thanks [@olivermrbl](https://github.com/olivermrbl)! - feat(medusa): Expose Module Resolution API
+
+- Updated dependencies []:
+  - @medusajs/medusa-cli@1.3.5
+
+## 1.6.4
+
+### Patch Changes
+
+- [#2646](https://github.com/medusajs/medusa/pull/2646) [`e7c4cc375`](https://github.com/medusajs/medusa/commit/e7c4cc375174775bb0cfe52e5dc0270237150b3c) Thanks [@pKorsholm](https://github.com/pKorsholm)! - jwt fix
+
+- Updated dependencies [[`e7c4cc375`](https://github.com/medusajs/medusa/commit/e7c4cc375174775bb0cfe52e5dc0270237150b3c)]:
+  - medusa-core-utils@1.1.35
+
 ## 1.6.3
 
 ### Patch Changes

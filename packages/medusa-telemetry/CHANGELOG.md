@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.0.16
+
+### Patch Changes
+
+- [#3025](https://github.com/medusajs/medusa/pull/3025) [`93d0dc1bd`](https://github.com/medusajs/medusa/commit/93d0dc1bdcb54cf6e87428a7bb9b0dac196b4de2) Thanks [@adrien2p](https://github.com/adrien2p)! - fix(medusa): test, build and watch scripts
+
+## 0.0.15
+
+### Patch Changes
+
+- [#2590](https://github.com/medusajs/medusa/pull/2590) [`a76762418`](https://github.com/medusajs/medusa/commit/a76762418877e675977540dc95e095492873af44) Thanks [@fPolic](https://github.com/fPolic)! - Add missing changeset
+
 ## 0.0.14
 
 ### Patch Changes

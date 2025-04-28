@@ -24,7 +24,7 @@ TransactionBaseService.constructor
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:53](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L53)
+[medusa/src/services/line-item.ts:56](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L56)
 
 ## Properties
 
@@ -38,7 +38,7 @@ TransactionBaseService.\_\_configModule\_\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:10](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L10)
+[medusa/src/interfaces/transaction-base-service.ts:14](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L14)
 
 ___
 
@@ -52,17 +52,31 @@ TransactionBaseService.\_\_container\_\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:9](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L9)
+[medusa/src/interfaces/transaction-base-service.ts:13](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L13)
+
+___
+
+### \_\_moduleDeclaration\_\_
+
+• `Protected` `Optional` `Readonly` **\_\_moduleDeclaration\_\_**: `Record`<`string`, `unknown`\>
+
+#### Inherited from
+
+TransactionBaseService.\_\_moduleDeclaration\_\_
+
+#### Defined in
+
+[medusa/src/interfaces/transaction-base-service.ts:15](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L15)
 
 ___
 
 ### cartRepository\_
 
-• `Protected` `Readonly` **cartRepository\_**: typeof `CartRepository`
+• `Protected` `Readonly` **cartRepository\_**: `Repository`<`Cart`\>
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:44](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L44)
+[medusa/src/services/line-item.ts:47](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L47)
 
 ___
 
@@ -72,17 +86,17 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:49](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L49)
+[medusa/src/services/line-item.ts:52](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L52)
 
 ___
 
 ### itemTaxLineRepo\_
 
-• `Protected` `Readonly` **itemTaxLineRepo\_**: typeof `LineItemTaxLineRepository`
+• `Protected` `Readonly` **itemTaxLineRepo\_**: `Repository`<`LineItemTaxLine`\> & { `deleteForCart`: (`cartId`: `string`) => `Promise`<`void`\> ; `upsertLines`: (`lines`: `LineItemTaxLine`[]) => `Promise`<`LineItemTaxLine`[]\>  }
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:43](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L43)
+[medusa/src/services/line-item.ts:46](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L46)
 
 ___
 
@@ -92,17 +106,17 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:50](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L50)
+[medusa/src/services/line-item.ts:53](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L53)
 
 ___
 
 ### lineItemRepository\_
 
-• `Protected` `Readonly` **lineItemRepository\_**: typeof `LineItemRepository`
+• `Protected` `Readonly` **lineItemRepository\_**: `Repository`<`LineItem`\> & { `findByReturn`: (`returnId`: `string`) => `Promise`<`LineItem` & { `return_item`: `ReturnItem`  }[]\>  }
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:42](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L42)
+[medusa/src/services/line-item.ts:45](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L45)
 
 ___
 
@@ -110,13 +124,13 @@ ___
 
 • `Protected` **manager\_**: `EntityManager`
 
-#### Overrides
+#### Inherited from
 
 TransactionBaseService.manager\_
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:39](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L39)
+[medusa/src/interfaces/transaction-base-service.ts:5](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L5)
 
 ___
 
@@ -126,7 +140,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:47](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L47)
+[medusa/src/services/line-item.ts:50](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L50)
 
 ___
 
@@ -136,7 +150,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:46](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L46)
+[medusa/src/services/line-item.ts:49](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L49)
 
 ___
 
@@ -146,7 +160,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:45](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L45)
+[medusa/src/services/line-item.ts:48](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L48)
 
 ___
 
@@ -156,7 +170,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:48](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L48)
+[medusa/src/services/line-item.ts:51](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L51)
 
 ___
 
@@ -166,7 +180,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:51](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L51)
+[medusa/src/services/line-item.ts:54](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L54)
 
 ___
 
@@ -174,13 +188,31 @@ ___
 
 • `Protected` **transactionManager\_**: `undefined` \| `EntityManager`
 
-#### Overrides
+#### Inherited from
 
 TransactionBaseService.transactionManager\_
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:40](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L40)
+[medusa/src/interfaces/transaction-base-service.ts:6](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L6)
+
+## Accessors
+
+### activeManager\_
+
+• `Protected` `get` **activeManager_**(): `EntityManager`
+
+#### Returns
+
+`EntityManager`
+
+#### Inherited from
+
+TransactionBaseService.activeManager\_
+
+#### Defined in
+
+[medusa/src/interfaces/transaction-base-service.ts:8](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L8)
 
 ## Methods
 
@@ -219,7 +251,7 @@ TransactionBaseService.atomicPhase\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:50](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L50)
+[medusa/src/interfaces/transaction-base-service.ts:56](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L56)
 
 ___
 
@@ -232,48 +264,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `ids` | `string` \| `string`[] |
-| `data` | `Object` |
-| `data.adjustments?` | (`undefined` \| { id?: string \| undefined; item\_id?: string \| undefined; item?: { cart\_id?: string \| undefined; cart?: { readonly object?: "cart" \| undefined; email?: string \| undefined; billing\_address\_id?: string \| undefined; ... 37 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 38 more ...; updated\_at?: { ...; }...)[] |
-| `data.allow_discounts?` | `boolean` |
-| `data.cart?` | { readonly object?: "cart" \| undefined; email?: string \| undefined; billing\_address\_id?: string \| undefined; billing\_address?: { customer\_id?: string \| null \| undefined; customer?: { ...; } \| ... 1 more ... \| undefined; ... 15 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 36 more ...; updated\_at?: ... |
-| `data.cart_id?` | `string` |
-| `data.claim_order?` | { payment\_status?: ClaimPaymentStatus \| undefined; fulfillment\_status?: ClaimFulfillmentStatus \| undefined; claim\_items?: ({ images?: ({ ...; } \| undefined)[] \| undefined; ... 14 more ...; updated\_at?: { ...; } \| undefined; } \| undefined)[] \| undefined; ... 17 more ...; id?: string \| undefined; } |
-| `data.claim_order_id?` | `string` |
-| `data.created_at?` | { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; } |
-| `data.description?` | `string` |
-| `data.discount_total?` | ``null`` \| `number` |
-| `data.fulfilled_quantity?` | `number` |
-| `data.gift_card_total?` | ``null`` \| `number` |
-| `data.has_shipping?` | `boolean` |
-| `data.id?` | `string` |
-| `data.includes_tax?` | `boolean` |
-| `data.is_giftcard?` | `boolean` |
-| `data.is_return?` | `boolean` |
-| `data.metadata?` | { [x: string]: unknown; } |
-| `data.order?` | { readonly object?: "order" \| undefined; status?: OrderStatus \| undefined; fulfillment\_status?: FulfillmentStatus \| undefined; payment\_status?: PaymentStatus \| undefined; ... 48 more ...; updated\_at?: { ...; } \| undefined; } |
-| `data.order_edit?` | ``null`` \| { order\_id?: string \| undefined; order?: { readonly object?: "order" \| undefined; status?: OrderStatus \| undefined; fulfillment\_status?: FulfillmentStatus \| undefined; ... 49 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 27 more ...; updated\_at?: { ...; } \| undefined; } |
-| `data.order_edit_id?` | ``null`` \| `string` |
-| `data.order_id?` | ``null`` \| `string` |
-| `data.original_item_id?` | ``null`` \| `string` |
-| `data.original_tax_total?` | ``null`` \| `number` |
-| `data.original_total?` | ``null`` \| `number` |
-| `data.quantity?` | `number` |
-| `data.refundable?` | ``null`` \| `number` |
-| `data.returned_quantity?` | `number` |
-| `data.shipped_quantity?` | `number` |
-| `data.should_merge?` | `boolean` |
-| `data.subtotal?` | ``null`` \| `number` |
-| `data.swap?` | { fulfillment\_status?: SwapFulfillmentStatus \| undefined; payment\_status?: SwapPaymentStatus \| undefined; order\_id?: string \| undefined; ... 20 more ...; updated\_at?: { ...; } \| undefined; } |
-| `data.swap_id?` | `string` |
-| `data.tax_lines?` | (`undefined` \| { item\_id?: string \| undefined; item?: { cart\_id?: string \| undefined; cart?: { readonly object?: "cart" \| undefined; email?: string \| undefined; billing\_address\_id?: string \| undefined; ... 37 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 38 more ...; updated\_at?: { ...; } \| undefined; } \| undefin...)[] |
-| `data.tax_total?` | ``null`` \| `number` |
-| `data.thumbnail?` | ``null`` \| `string` |
-| `data.title?` | `string` |
-| `data.total?` | ``null`` \| `number` |
-| `data.unit_price?` | `number` |
-| `data.updated_at?` | { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; } |
-| `data.variant?` | { title?: string \| undefined; product\_id?: string \| undefined; product?: { title?: string \| undefined; subtitle?: string \| null \| undefined; description?: string \| null \| undefined; ... 29 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 22 more ...; updated\_at?: { ...; } \| undefined; } |
-| `data.variant_id?` | `string` |
+| `data` | `DeepPartial`<`LineItem`\> |
 | `options` | `Object` |
 | `options.setOriginalLineItemId?` | `boolean` |
 
@@ -283,31 +274,38 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:394](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L394)
+[medusa/src/services/line-item.ts:494](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L494)
 
 ___
 
 ### create
 
-▸ **create**(`data`): `Promise`<`LineItem`\>
+▸ **create**<`T`, `TResult`\>(`data`): `Promise`<`TResult`\>
 
 Create a line item
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `LineItem` \| `LineItem`[] |
+| `TResult` | `T` extends `LineItem`[] ? `LineItem`[] : `LineItem` |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `data` | `Partial`<`LineItem`\> | the line item object to create |
+| `data` | `T` | the line item object to create |
 
 #### Returns
 
-`Promise`<`LineItem`\>
+`Promise`<`TResult`\>
 
 the created line item
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:278](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L278)
+[medusa/src/services/line-item.ts:373](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L373)
 
 ___
 
@@ -333,7 +331,7 @@ the created line items
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:128](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L128)
+[medusa/src/services/line-item.ts:130](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L130)
 
 ___
 
@@ -347,16 +345,7 @@ Create a line item tax line.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `args` | `Object` | tax line partial passed to the repo create method |
-| `args.code?` | ``null`` \| `string` | - |
-| `args.created_at?` | { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; } | - |
-| `args.id?` | `string` | - |
-| `args.item?` | { cart\_id?: string \| undefined; cart?: { readonly object?: "cart" \| undefined; email?: string \| undefined; billing\_address\_id?: string \| undefined; billing\_address?: { customer\_id?: string \| ... 1 more ... \| undefined; ... 16 more ...; updated\_at?: { ...; } \| undefined; } \| undefined; ... 36 more ...; updated\_at?: {... | - |
-| `args.item_id?` | `string` | - |
-| `args.metadata?` | { [x: string]: unknown; } | - |
-| `args.name?` | `string` | - |
-| `args.rate?` | `number` | - |
-| `args.updated_at?` | { toString?: {} \| undefined; toDateString?: {} \| undefined; toTimeString?: {} \| undefined; toLocaleString?: {} \| undefined; toLocaleDateString?: {} \| undefined; toLocaleTimeString?: {} \| undefined; ... 37 more ...; [Symbol.toPrimitive]?: {} \| undefined; } | - |
+| `args` | `DeepPartial`<`LineItemTaxLine`\> | tax line partial passed to the repo create method |
 
 #### Returns
 
@@ -366,13 +355,13 @@ a new line item tax line
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:386](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L386)
+[medusa/src/services/line-item.ts:486](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L486)
 
 ___
 
 ### delete
 
-▸ **delete**(`id`): `Promise`<`undefined` \| `LineItem`\>
+▸ **delete**(`id`): `Promise`<`undefined` \| ``null`` \| `LineItem`\>
 
 Deletes a line item.
 
@@ -384,19 +373,19 @@ Deletes a line item.
 
 #### Returns
 
-`Promise`<`undefined` \| `LineItem`\>
+`Promise`<`undefined` \| ``null`` \| `LineItem`\>
 
 the result of the delete operation
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:346](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L346)
+[medusa/src/services/line-item.ts:446](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L446)
 
 ___
 
 ### deleteWithTaxLines
 
-▸ **deleteWithTaxLines**(`id`): `Promise`<`undefined` \| `LineItem`\>
+▸ **deleteWithTaxLines**(`id`): `Promise`<`undefined` \| ``null`` \| `LineItem`\>
 
 Deletes a line item with the tax lines.
 
@@ -408,34 +397,67 @@ Deletes a line item with the tax lines.
 
 #### Returns
 
-`Promise`<`undefined` \| `LineItem`\>
+`Promise`<`undefined` \| ``null`` \| `LineItem`\>
 
 the result of the delete operation
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:365](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L365)
+[medusa/src/services/line-item.ts:465](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L465)
 
 ___
 
 ### generate
 
-▸ **generate**(`variantId`, `regionId`, `quantity`, `context?`): `Promise`<`LineItem`\>
+▸ **generate**<`T`, `TResult`\>(`variantIdOrData`, `regionIdOrContext`, `quantity?`, `context?`): `Promise`<`TResult`\>
+
+Generate a single or multiple line item without persisting the data into the db
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `string` \| `GenerateInputData` \| `GenerateInputData`[] |
+| `TResult` | `T` extends `string` ? `LineItem` : `T` extends `LineItem` ? `LineItem` : `LineItem`[] |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `variantId` | `string` |
-| `regionId` | `string` |
+| `variantIdOrData` | `T` |
+| `regionIdOrContext` | `T` extends `string` ? `string` : `GenerateLineItemContext` |
+| `quantity?` | `number` |
+| `context` | `GenerateLineItemContext` |
+
+#### Returns
+
+`Promise`<`TResult`\>
+
+#### Defined in
+
+[medusa/src/services/line-item.ts:191](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L191)
+
+___
+
+### generateLineItem
+
+▸ `Protected` **generateLineItem**(`variant`, `quantity`, `context`): `Promise`<`LineItem`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `variant` | `Object` |
+| `variant.id` | `string` |
+| `variant.product` | `Object` |
+| `variant.product.discountable` | `boolean` |
+| `variant.product.is_giftcard` | `boolean` |
+| `variant.product.thumbnail` | ``null`` \| `string` |
+| `variant.product.title` | `string` |
+| `variant.product_id` | `string` |
+| `variant.title` | `string` |
 | `quantity` | `number` |
-| `context` | `Object` |
-| `context.cart?` | `Cart` |
-| `context.customer_id?` | `string` |
-| `context.includes_tax?` | `boolean` |
-| `context.metadata?` | `Record`<`string`, `unknown`\> |
-| `context.order_edit_id?` | `string` |
-| `context.unit_price?` | `number` |
+| `context` | `GenerateLineItemContext` & { `variantPricing`: `ProductVariantPricing`  } |
 
 #### Returns
 
@@ -443,7 +465,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:181](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L181)
+[medusa/src/services/line-item.ts:306](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L306)
 
 ___
 
@@ -464,7 +486,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:81](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L81)
+[medusa/src/services/line-item.ts:83](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L83)
 
 ___
 
@@ -489,7 +511,7 @@ the line item
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:101](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L101)
+[medusa/src/services/line-item.ts:104](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L104)
 
 ___
 
@@ -513,7 +535,7 @@ TransactionBaseService.shouldRetryTransaction\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:31](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L31)
+[medusa/src/interfaces/transaction-base-service.ts:37](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L37)
 
 ___
 
@@ -538,7 +560,36 @@ the updated line item(s)
 
 #### Defined in
 
-[packages/medusa/src/services/line-item.ts:297](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/line-item.ts#L297)
+[medusa/src/services/line-item.ts:403](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L403)
+
+___
+
+### validateGenerateArguments
+
+▸ `Protected` **validateGenerateArguments**<`T`, `TResult`\>(`variantIdOrData`, `regionIdOrContext`, `quantity?`): `void`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `string` \| `GenerateInputData` \| `GenerateInputData`[] |
+| `TResult` | `T` extends `string` ? `LineItem` : `T` extends `LineItem` ? `LineItem` : `LineItem`[] |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `variantIdOrData` | `string` \| `T` |
+| `regionIdOrContext` | `T` extends `string` ? `string` : `GenerateLineItemContext` |
+| `quantity?` | `number` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[medusa/src/services/line-item.ts:565](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/line-item.ts#L565)
 
 ___
 
@@ -562,4 +613,4 @@ TransactionBaseService.withTransaction
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:13](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L13)
+[medusa/src/interfaces/transaction-base-service.ts:20](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L20)

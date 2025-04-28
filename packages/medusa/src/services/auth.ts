@@ -16,15 +16,13 @@ type InjectedDependencies = {
  * Can authenticate a user based on email password combination
  */
 class AuthService extends TransactionBaseService {
-  protected manager_: EntityManager
-  protected transactionManager_: EntityManager | undefined
   protected readonly userService_: UserService
   protected readonly customerService_: CustomerService
 
-  constructor({ manager, userService, customerService }: InjectedDependencies) {
+  constructor({ userService, customerService }: InjectedDependencies) {
+    // eslint-disable-next-line prefer-rest-params
     super(arguments[0])
 
-    this.manager_ = manager
     this.userService_ = userService
     this.customerService_ = customerService
   }
@@ -149,21 +147,21 @@ class AuthService extends TransactionBaseService {
   ): Promise<AuthenticateResult> {
     return await this.atomicPhase_(async (transactionManager) => {
       try {
-        const customerPasswordHash: Customer = await this.customerService_
+        const customer: Customer = await this.customerService_
           .withTransaction(transactionManager)
-          .retrieveByEmail(email, {
-            select: ["password_hash"],
+          .retrieveRegisteredByEmail(email, {
+            select: ["id", "password_hash"],
           })
-        if (customerPasswordHash.password_hash) {
+        if (customer.password_hash) {
           const passwordsMatch = await this.comparePassword_(
             password,
-            customerPasswordHash.password_hash
+            customer.password_hash
           )
 
           if (passwordsMatch) {
             const customer = await this.customerService_
               .withTransaction(transactionManager)
-              .retrieveByEmail(email)
+              .retrieveRegisteredByEmail(email)
 
             return {
               success: true,

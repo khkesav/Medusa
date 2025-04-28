@@ -24,7 +24,7 @@ TransactionBaseService.constructor
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:53](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L53)
+[medusa/src/services/product-variant.ts:75](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L75)
 
 ## Properties
 
@@ -38,7 +38,7 @@ TransactionBaseService.\_\_configModule\_\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:10](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L10)
+[medusa/src/interfaces/transaction-base-service.ts:14](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L14)
 
 ___
 
@@ -52,17 +52,31 @@ TransactionBaseService.\_\_container\_\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:9](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L9)
+[medusa/src/interfaces/transaction-base-service.ts:13](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L13)
+
+___
+
+### \_\_moduleDeclaration\_\_
+
+• `Protected` `Optional` `Readonly` **\_\_moduleDeclaration\_\_**: `Record`<`string`, `unknown`\>
+
+#### Inherited from
+
+TransactionBaseService.\_\_moduleDeclaration\_\_
+
+#### Defined in
+
+[medusa/src/interfaces/transaction-base-service.ts:15](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L15)
 
 ___
 
 ### cartRepository\_
 
-• `Protected` `Readonly` **cartRepository\_**: typeof `CartRepository`
+• `Protected` `Readonly` **cartRepository\_**: `Repository`<`Cart`\>
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:51](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L51)
+[medusa/src/services/product-variant.ts:73](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L73)
 
 ___
 
@@ -72,7 +86,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:46](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L46)
+[medusa/src/services/product-variant.ts:67](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L67)
 
 ___
 
@@ -80,23 +94,23 @@ ___
 
 • `Protected` **manager\_**: `EntityManager`
 
-#### Overrides
+#### Inherited from
 
 TransactionBaseService.manager\_
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:41](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L41)
+[medusa/src/interfaces/transaction-base-service.ts:5](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L5)
 
 ___
 
 ### moneyAmountRepository\_
 
-• `Protected` `Readonly` **moneyAmountRepository\_**: typeof `MoneyAmountRepository`
+• `Protected` `Readonly` **moneyAmountRepository\_**: `Repository`<`MoneyAmount`\> & { `addPriceListPrices`: (`priceListId`: `string`, `prices`: `PriceListPriceCreateInput`[], `overrideExisting`: `boolean`) => `Promise`<`MoneyAmount`[]\> ; `deletePriceListPrices`: (`priceListId`: `string`, `moneyAmountIds`: `string`[]) => `Promise`<`void`\> ; `deleteVariantPricesNotIn`: (`variantIdOrData`: `string` \| { `prices`: `ProductVariantPrice`[] ; `variantId`: `string`  }[], `prices?`: `Price`[]) => `Promise`<`void`\> ; `findManyForVariantInPriceList`: (`variant_id`: `string`, `price_list_id`: `string`, `requiresPriceList`: `boolean`) => `Promise`<[`MoneyAmount`[], `number`]\> ; `findManyForVariantInRegion`: (`variant_id`: `string`, `region_id?`: `string`, `currency_code?`: `string`, `customer_id?`: `string`, `include_discount_prices?`: `boolean`, `include_tax_inclusive_pricing`: `boolean`) => `Promise`<[`MoneyAmount`[], `number`]\> ; `findVariantPricesNotIn`: (`variantId`: `string`, `prices`: `Price`[]) => `Promise`<`MoneyAmount`[]\> ; `insertBulk`: (`data`: `_QueryDeepPartialEntity`<`MoneyAmount`\>[]) => `Promise`<`MoneyAmount`[]\> ; `updatePriceListPrices`: (`priceListId`: `string`, `updates`: `PriceListPriceUpdateInput`[]) => `Promise`<`MoneyAmount`[]\> ; `upsertVariantCurrencyPrice`: (`variantId`: `string`, `price`: `Price`) => `Promise`<`MoneyAmount`\>  }
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:49](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L49)
+[medusa/src/services/product-variant.ts:70](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L70)
 
 ___
 
@@ -106,37 +120,37 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:48](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L48)
+[medusa/src/services/product-variant.ts:69](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L69)
 
 ___
 
 ### productOptionValueRepository\_
 
-• `Protected` `Readonly` **productOptionValueRepository\_**: typeof `ProductOptionValueRepository`
+• `Protected` `Readonly` **productOptionValueRepository\_**: `Repository`<`ProductOptionValue`\>
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:50](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L50)
+[medusa/src/services/product-variant.ts:72](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L72)
 
 ___
 
 ### productRepository\_
 
-• `Protected` `Readonly` **productRepository\_**: typeof `ProductRepository`
+• `Protected` `Readonly` **productRepository\_**: `Repository`<`Product`\> & { `bulkAddToCollection`: (`productIds`: `string`[], `collectionId`: `string`) => `Promise`<`Product`[]\> ; `bulkRemoveFromCollection`: (`productIds`: `string`[], `collectionId`: `string`) => `Promise`<`Product`[]\> ; `findAndCount`: (`options`: `ExtendedFindConfig`<`Product` & `ProductFilterOptions`\>, `q?`: `string`) => `Promise`<[`Product`[], `number`]\> ; `findOne`: (`options`: `ExtendedFindConfig`<`Product` & `ProductFilterOptions`\>) => `Promise`<``null`` \| `Product`\> ; `isProductInSalesChannels`: (`id`: `string`, `salesChannelIds`: `string`[]) => `Promise`<`boolean`\> ; `prepareQueryBuilder_`: (`options`: `ExtendedFindConfig`<`Product` & `ProductFilterOptions`\>, `q?`: `string`) => `Promise`<`SelectQueryBuilder`<`Product`\>\> ; `upsertShippingProfile`: (`productIds`: `string`[], `shippingProfileId`: `string`) => `Promise`<`Product`[]\>  }
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:45](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L45)
+[medusa/src/services/product-variant.ts:66](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L66)
 
 ___
 
 ### productVariantRepository\_
 
-• `Protected` `Readonly` **productVariantRepository\_**: typeof `ProductVariantRepository`
+• `Protected` `Readonly` **productVariantRepository\_**: `Repository`<`ProductVariant`\>
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:44](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L44)
+[medusa/src/services/product-variant.ts:65](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L65)
 
 ___
 
@@ -146,7 +160,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:47](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L47)
+[medusa/src/services/product-variant.ts:68](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L68)
 
 ___
 
@@ -154,13 +168,13 @@ ___
 
 • `Protected` **transactionManager\_**: `undefined` \| `EntityManager`
 
-#### Overrides
+#### Inherited from
 
 TransactionBaseService.transactionManager\_
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:42](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L42)
+[medusa/src/interfaces/transaction-base-service.ts:6](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L6)
 
 ___
 
@@ -178,7 +192,25 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:35](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L35)
+[medusa/src/services/product-variant.ts:59](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L59)
+
+## Accessors
+
+### activeManager\_
+
+• `Protected` `get` **activeManager_**(): `EntityManager`
+
+#### Returns
+
+`EntityManager`
+
+#### Inherited from
+
+TransactionBaseService.activeManager\_
+
+#### Defined in
+
+[medusa/src/interfaces/transaction-base-service.ts:8](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L8)
 
 ## Methods
 
@@ -208,7 +240,7 @@ the result of the update operation.
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:498](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L498)
+[medusa/src/services/product-variant.ts:840](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L840)
 
 ___
 
@@ -247,7 +279,7 @@ TransactionBaseService.atomicPhase\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:50](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L50)
+[medusa/src/interfaces/transaction-base-service.ts:56](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L56)
 
 ___
 
@@ -273,22 +305,22 @@ resolves to the creation result.
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:147](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L147)
+[medusa/src/services/product-variant.ts:168](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L168)
 
 ___
 
 ### delete
 
-▸ **delete**(`variantId`): `Promise`<`void`\>
+▸ **delete**(`variantIds`): `Promise`<`void`\>
 
-Deletes variant.
+Deletes variant or variants.
 Will never fail due to delete being idempotent.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `variantId` | `string` | the id of the variant to delete. Must be   castable as an ObjectId |
+| `variantIds` | `string` \| `string`[] | the id of the variant to delete. Must be   castable as an ObjectId |
 
 #### Returns
 
@@ -298,7 +330,7 @@ empty promise
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:651](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L651)
+[medusa/src/services/product-variant.ts:1010](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L1010)
 
 ___
 
@@ -324,7 +356,7 @@ empty promise
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:525](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L525)
+[medusa/src/services/product-variant.ts:867](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L867)
 
 ___
 
@@ -339,7 +371,7 @@ variants that match the query.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `variantRepo` | `ProductVariantRepository` | the variant repository |
+| `variantRepo` | `Repository`<`ProductVariant`\> | the variant repository |
 | `query` | `FindWithRelationsOptions` | object that defines the scope for what should be returned |
 | `q?` | `string` | free text query |
 
@@ -352,7 +384,7 @@ an array containing the products as the first element and the total
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:724](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L724)
+[medusa/src/services/product-variant.ts:1073](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L1073)
 
 ___
 
@@ -379,7 +411,30 @@ the price specific to the region
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:374](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L374)
+[medusa/src/services/product-variant.ts:714](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L714)
+
+___
+
+### isVariantInSalesChannels
+
+▸ **isVariantInSalesChannels**(`id`, `salesChannelIds`): `Promise`<`boolean`\>
+
+Check if the variant is assigned to at least one of the provided sales channels.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | product variant id |
+| `salesChannelIds` | `string`[] | an array of sales channel ids |
+
+#### Returns
+
+`Promise`<`boolean`\>
+
+#### Defined in
+
+[medusa/src/services/product-variant.ts:1048](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L1048)
 
 ___
 
@@ -402,7 +457,7 @@ the result of the find operation
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:593](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L593)
+[medusa/src/services/product-variant.ts:956](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L956)
 
 ___
 
@@ -425,39 +480,7 @@ the result of the find operation
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:552](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L552)
-
-___
-
-### prepareListQuery\_
-
-▸ **prepareListQuery_**(`selector`, `config`): `Object`
-
-Creates a query object to be used for list queries.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `selector` | `FilterableProductVariantProps` | the selector to create the query from |
-| `config` | `FindConfig`<`ProductVariant`\> | the config to use for the query |
-
-#### Returns
-
-`Object`
-
-an object containing the query, relations and free-text
-  search param.
-
-| Name | Type |
-| :------ | :------ |
-| `q?` | `string` |
-| `query` | `FindWithRelationsOptions` |
-| `relations` | `string`[] |
-
-#### Defined in
-
-[packages/medusa/src/services/product-variant.ts:685](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L685)
+[medusa/src/services/product-variant.ts:895](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L895)
 
 ___
 
@@ -482,7 +505,7 @@ the product document.
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:83](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L83)
+[medusa/src/services/product-variant.ts:104](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L104)
 
 ___
 
@@ -507,7 +530,7 @@ the product document.
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:111](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L111)
+[medusa/src/services/product-variant.ts:132](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L132)
 
 ___
 
@@ -515,6 +538,9 @@ ___
 
 ▸ **setCurrencyPrice**(`variantId`, `price`): `Promise`<`MoneyAmount`\>
 
+**`Deprecated`**
+
+use addOrUpdateCurrencyPrices instead
 Sets the default price for the given currency.
 
 #### Parameters
@@ -532,7 +558,7 @@ the result of the update operation
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:439](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L439)
+[medusa/src/services/product-variant.ts:781](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L781)
 
 ___
 
@@ -540,6 +566,9 @@ ___
 
 ▸ **setRegionPrice**(`variantId`, `price`): `Promise`<`MoneyAmount`\>
 
+**`Deprecated`**
+
+use addOrUpdateRegionPrices instead
 Sets the default price of a specific region
 
 #### Parameters
@@ -557,7 +586,7 @@ the result of the update operation
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:403](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L403)
+[medusa/src/services/product-variant.ts:744](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L744)
 
 ___
 
@@ -581,11 +610,31 @@ TransactionBaseService.shouldRetryTransaction\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:31](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L31)
+[medusa/src/interfaces/transaction-base-service.ts:37](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L37)
 
 ___
 
 ### update
+
+▸ **update**(`variantData`): `Promise`<`ProductVariant`[]\>
+
+Updates a collection of variant.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `variantData` | { `updateData`: `UpdateProductVariantInput` ; `variant`: `ProductVariant`  }[] | a collection of variant and the data to update. |
+
+#### Returns
+
+`Promise`<`ProductVariant`[]\>
+
+resolves to the update result.
+
+#### Defined in
+
+[medusa/src/services/product-variant.ts:269](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L269)
 
 ▸ **update**(`variantOrVariantId`, `update`): `Promise`<`ProductVariant`\>
 
@@ -608,7 +657,44 @@ resolves to the update result.
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:255](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L255)
+[medusa/src/services/product-variant.ts:284](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L284)
+
+▸ **update**(`variantOrVariantId`, `update`): `Promise`<`ProductVariant`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `variantOrVariantId` | `string` \| `Partial`<`ProductVariant`\> |
+| `update` | `UpdateProductVariantInput` |
+
+#### Returns
+
+`Promise`<`ProductVariant`\>
+
+#### Defined in
+
+[medusa/src/services/product-variant.ts:289](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L289)
+
+___
+
+### updateBatch
+
+▸ `Protected` **updateBatch**(`variantData`): `Promise`<`ProductVariant`[]\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `variantData` | `UpdateProductVariantData`[] |
+
+#### Returns
+
+`Promise`<`ProductVariant`[]\>
+
+#### Defined in
+
+[medusa/src/services/product-variant.ts:343](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L343)
 
 ___
 
@@ -635,11 +721,32 @@ the result of the update operation.
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:460](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L460)
+[medusa/src/services/product-variant.ts:802](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L802)
 
 ___
 
 ### updateVariantPrices
+
+▸ **updateVariantPrices**(`data`): `Promise`<`void`\>
+
+Updates variant/prices collection.
+Deletes any prices that are not in the update object, and is not associated with a price list.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | `UpdateVariantPricesData`[] |
+
+#### Returns
+
+`Promise`<`void`\>
+
+empty promise
+
+#### Defined in
+
+[medusa/src/services/product-variant.ts:441](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L441)
 
 ▸ **updateVariantPrices**(`variantId`, `prices`): `Promise`<`void`\>
 
@@ -661,7 +768,67 @@ empty promise
 
 #### Defined in
 
-[packages/medusa/src/services/product-variant.ts:333](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/product-variant.ts#L333)
+[medusa/src/services/product-variant.ts:450](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L450)
+
+___
+
+### updateVariantPricesBatch
+
+▸ `Protected` **updateVariantPricesBatch**(`data`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | `UpdateVariantPricesData`[] |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[medusa/src/services/product-variant.ts:470](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L470)
+
+___
+
+### upsertCurrencyPrices
+
+▸ **upsertCurrencyPrices**(`data`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | { `price`: `WithRequiredProperty`<`ProductVariantPrice`, ``"currency_code"``\> ; `variantId`: `string`  }[] |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[medusa/src/services/product-variant.ts:622](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L622)
+
+___
+
+### upsertRegionPrices
+
+▸ **upsertRegionPrices**(`data`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | `UpdateVariantRegionPriceData`[] |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[medusa/src/services/product-variant.ts:543](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/product-variant.ts#L543)
 
 ___
 
@@ -685,4 +852,4 @@ TransactionBaseService.withTransaction
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:13](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L13)
+[medusa/src/interfaces/transaction-base-service.ts:20](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L20)

@@ -1,6 +1,7 @@
 const path = require("path")
 const fs = require("fs/promises")
 import { resolve, sep } from "path"
+import { simpleSalesChannelFactory } from "../../../factories"
 
 const setupServer = require("../../../../helpers/setup-server")
 const { useApi } = require("../../../../helpers/use-api")
@@ -16,7 +17,7 @@ const adminReqConfig = {
   },
 }
 
-jest.setTimeout(100000000)
+jest.setTimeout(180000)
 
 describe("Batch job of product-export type", () => {
   let medusaProcess
@@ -29,9 +30,7 @@ describe("Batch job of product-export type", () => {
     dbConnection = await initDb({ cwd })
     medusaProcess = await setupServer({
       cwd,
-      redisUrl: "redis://127.0.0.1:6379",
       uploadDir: __dirname,
-      verbose: false,
     })
   })
 
@@ -50,6 +49,11 @@ describe("Batch job of product-export type", () => {
     await productSeeder(dbConnection)
     await adminSeeder(dbConnection)
     await userSeeder(dbConnection)
+
+    await simpleSalesChannelFactory(dbConnection, {
+      id: "test-channel",
+      is_default: true,
+    })
   })
 
   afterEach(async () => {

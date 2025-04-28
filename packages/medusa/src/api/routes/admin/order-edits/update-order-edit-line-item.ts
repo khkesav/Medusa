@@ -8,9 +8,9 @@ import {
 } from "../../../../types/order-edit"
 
 /**
- * @oas [post] /order-edits/{id}/items/{item_id}
+ * @oas [post] /admin/order-edits/{id}/items/{item_id}
  * operationId: "PostOrderEditsEditLineItemsLineItem"
- * summary: "Create or update the order edit change holding the line item changes"
+ * summary: "Upsert Line Item Change"
  * description: "Create or update the order edit change holding the line item changes"
  * x-authenticated: true
  * parameters:
@@ -20,12 +20,9 @@ import {
  *   content:
  *     application/json:
  *       schema:
- *         required:
- *           - quantity
- *         properties:
- *           quantity:
- *             description: The quantity to update
- *             type: number
+ *         $ref: "#/components/schemas/AdminPostOrderEditsEditLineItemsLineItemReq"
+ * x-codegen:
+ *   method: updateLineItem
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -50,16 +47,14 @@ import {
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - OrderEdit
+ *   - Order Edits
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             order_edit:
- *               $ref: "#/components/schemas/order_edit"
+ *           $ref: "#/components/schemas/AdminOrderEditsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -84,23 +79,38 @@ export default async (req: Request, res: Response) => {
 
   const manager: EntityManager = req.scope.resolve("manager")
 
-  await manager.transaction(async (transactionManager) => {
-    await orderEditService
-      .withTransaction(transactionManager)
-      .updateLineItem(id, item_id, validatedBody)
-  })
+  const decoratedEdit = await manager.transaction(
+    async (transactionManager) => {
+      const orderEditTx = orderEditService.withTransaction(transactionManager)
 
-  let orderEdit = await orderEditService.retrieve(id, {
-    select: defaultOrderEditFields,
-    relations: defaultOrderEditRelations,
-  })
-  orderEdit = await orderEditService.decorateTotals(orderEdit)
+      await orderEditTx.updateLineItem(id, item_id, validatedBody)
+
+      const orderEdit = await orderEditTx.retrieve(id, {
+        select: defaultOrderEditFields,
+        relations: defaultOrderEditRelations,
+      })
+
+      await orderEditTx.decorateTotals(orderEdit)
+
+      return orderEdit
+    }
+  )
 
   res.status(200).send({
-    order_edit: orderEdit,
+    order_edit: decoratedEdit,
   })
 }
 
+/**
+ * @schema AdminPostOrderEditsEditLineItemsLineItemReq
+ * type: object
+ * required:
+ *   - quantity
+ * properties:
+ *   quantity:
+ *     description: The quantity to update
+ *     type: number
+ */
 export class AdminPostOrderEditsEditLineItemsLineItemReq {
   @IsNumber()
   quantity: number

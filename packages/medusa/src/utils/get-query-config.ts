@@ -1,8 +1,7 @@
 import { pick } from "lodash"
 import { FindConfig, QueryConfig, RequestQueryFields } from "../types/common"
-import { MedusaError } from "medusa-core-utils/dist"
+import { isDefined, MedusaError } from "medusa-core-utils"
 import { BaseEntity } from "../interfaces"
-import { isDefined } from "."
 
 export function pickByConfig<TModel extends BaseEntity>(
   obj: TModel | TModel[],
@@ -40,7 +39,7 @@ export function getRetrieveConfig<TModel extends BaseEntity>(
 
   return {
     select: includeFields.length ? includeFields : defaultFields,
-    relations: expandFields.length ? expandFields : defaultRelations,
+    relations: isDefined(expand) ? expandFields : defaultRelations,
   }
 }
 
@@ -51,7 +50,7 @@ export function getListConfig<TModel extends BaseEntity>(
   expand?: string[],
   limit = 50,
   offset = 0,
-  order?: { [k: symbol]: "DESC" | "ASC" }
+  order: { [k: string | symbol]: "DESC" | "ASC" } = {}
 ): FindConfig<TModel> {
   let includeFields: (keyof TModel)[] = []
   if (isDefined(fields)) {
@@ -67,13 +66,15 @@ export function getListConfig<TModel extends BaseEntity>(
     expandFields = expand
   }
 
-  const orderBy: Record<string, "DESC" | "ASC"> = order ?? {
-    created_at: "DESC",
+  const orderBy = order
+
+  if (!Object.keys(order).length) {
+    orderBy["created_at"] = "DESC"
   }
 
   return {
     select: includeFields.length ? includeFields : defaultFields,
-    relations: expandFields.length ? expandFields : defaultRelations,
+    relations: isDefined(expand) ? expandFields : defaultRelations,
     skip: offset,
     take: limit,
     order: orderBy,
@@ -87,13 +88,13 @@ export function prepareListQuery<
   const { order, fields, expand, limit, offset } = validated
 
   let expandRelations: string[] | undefined = undefined
-  if (expand) {
-    expandRelations = expand.split(",")
+  if (isDefined(expand)) {
+    expandRelations = expand.split(",").filter((v) => v)
   }
 
   let expandFields: (keyof TEntity)[] | undefined = undefined
-  if (fields) {
-    expandFields = fields.split(",") as (keyof TEntity)[]
+  if (isDefined(fields)) {
+    expandFields = (fields.split(",") as (keyof TEntity)[]).filter((v) => v)
   }
 
   if (expandFields?.length && queryConfig?.allowedFields?.length) {
@@ -143,14 +144,14 @@ export function prepareRetrieveQuery<
 >(validated: T, queryConfig?: QueryConfig<TEntity>) {
   const { fields, expand } = validated
 
-  let expandRelations: string[] = []
-  if (expand) {
-    expandRelations = expand.split(",")
+  let expandRelations: string[] | undefined = undefined
+  if (isDefined(expand)) {
+    expandRelations = expand.split(",").filter((v) => v)
   }
 
   let expandFields: (keyof TEntity)[] | undefined = undefined
-  if (fields) {
-    expandFields = fields.split(",") as (keyof TEntity)[]
+  if (isDefined(fields)) {
+    expandFields = (fields.split(",") as (keyof TEntity)[]).filter((v) => v)
   }
 
   if (expandFields?.length && queryConfig?.allowedFields?.length) {

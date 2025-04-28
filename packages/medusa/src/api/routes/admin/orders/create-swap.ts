@@ -16,95 +16,31 @@ import {
   Min,
   ValidateNested,
 } from "class-validator"
-import { defaultAdminOrdersFields, defaultAdminOrdersRelations } from "."
 
 import { EntityManager } from "typeorm"
 import { MedusaError } from "medusa-core-utils"
 import { Type } from "class-transformer"
-import { validator } from "../../../../utils/validator"
+import { FindParams } from "../../../../types/common"
+import { cleanResponseData } from "../../../../utils/clean-response-data"
 
 /**
- * @oas [post] /order/{id}/swaps
+ * @oas [post] /admin/orders/{id}/swaps
  * operationId: "PostOrdersOrderSwaps"
  * summary: "Create a Swap"
  * description: "Creates a Swap. Swaps are used to handle Return of previously purchased goods and Fulfillment of replacements simultaneously."
  * x-authenticated: true
  * parameters:
  *   - (path) id=* {string} The ID of the Order.
+ *   - (query) expand {string} (Comma separated) Which fields should be expanded the order of the result.
+ *   - (query) fields {string} (Comma separated) Which fields should be included the order of the result.
  * requestBody:
  *   content:
  *     application/json:
  *       schema:
- *         required:
- *           - return_items
- *         properties:
- *           return_items:
- *             description: The Line Items to return as part of the Swap.
- *             type: array
- *             items:
- *               required:
- *                 - item_id
- *                 - quantity
- *               properties:
- *                 item_id:
- *                   description: The ID of the Line Item that will be claimed.
- *                   type: string
- *                 quantity:
- *                   description: The number of items that will be returned
- *                   type: integer
- *                 reason_id:
- *                   description: The ID of the Return Reason to use.
- *                   type: string
- *                 note:
- *                   description: An optional note with information about the Return.
- *                   type: string
- *           return_shipping:
- *             description: How the Swap will be returned.
- *             type: object
- *             required:
- *               - option_id
- *             properties:
- *               option_id:
- *                 type: string
- *                 description: The ID of the Shipping Option to create the Shipping Method from.
- *               price:
- *                 type: integer
- *                 description: The price to charge for the Shipping Method.
- *           additional_items:
- *             description: The new items to send to the Customer.
- *             type: array
- *             items:
- *               required:
- *                 - variant_id
- *                 - quantity
- *               properties:
- *                 variant_id:
- *                   description: The ID of the Product Variant to ship.
- *                   type: string
- *                 quantity:
- *                   description: The quantity of the Product Variant to ship.
- *                   type: integer
- *           custom_shipping_options:
- *             description: The custom shipping options to potentially create a Shipping Method from.
- *             type: array
- *             items:
- *               required:
- *                 - option_id
- *                 - price
- *               properties:
- *                 option_id:
- *                   description: The ID of the Shipping Option to override with a custom price.
- *                   type: string
- *                 price:
- *                   description: The custom price of the Shipping Option.
- *                   type: integer
- *           no_notification:
- *             description: If set to true no notification will be send related to this Swap.
- *             type: boolean
- *           allow_backorder:
- *             description: If true, swaps can be completed with items out of stock
- *             type: boolean
- *             default: true
+ *         $ref: "#/components/schemas/AdminPostOrdersOrderSwapsReq"
+ * x-codegen:
+ *   method: createSwap
+ *   queryParams: AdminPostOrdersOrderSwapsParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -141,16 +77,14 @@ import { validator } from "../../../../utils/validator"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Swap
+ *   - Orders
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             order:
- *               $ref: "#/components/schemas/order"
+ *           $ref: "#/components/schemas/AdminOrdersRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -167,7 +101,7 @@ import { validator } from "../../../../utils/validator"
 export default async (req, res) => {
   const { id } = req.params
 
-  const validated = await validator(AdminPostOrdersOrderSwapsReq, req.body)
+  const validated = req.validatedBody
 
   const idempotencyKeyService: IdempotencyKeyService = req.scope.resolve(
     "idempotencyKeyService"
@@ -207,13 +141,15 @@ export default async (req, res) => {
               .workStage(idempotencyKey.idempotency_key, async (manager) => {
                 const order = await orderService
                   .withTransaction(manager)
-                  .retrieve(id, {
-                    select: ["refunded_total", "total"],
+                  .retrieveWithTotals(id, {
                     relations: [
+                      "cart",
                       "items",
+                      "items.variant",
                       "items.tax_lines",
                       "swaps",
                       "swaps.additional_items",
+                      "swaps.additional_items.variant",
                       "swaps.additional_items.tax_lines",
                     ],
                   })
@@ -229,6 +165,7 @@ export default async (req, res) => {
                       idempotency_key: idempotencyKey.idempotency_key,
                       no_notification: validated.no_notification,
                       allow_backorder: validated.allow_backorder,
+                      location_id: validated.return_location_id,
                     }
                   )
 
@@ -277,14 +214,15 @@ export default async (req, res) => {
 
                 const order = await orderService
                   .withTransaction(transactionManager)
-                  .retrieve(id, {
-                    select: defaultAdminOrdersFields,
-                    relations: defaultAdminOrdersRelations,
+                  .retrieveWithTotals(id, req.retrieveConfig, {
+                    includes: req.includes,
                   })
 
                 return {
                   response_code: 200,
-                  response_body: { order },
+                  response_body: {
+                    order: cleanResponseData(order, []),
+                  },
                 }
               })
           })
@@ -321,6 +259,83 @@ export default async (req, res) => {
   res.status(idempotencyKey.response_code).json(idempotencyKey.response_body)
 }
 
+/**
+ * @schema AdminPostOrdersOrderSwapsReq
+ * type: object
+ * required:
+ *   - return_items
+ * properties:
+ *   return_items:
+ *     description: The Line Items to return as part of the Swap.
+ *     type: array
+ *     items:
+ *       type: object
+ *       required:
+ *         - item_id
+ *         - quantity
+ *       properties:
+ *         item_id:
+ *           description: The ID of the Line Item that will be claimed.
+ *           type: string
+ *         quantity:
+ *           description: The number of items that will be returned
+ *           type: integer
+ *         reason_id:
+ *           description: The ID of the Return Reason to use.
+ *           type: string
+ *         note:
+ *           description: An optional note with information about the Return.
+ *           type: string
+ *   return_shipping:
+ *     description: How the Swap will be returned.
+ *     type: object
+ *     required:
+ *       - option_id
+ *     properties:
+ *       option_id:
+ *         type: string
+ *         description: The ID of the Shipping Option to create the Shipping Method from.
+ *       price:
+ *         type: integer
+ *         description: The price to charge for the Shipping Method.
+ *   additional_items:
+ *     description: The new items to send to the Customer.
+ *     type: array
+ *     items:
+ *       type: object
+ *       required:
+ *         - variant_id
+ *         - quantity
+ *       properties:
+ *         variant_id:
+ *           description: The ID of the Product Variant to ship.
+ *           type: string
+ *         quantity:
+ *           description: The quantity of the Product Variant to ship.
+ *           type: integer
+ *   custom_shipping_options:
+ *     description: The custom shipping options to potentially create a Shipping Method from.
+ *     type: array
+ *     items:
+ *       type: object
+ *       required:
+ *         - option_id
+ *         - price
+ *       properties:
+ *         option_id:
+ *           description: The ID of the Shipping Option to override with a custom price.
+ *           type: string
+ *         price:
+ *           description: The custom price of the Shipping Option.
+ *           type: integer
+ *   no_notification:
+ *     description: If set to true no notification will be send related to this Swap.
+ *     type: boolean
+ *   allow_backorder:
+ *     description: If true, swaps can be completed with items out of stock
+ *     type: boolean
+ *     default: true
+ */
 export class AdminPostOrdersOrderSwapsReq {
   @IsArray()
   @IsNotEmpty()
@@ -349,6 +364,10 @@ export class AdminPostOrdersOrderSwapsReq {
   @IsBoolean()
   @IsOptional()
   no_notification?: boolean
+
+  @IsOptional()
+  @IsString()
+  return_location_id?: string
 
   @IsBoolean()
   @IsOptional()
@@ -403,3 +422,5 @@ class AdditionalItem {
   @IsNotEmpty()
   quantity: number
 }
+
+export class AdminPostOrdersOrderSwapsParams extends FindParams {}

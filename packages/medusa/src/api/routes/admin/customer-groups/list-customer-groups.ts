@@ -6,7 +6,7 @@ import { FilterableCustomerGroupProps } from "../../../../types/customer-groups"
 import { Type } from "class-transformer"
 
 /**
- * @oas [get] /customer-groups
+ * @oas [get] /admin/customer-groups
  * operationId: "GetCustomerGroups"
  * summary: "List Customer Groups"
  * description: "Retrieve a list of customer groups."
@@ -100,6 +100,9 @@ import { Type } from "class-transformer"
  *            format: date
  *   - (query) limit=10 {integer} Limit the number of customer groups returned.
  *   - (query) expand {string} (Comma separated) Which fields should be expanded in each customer groups of the result.
+ * x-codegen:
+ *   method: list
+ *   queryParams: AdminGetCustomerGroupsParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -120,27 +123,14 @@ import { Type } from "class-transformer"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Customer Group
+ *   - Customer Groups
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             customer_groups:
- *               type: array
- *               items:
- *                 $ref: "#/components/schemas/customer_group"
- *             count:
- *               type: integer
- *               description: The total number of items available
- *             offset:
- *               type: integer
- *               description: The number of items skipped before these items
- *             limit:
- *               type: integer
- *               description: The number of items per page
+ *           $ref: "#/components/schemas/AdminCustomerGroupsListRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":

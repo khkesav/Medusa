@@ -1,4 +1,7 @@
 import { EntityManager } from "typeorm"
+
+import { humanizeAmount } from "medusa-core-utils"
+
 import { AbstractBatchJobStrategy, IFileService } from "../../../interfaces"
 import { Product, ProductVariant } from "../../../models"
 import { BatchJobService, ProductService } from "../../../services"
@@ -211,13 +214,19 @@ export default class ProductExportStrategy extends AbstractBatchJobStrategy {
 
     return await this.atomicPhase_(
       async (transactionManager) => {
-        let batchJob = (await this.batchJobService_
-          .withTransaction(transactionManager)
-          .retrieve(batchJobId)) as ProductExportBatchJob
+        const productServiceTx =
+          this.productService_.withTransaction(transactionManager)
+        const batchJobServiceTx =
+          this.batchJobService_.withTransaction(transactionManager)
+        const fileServiceTx =
+          this.fileService_.withTransaction(transactionManager)
 
-        const { writeStream, fileKey, promise } = await this.fileService_
-          .withTransaction(transactionManager)
-          .getUploadStreamDescriptor({
+        let batchJob = (await batchJobServiceTx.retrieve(
+          batchJobId
+        )) as ProductExportBatchJob
+
+        const { writeStream, fileKey, promise } =
+          await fileServiceTx.getUploadStreamDescriptor({
             name: `exports/products/product-export-${Date.now()}`,
             ext: "csv",
           })
@@ -226,14 +235,12 @@ export default class ProductExportStrategy extends AbstractBatchJobStrategy {
         writeStream.write(header)
         approximateFileSize += Buffer.from(header).byteLength
 
-        await this.batchJobService_
-          .withTransaction(transactionManager)
-          .update(batchJobId, {
-            result: {
-              file_key: fileKey,
-              file_size: approximateFileSize,
-            },
-          })
+        await batchJobServiceTx.update(batchJobId, {
+          result: {
+            file_key: fileKey,
+            file_size: approximateFileSize,
+          },
+        })
 
         advancementCount =
           batchJob.result?.advancement_count ?? advancementCount
@@ -241,26 +248,25 @@ export default class ProductExportStrategy extends AbstractBatchJobStrategy {
         limit = batchJob.context?.list_config?.take ?? limit
 
         const { list_config = {}, filterable_fields = {} } = batchJob.context
-        const [productList, count] = await this.productService_
-          .withTransaction(transactionManager)
-          .listAndCount(filterable_fields, {
+        const [productList, count] = await productServiceTx.listAndCount(
+          filterable_fields,
+          {
             ...list_config,
             skip: offset,
             take: Math.min(batchJob.context.batch_size ?? Infinity, limit),
-          } as FindProductConfig)
+          } as FindProductConfig
+        )
 
         productCount = batchJob.context?.batch_size ?? count
         let products: Product[] = productList
 
         while (offset < productCount) {
           if (!products?.length) {
-            products = await this.productService_
-              .withTransaction(transactionManager)
-              .list(filterable_fields, {
-                ...list_config,
-                skip: offset,
-                take: Math.min(productCount - offset, limit),
-              } as FindProductConfig)
+            products = await productServiceTx.list(filterable_fields, {
+              ...list_config,
+              skip: offset,
+              take: Math.min(productCount - offset, limit),
+            } as FindProductConfig)
           }
 
           products.forEach((product: Product) => {
@@ -275,16 +281,14 @@ export default class ProductExportStrategy extends AbstractBatchJobStrategy {
           offset += products.length
           products = []
 
-          batchJob = (await this.batchJobService_
-            .withTransaction(transactionManager)
-            .update(batchJobId, {
-              result: {
-                file_size: approximateFileSize,
-                count: productCount,
-                advancement_count: advancementCount,
-                progress: advancementCount / productCount,
-              },
-            })) as ProductExportBatchJob
+          batchJob = (await batchJobServiceTx.update(batchJobId, {
+            result: {
+              file_size: approximateFileSize,
+              count: productCount,
+              advancement_count: advancementCount,
+              progress: advancementCount / productCount,
+            },
+          })) as ProductExportBatchJob
 
           if (batchJob.status === BatchJobStatus.CANCELED) {
             writeStream.end()
@@ -459,7 +463,12 @@ export default class ProductExportStrategy extends AbstractBatchJobStrategy {
                     priceData.currency_code.toLowerCase()
                 )
               })
-              return price?.amount?.toString() ?? ""
+              return price?.amount
+                ? humanizeAmount(
+                    price?.amount,
+                    priceData.currency_code!
+                  ).toString()
+                : ""
             },
             entityName: "variant",
           },
@@ -486,7 +495,12 @@ export default class ProductExportStrategy extends AbstractBatchJobStrategy {
                     priceData.region?.id?.toLowerCase()
                 )
               })
-              return price?.amount?.toString() ?? ""
+              return price?.amount
+                ? humanizeAmount(
+                    price?.amount,
+                    priceData.region!.currency_code!
+                  ).toString()
+                : ""
             },
             entityName: "variant",
           },
@@ -503,7 +517,9 @@ export default class ProductExportStrategy extends AbstractBatchJobStrategy {
       for (const [, { exportDescriptor: columnSchema }] of Object.entries(
         this.columnsDefinition
       )) {
-        if (!columnSchema || "isDynamic" in columnSchema) continue
+        if (!columnSchema || "isDynamic" in columnSchema) {
+          continue
+        }
 
         if (columnSchema.entityName === "product") {
           const formattedContent = csvCellContentFormatter(
@@ -543,7 +559,7 @@ export default class ProductExportStrategy extends AbstractBatchJobStrategy {
   }
 
   /**
-   * Return the maximun number of each relation that must appears in the export.
+   * Return the maximum number of each relation that must appears in the export.
    * The number of item of a relation can vary between 0-Infinity and therefore the number of columns
    * that will be added to the export correspond to that number
    * @param products - The main entity to get the relation shape from

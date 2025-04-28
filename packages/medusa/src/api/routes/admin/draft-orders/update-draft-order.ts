@@ -19,6 +19,8 @@ import { CartUpdateProps } from "../../../../types/cart"
 import { AddressPayload } from "../../../../types/common"
 import { validator } from "../../../../utils/validator"
 import { IsType } from "../../../../utils/validators/is-type"
+import { cleanResponseData } from "../../../../utils/clean-response-data"
+
 /**
  * @oas [post] /admin/draft-orders/{id}
  * operationId: PostDraftOrdersDraftOrder
@@ -31,47 +33,9 @@ import { IsType } from "../../../../utils/validators/is-type"
  *   content:
  *     application/json:
  *       schema:
- *         properties:
- *           region_id:
- *             type: string
- *             description: The ID of the Region to create the Draft Order in.
- *           country_code:
- *             type: string
- *             description: "The 2 character ISO code for the Country."
- *             externalDocs:
- *                url: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
- *                description: See a list of codes.
- *           email:
- *             type: string
- *             description: "An email to be used on the Draft Order."
- *             format: email
- *           billing_address:
- *             description: "The Address to be used for billing purposes."
- *             anyOf:
- *               - $ref: "#/components/schemas/address_fields"
- *               - type: string
- *           shipping_address:
- *             description: "The Address to be used for shipping."
- *             anyOf:
- *               - $ref: "#/components/schemas/address_fields"
- *               - type: string
- *           discounts:
- *             description: "An array of Discount codes to add to the Draft Order."
- *             type: array
- *             items:
- *               type: object
- *               required:
- *                 - code
- *               properties:
- *                 code:
- *                   description: "The code that a Discount is identifed by."
- *                   type: string
- *           no_notification_order:
- *             description: "An optional flag passed to the resulting order to determine use of notifications."
- *             type: boolean
- *           customer_id:
- *             description: "The ID of the Customer to associate the Draft Order with."
- *             type: string
+ *         $ref: "#/components/schemas/AdminPostDraftOrdersDraftOrderReq"
+ * x-codegen:
+ *   method: update
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -98,16 +62,14 @@ import { IsType } from "../../../../utils/validators/is-type"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Draft Order
+ *   - Draft Orders
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             draft_order:
- *               $ref: "#/components/schemas/draft-order"
+ *           $ref: "#/components/schemas/AdminDraftOrdersRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -171,14 +133,59 @@ export default async (req, res) => {
     await cartService.update(draftOrder.cart_id, cartDataToUpdate)
   })
 
-  draftOrder.cart = await cartService.retrieve(draftOrder.cart_id, {
+  draftOrder.cart = await cartService.retrieveWithTotals(draftOrder.cart_id, {
     relations: defaultAdminDraftOrdersCartRelations,
     select: defaultAdminDraftOrdersCartFields,
   })
 
-  res.status(200).json({ draft_order: draftOrder })
+  res.status(200).json({ draft_order: cleanResponseData(draftOrder, []) })
 }
 
+/**
+ * @schema AdminPostDraftOrdersDraftOrderReq
+ * type: object
+ * properties:
+ *   region_id:
+ *     type: string
+ *     description: The ID of the Region to create the Draft Order in.
+ *   country_code:
+ *     type: string
+ *     description: "The 2 character ISO code for the Country."
+ *     externalDocs:
+ *        url: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
+ *        description: See a list of codes.
+ *   email:
+ *     type: string
+ *     description: "An email to be used on the Draft Order."
+ *     format: email
+ *   billing_address:
+ *     description: "The Address to be used for billing purposes."
+ *     anyOf:
+ *       - $ref: "#/components/schemas/AddressPayload"
+ *       - type: string
+ *   shipping_address:
+ *     description: "The Address to be used for shipping."
+ *     anyOf:
+ *       - $ref: "#/components/schemas/AddressPayload"
+ *       - type: string
+ *   discounts:
+ *     description: "An array of Discount codes to add to the Draft Order."
+ *     type: array
+ *     items:
+ *       type: object
+ *       required:
+ *         - code
+ *       properties:
+ *         code:
+ *           description: "The code that a Discount is identifed by."
+ *           type: string
+ *   no_notification_order:
+ *     description: "An optional flag passed to the resulting order to determine use of notifications."
+ *     type: boolean
+ *   customer_id:
+ *     description: "The ID of the Customer to associate the Draft Order with."
+ *     type: string
+ */
 export class AdminPostDraftOrdersDraftOrderReq {
   @IsString()
   @IsOptional()

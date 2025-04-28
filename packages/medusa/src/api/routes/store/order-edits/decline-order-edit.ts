@@ -8,7 +8,7 @@ import {
 } from "../../../../types/order-edit"
 
 /**
- * @oas [post] /order-edits/{id}/decline
+ * @oas [post] /store/order-edits/{id}/decline
  * operationId: "PostOrderEditsOrderEditDecline"
  * summary: "Decline an OrderEdit"
  * description: "Declines an OrderEdit."
@@ -18,10 +18,9 @@ import {
  *   content:
  *     application/json:
  *       schema:
- *         properties:
- *           declined_reason:
- *             type: string
- *             description: The reason for declining the OrderEdit.
+ *         $ref: "#/components/schemas/StorePostOrderEditsOrderEditDecline"
+ * x-codegen:
+ *   method: decline
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -37,16 +36,14 @@ import {
  *     source: |
  *       curl --location --request POST 'https://medusa-url.com/store/order-edits/{id}/decline'
  * tags:
- *   - OrderEdit
+ *   - Order Edits
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             order_edit:
- *               $ref: "#/components/schemas/order_edit"
+ *           $ref: "#/components/schemas/StoreOrderEditsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -72,7 +69,7 @@ export default async (req: Request, res: Response) => {
   await manager.transaction(async (manager) => {
     await orderEditService.withTransaction(manager).decline(id, {
       declinedReason: validatedBody.declined_reason,
-      loggedInUserId: userId,
+      declinedBy: userId,
     })
   })
 
@@ -85,6 +82,14 @@ export default async (req: Request, res: Response) => {
   res.status(200).json({ order_edit: orderEdit })
 }
 
+/**
+ * @schema StorePostOrderEditsOrderEditDecline
+ * type: object
+ * properties:
+ *   declined_reason:
+ *     type: string
+ *     description: The reason for declining the OrderEdit.
+ */
 export class StorePostOrderEditsOrderEditDecline {
   @IsOptional()
   @IsString()

@@ -4,10 +4,10 @@ import { extendedFindParamsMixin } from "../../../../types/common"
 import { IsOptional, IsString } from "class-validator"
 
 /**
- * @oas [get] /order-edits
+ * @oas [get] /admin/order-edits
  * operationId: "GetOrderEdits"
- * summary: "List an OrderEdit"
- * description: "List a OrderEdit."
+ * summary: "List OrderEdits"
+ * description: "List OrderEdits."
  * x-authenticated: true
  * parameters:
  *   - (query) q {string} Query used for searching order edit internal note.
@@ -16,6 +16,9 @@ import { IsOptional, IsString } from "class-validator"
  *   - (query) offset=0 {number} The offset of items in response
  *   - (query) expand {string} Comma separated list of relations to include in the results.
  *   - (query) fields {string} Comma separated list of fields to include in the results.
+ * x-codegen:
+ *   method: list
+ *   queryParams: GetOrderEditsParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -36,26 +39,14 @@ import { IsOptional, IsString } from "class-validator"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - OrderEdit
+ *   - Order Edits
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             order_edits:
- *               type: array
- *               $ref: "#/components/schemas/order_edit"
- *             count:
- *               type: integer
- *               description: The total number of items available
- *             offset:
- *               type: integer
- *               description: The number of items skipped before these items
- *             limit:
- *               type: integer
- *               description: The number of items per page
+ *           $ref: "#/components/schemas/AdminOrderEditsListRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":

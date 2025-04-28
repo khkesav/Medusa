@@ -1,12 +1,16 @@
 import { CartService } from "../../../../services"
+import { EntityManager } from "typeorm"
+import { cleanResponseData } from "../../../../utils/clean-response-data"
 
 /**
- * @oas [get] /carts/{id}
+ * @oas [get] /store/carts/{id}
  * operationId: "GetCartsCart"
  * summary: "Get a Cart"
  * description: "Retrieves a Cart."
  * parameters:
  *   - (path) id=* {string} The id of the Cart.
+ * x-codegen:
+ *   method: retrieve
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -22,16 +26,14 @@ import { CartService } from "../../../../services"
  *     source: |
  *       curl --location --request GET 'https://medusa-url.com/store/carts/{id}'
  * tags:
- *   - Cart
+ *   - Carts
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             cart:
- *               $ref: "#/components/schemas/cart"
+ *           $ref: "#/components/schemas/StoreCartsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "404":
@@ -47,6 +49,7 @@ export default async (req, res) => {
   const { id } = req.params
 
   const cartService: CartService = req.scope.resolve("cartService")
+  const manager: EntityManager = req.scope.resolve("manager")
 
   const cart = await cartService.retrieve(id, {
     select: ["id", "customer_id"],
@@ -59,12 +62,14 @@ export default async (req, res) => {
       !cart.email ||
       cart.customer_id !== req.user.customer_id
     ) {
-      await cartService.update(id, {
-        customer_id: req.user.customer_id,
+      await manager.transaction(async (transctionManager) => {
+        await cartService.withTransaction(transctionManager).update(id, {
+          customer_id: req.user.customer_id,
+        })
       })
     }
   }
 
   const data = await cartService.retrieveWithTotals(id, req.retrieveConfig)
-  res.json({ cart: data })
+  res.json({ cart: cleanResponseData(data, []) })
 }

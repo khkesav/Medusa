@@ -1,3 +1,5 @@
+import { isDefined, MedusaError } from "@medusajs/utils"
+import { Type } from "class-transformer"
 import {
   IsArray,
   IsBoolean,
@@ -6,79 +8,35 @@ import {
   IsString,
   ValidateNested,
 } from "class-validator"
-import { defaultAdminOrdersFields, defaultAdminOrdersRelations } from "."
+import { EntityManager } from "typeorm"
+import { Order, Return } from "../../../../models"
 import {
   EventBusService,
   OrderService,
   ReturnService,
 } from "../../../../services"
-
-import { Type } from "class-transformer"
-import { MedusaError } from "medusa-core-utils"
-import { EntityManager } from "typeorm"
-import { Order, Return } from "../../../../models"
+import { FindParams } from "../../../../types/common"
 import { OrdersReturnItem } from "../../../../types/orders"
-import { isDefined } from "../../../../utils"
-import { validator } from "../../../../utils/validator"
+import { cleanResponseData } from "../../../../utils/clean-response-data"
 
 /**
- * @oas [post] /orders/{id}/return
+ * @oas [post] /admin/orders/{id}/return
  * operationId: "PostOrdersOrderReturns"
  * summary: "Request a Return"
  * description: "Requests a Return. If applicable a return label will be created and other plugins notified."
  * x-authenticated: true
  * parameters:
  *   - (path) id=* {string} The ID of the Order.
+ *   - (query) expand {string} Comma separated list of relations to include in the result.
+ *   - (query) fields {string} Comma separated list of fields to include in the result.
  * requestBody:
  *   content:
  *     application/json:
  *       schema:
- *         required:
- *           - items
- *         properties:
- *           items:
- *             description: The Line Items that will be returned.
- *             type: array
- *             items:
- *               required:
- *                 - item_id
- *                 - quantity
- *               properties:
- *                 item_id:
- *                   description: The ID of the Line Item.
- *                   type: string
- *                 reason_id:
- *                   description: The ID of the Return Reason to use.
- *                   type: string
- *                 note:
- *                   description: An optional note with information about the Return.
- *                   type: string
- *                 quantity:
- *                   description: The quantity of the Line Item.
- *                   type: integer
- *           return_shipping:
- *             description: The Shipping Method to be used to handle the return shipment.
- *             type: object
- *             properties:
- *               option_id:
- *                 type: string
- *                 description: The ID of the Shipping Option to create the Shipping Method from.
- *               price:
- *                 type: integer
- *                 description: The price to charge for the Shipping Method.
- *           note:
- *             description: An optional note with information about the Return.
- *             type: string
- *           receive_now:
- *             description: A flag to indicate if the Return should be registerd as received immediately.
- *             type: boolean
- *             default: false
- *           no_notification:
- *             description: A flag to indicate if no notifications should be emitted related to the requested Return.
- *             type: boolean
- *           refund:
- *             description: The amount to refund.
- *             type: integer
+ *         $ref: "#/components/schemas/AdminPostOrdersOrderReturnsReq"
+ * x-codegen:
+ *   method: requestReturn
+ *   params: AdminPostOrdersOrderReturnsParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -115,17 +73,14 @@ import { validator } from "../../../../utils/validator"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Return
- *   - Order
+ *   - Orders
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             order:
- *               $ref: "#/components/schemas/order"
+ *           $ref: "#/components/schemas/AdminOrdersRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -142,7 +97,7 @@ import { validator } from "../../../../utils/validator"
 export default async (req, res) => {
   const { id } = req.params
 
-  const value = await validator(AdminPostOrdersOrderReturnsReq, req.body)
+  const value = req.validatedBody as AdminPostOrdersOrderReturnsReq
 
   const idempotencyKeyService = req.scope.resolve("idempotencyKeyService")
   const manager: EntityManager = req.scope.resolve("manager")
@@ -166,6 +121,9 @@ export default async (req, res) => {
 
   try {
     const orderService: OrderService = req.scope.resolve("orderService")
+    const inventoryServiceEnabled =
+      !!req.scope.resolve("inventoryService") &&
+      !!req.scope.resolve("stockLocationService")
     const returnService: ReturnService = req.scope.resolve("returnService")
     const eventBus: EventBusService = req.scope.resolve("eventBusService")
 
@@ -185,6 +143,9 @@ export default async (req, res) => {
                     idempotency_key: idempotencyKey.idempotency_key,
                     items: value.items,
                   }
+                  if (isDefined(value.location_id) && inventoryServiceEnabled) {
+                    returnObj.location_id = value.location_id
+                  }
 
                   if (value.return_shipping) {
                     returnObj.shipping_method = value.return_shipping
@@ -198,14 +159,16 @@ export default async (req, res) => {
                     }
                   }
 
-                  const order = await orderService
-                    .withTransaction(manager)
-                    .retrieve(id)
+                  let evaluatedNoNotification = value.no_notification
 
-                  const evaluatedNoNotification =
-                    value.no_notification !== undefined
-                      ? value.no_notification
-                      : order.no_notification
+                  if (!isDefined(evaluatedNoNotification)) {
+                    const order = await orderService
+                      .withTransaction(manager)
+                      .retrieve(id)
+
+                    evaluatedNoNotification = order.no_notification
+                  }
+
                   returnObj.no_notification = evaluatedNoNotification
 
                   const createdReturn = await returnService
@@ -220,7 +183,7 @@ export default async (req, res) => {
 
                   await eventBus
                     .withTransaction(manager)
-                    .emit("order.return_requested", {
+                    .emit(OrderService.Events.RETURN_REQUESTED, {
                       id,
                       return_id: createdReturn.id,
                       no_notification: evaluatedNoNotification,
@@ -244,9 +207,7 @@ export default async (req, res) => {
               idempotencyKey = await idempotencyKeyService
                 .withTransaction(transactionManager)
                 .workStage(idempotencyKey.idempotency_key, async (manager) => {
-                  let order: Order | Return = await orderService
-                    .withTransaction(manager)
-                    .retrieve(id, { relations: ["returns"] })
+                  let order: Order | Return
 
                   /**
                    * If we are ready to receive immediately, we find the newly created return
@@ -275,14 +236,15 @@ export default async (req, res) => {
 
                   order = await orderService
                     .withTransaction(manager)
-                    .retrieve(id, {
-                      select: defaultAdminOrdersFields,
-                      relations: defaultAdminOrdersRelations,
+                    .retrieveWithTotals(id, req.retrieveConfig, {
+                      includes: req.includes,
                     })
 
                   return {
                     response_code: 200,
-                    response_body: { order },
+                    response_body: {
+                      order: cleanResponseData(order, []),
+                    },
                   }
                 })
             })
@@ -330,8 +292,60 @@ type ReturnObj = {
   shipping_method?: ReturnShipping
   refund_amount?: number
   no_notification?: boolean
+  location_id?: string
 }
 
+/**
+ * @schema AdminPostOrdersOrderReturnsReq
+ * type: object
+ * required:
+ *   - items
+ * properties:
+ *   items:
+ *     description: The Line Items that will be returned.
+ *     type: array
+ *     items:
+ *       type: object
+ *       required:
+ *         - item_id
+ *         - quantity
+ *       properties:
+ *         item_id:
+ *           description: The ID of the Line Item.
+ *           type: string
+ *         reason_id:
+ *           description: The ID of the Return Reason to use.
+ *           type: string
+ *         note:
+ *           description: An optional note with information about the Return.
+ *           type: string
+ *         quantity:
+ *           description: The quantity of the Line Item.
+ *           type: integer
+ *   return_shipping:
+ *     description: The Shipping Method to be used to handle the return shipment.
+ *     type: object
+ *     properties:
+ *       option_id:
+ *         type: string
+ *         description: The ID of the Shipping Option to create the Shipping Method from.
+ *       price:
+ *         type: integer
+ *         description: The price to charge for the Shipping Method.
+ *   note:
+ *     description: An optional note with information about the Return.
+ *     type: string
+ *   receive_now:
+ *     description: A flag to indicate if the Return should be registerd as received immediately.
+ *     type: boolean
+ *     default: false
+ *   no_notification:
+ *     description: A flag to indicate if no notifications should be emitted related to the requested Return.
+ *     type: boolean
+ *   refund:
+ *     description: The amount to refund.
+ *     type: integer
+ */
 export class AdminPostOrdersOrderReturnsReq {
   @IsArray()
   @ValidateNested({ each: true })
@@ -358,6 +372,10 @@ export class AdminPostOrdersOrderReturnsReq {
   @IsInt()
   @IsOptional()
   refund?: number
+
+  @IsOptional()
+  @IsString()
+  location_id?: string
 }
 
 class ReturnShipping {
@@ -369,3 +387,5 @@ class ReturnShipping {
   @IsOptional()
   price?: number
 }
+
+export class AdminPostOrdersOrderReturnsParams extends FindParams {}

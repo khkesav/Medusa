@@ -1,18 +1,17 @@
-import { renderHook } from "@testing-library/react-hooks"
+import { renderHook } from "@testing-library/react-hooks/dom"
+import { fixtures } from "../../../../mocks/data"
 import {
   useAdminCancelOrderEdit,
   useAdminConfirmOrderEdit,
   useAdminCreateOrderEdit,
   useAdminDeleteOrderEdit,
   useAdminDeleteOrderEditItemChange,
+  useAdminOrderEditAddLineItem,
+  useAdminOrderEditDeleteLineItem,
   useAdminOrderEditUpdateLineItem,
   useAdminRequestOrderEditConfirmation,
-  useAdminOrderEditAddLineItem,
-  useAdminCancelOrderEdit,
   useAdminUpdateOrderEdit,
-  useAdminOrderEditDeleteLineItem,
 } from "../../../../src/"
-import { fixtures } from "../../../../mocks/data"
 import { createWrapper } from "../../../utils"
 
 describe("useAdminOrderEditUpdateLineItem hook", () => {
@@ -68,7 +67,7 @@ describe("useAdminDeleteOrderEditItemChange hook", () => {
   })
 })
 
-describe("useAdminDelete hook", () => {
+describe("useAdminDeleteOrderEdit hook", () => {
   test("Deletes an order edit", async () => {
     const id = "oe_1"
     const { result, waitFor } = renderHook(() => useAdminDeleteOrderEdit(id), {

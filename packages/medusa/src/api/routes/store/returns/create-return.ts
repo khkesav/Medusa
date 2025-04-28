@@ -15,9 +15,10 @@ import EventBusService from "../../../../services/event-bus"
 import IdempotencyKeyService from "../../../../services/idempotency-key"
 import ReturnService from "../../../../services/return"
 import { validator } from "../../../../utils/validator"
+import { defaultRelations } from "."
 
 /**
- * @oas [post] /returns
+ * @oas [post] /store/returns
  * operationId: "PostReturns"
  * summary: "Create Return"
  * description: "Creates a Return for an Order."
@@ -25,42 +26,9 @@ import { validator } from "../../../../utils/validator"
  *   content:
  *     application/json:
  *       schema:
- *         required:
- *           - order_id
- *           - items
- *         properties:
- *           order_id:
- *             type: string
- *             description: The ID of the Order to create the Return from.
- *           items:
- *             description: "The items to include in the Return."
- *             type: array
- *             items:
- *               required:
- *                 - item_id
- *                 - quantity
- *               properties:
- *                 item_id:
- *                   description: The ID of the Line Item from the Order.
- *                   type: string
- *                 quantity:
- *                   description: The quantity to return.
- *                   type: integer
- *                 reason_id:
- *                   description: The ID of the return reason.
- *                   type: string
- *                 note:
- *                   description: A note to add to the item returned.
- *                   type: string
- *           return_shipping:
- *             description: If the Return is to be handled by the store operator the Customer can choose a Return Shipping Method. Alternatvely the Customer can handle the Return themselves.
- *             type: object
- *             required:
- *               - option_id
- *             properties:
- *               option_id:
- *                 type: string
- *                 description: The ID of the Shipping Option to create the Shipping Method from.
+ *         $ref: "#/components/schemas/StorePostReturnsReq"
+ * x-codegen:
+ *   method: create
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -94,16 +62,14 @@ import { validator } from "../../../../utils/validator"
  *           ]
  *       }'
  * tags:
- *   - Return
+ *   - Returns
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             return:
- *               $ref: "#/components/schemas/return"
+ *           $ref: "#/components/schemas/StoreReturnsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "404":
@@ -207,7 +173,7 @@ export default async (req, res) => {
                         idempotency_key: idempotencyKey.idempotency_key,
                       },
                       {
-                        relations: ["items", "items.reason"],
+                        relations: defaultRelations,
                       }
                     )
                   if (!returnOrders.length) {
@@ -285,6 +251,47 @@ class Item {
   note?: string
 }
 
+/**
+ * @schema StorePostReturnsReq
+ * type: object
+ * required:
+ *   - order_id
+ *   - items
+ * properties:
+ *   order_id:
+ *     type: string
+ *     description: The ID of the Order to create the Return from.
+ *   items:
+ *     description: "The items to include in the Return."
+ *     type: array
+ *     items:
+ *       type: object
+ *       required:
+ *         - item_id
+ *         - quantity
+ *       properties:
+ *         item_id:
+ *           description: The ID of the Line Item from the Order.
+ *           type: string
+ *         quantity:
+ *           description: The quantity to return.
+ *           type: integer
+ *         reason_id:
+ *           description: The ID of the return reason.
+ *           type: string
+ *         note:
+ *           description: A note to add to the item returned.
+ *           type: string
+ *   return_shipping:
+ *     description: If the Return is to be handled by the store operator the Customer can choose a Return Shipping Method. Alternatvely the Customer can handle the Return themselves.
+ *     type: object
+ *     required:
+ *       - option_id
+ *     properties:
+ *       option_id:
+ *         type: string
+ *         description: The ID of the Shipping Option to create the Shipping Method from.
+ */
 export class StorePostReturnsReq {
   @IsString()
   @IsNotEmpty()

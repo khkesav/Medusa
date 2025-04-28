@@ -28,7 +28,7 @@ describe("/admin/users", () => {
   beforeAll(async () => {
     const cwd = path.resolve(path.join(__dirname, "..", ".."))
     dbConnection = await initDb({ cwd })
-    medusaProcess = await setupServer({ cwd, verbose: false })
+    medusaProcess = await setupServer({ cwd })
   })
 
   afterAll(async () => {
@@ -171,6 +171,16 @@ describe("/admin/users", () => {
     })
 
     describe("Password reset", () => {
+      it("Doesn't fail to fetch user when resetting password for an unknown email (unauthorized endpoint)", async () => {
+        const api = useApi()
+
+        const resp = await api.post("/admin/users/password-token", {
+          email: "test-doesnt-exist@test.com",
+        })
+
+        expect(resp.status).toEqual(204)
+      })
+
       it("Doesn't fail when generating password reset token (unauthorized endpoint)", async () => {
         const api = useApi()
 

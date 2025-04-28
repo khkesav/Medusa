@@ -1,14 +1,14 @@
 import { IsEmail, IsNotEmpty, IsString } from "class-validator"
 
-import AuthService from "../../../../services/auth"
-import { EntityManager } from "typeorm"
-import { MedusaError } from "medusa-core-utils"
-import _ from "lodash"
 import jwt from "jsonwebtoken"
+import _ from "lodash"
+import { MedusaError } from "medusa-core-utils"
+import { EntityManager } from "typeorm"
+import AuthService from "../../../../services/auth"
 import { validator } from "../../../../utils/validator"
 
 /**
- * @oas [post] /auth
+ * @oas [post] /admin/auth
  * operationId: "PostAuth"
  * summary: "User Login"
  * x-authenticated: false
@@ -20,18 +20,9 @@ import { validator } from "../../../../utils/validator"
  *   content:
  *     application/json:
  *       schema:
- *         required:
- *           - email
- *           - password
- *         properties:
- *           email:
- *             type: string
- *             description: The User's email.
- *             format: email
- *           password:
- *             type: string
- *             description: The User's password.
- *             format: password
+ *         $ref: "#/components/schemas/AdminPostAuthReq"
+ * x-codegen:
+ *   method: createSession
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -61,9 +52,7 @@ import { validator } from "../../../../utils/validator"
  *    content:
  *      application/json:
  *        schema:
- *          properties:
- *            user:
- *              $ref: "#/components/schemas/user"
+ *          $ref: "#/components/schemas/AdminAuthRes"
  *  "400":
  *    $ref: "#/components/responses/400_error"
  *  "401":
@@ -111,6 +100,22 @@ export default async (req, res) => {
   }
 }
 
+/**
+ * @schema AdminPostAuthReq
+ * type: object
+ * required:
+ *   - email
+ *   - password
+ * properties:
+ *   email:
+ *     type: string
+ *     description: The User's email.
+ *     format: email
+ *   password:
+ *     type: string
+ *     description: The User's password.
+ *     format: password
+ */
 export class AdminPostAuthReq {
   @IsEmail()
   @IsNotEmpty()

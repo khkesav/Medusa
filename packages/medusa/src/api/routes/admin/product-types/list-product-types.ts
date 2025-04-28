@@ -9,7 +9,7 @@ import { IsType } from "../../../../utils/validators/is-type"
 import ProductTypeService from "../../../../services/product-type"
 
 /**
- * @oas [get] /product-types
+ * @oas [get] /admin/product-types
  * operationId: "GetProductTypes"
  * summary: "List Product Types"
  * description: "Retrieve a list of Product Types."
@@ -82,6 +82,9 @@ import ProductTypeService from "../../../../services/product-type"
  *            type: string
  *            description: filter by dates greater than or equal to this date
  *            format: date
+ * x-codegen:
+ *   method: list
+ *   queryParams: AdminGetProductTypesParams
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -102,25 +105,14 @@ import ProductTypeService from "../../../../services/product-type"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Product Type
+ *   - Product Types
  * responses:
  *  "200":
  *    description: OK
  *    content:
  *      application/json:
  *        schema:
- *          properties:
- *            product_types:
- *              $ref: "#/components/schemas/product_type"
- *            count:
- *              type: integer
- *              description: The total number of items available
- *            offset:
- *              type: integer
- *              description: The number of items skipped before these items
- *            limit:
- *              type: integer
- *              description: The number of items per page
+ *          $ref: "#/components/schemas/AdminProductTypesListRes"
  *  "400":
  *    $ref: "#/components/responses/400_error"
  *  "401":

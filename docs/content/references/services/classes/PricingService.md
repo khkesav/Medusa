@@ -26,7 +26,7 @@ TransactionBaseService.constructor
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:44](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L44)
+[medusa/src/services/pricing.ts:42](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L42)
 
 ## Properties
 
@@ -40,7 +40,7 @@ TransactionBaseService.\_\_configModule\_\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:10](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L10)
+[medusa/src/interfaces/transaction-base-service.ts:14](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L14)
 
 ___
 
@@ -54,7 +54,21 @@ TransactionBaseService.\_\_container\_\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:9](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L9)
+[medusa/src/interfaces/transaction-base-service.ts:13](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L13)
+
+___
+
+### \_\_moduleDeclaration\_\_
+
+• `Protected` `Optional` `Readonly` **\_\_moduleDeclaration\_\_**: `Record`<`string`, `unknown`\>
+
+#### Inherited from
+
+TransactionBaseService.\_\_moduleDeclaration\_\_
+
+#### Defined in
+
+[medusa/src/interfaces/transaction-base-service.ts:15](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L15)
 
 ___
 
@@ -64,7 +78,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:42](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L42)
+[medusa/src/services/pricing.ts:40](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L40)
 
 ___
 
@@ -72,13 +86,13 @@ ___
 
 • `Protected` **manager\_**: `EntityManager`
 
-#### Overrides
+#### Inherited from
 
 TransactionBaseService.manager\_
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:36](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L36)
+[medusa/src/interfaces/transaction-base-service.ts:5](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L5)
 
 ___
 
@@ -88,7 +102,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:40](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L40)
+[medusa/src/services/pricing.ts:38](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L38)
 
 ___
 
@@ -98,7 +112,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:41](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L41)
+[medusa/src/services/pricing.ts:39](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L39)
 
 ___
 
@@ -108,7 +122,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:38](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L38)
+[medusa/src/services/pricing.ts:36](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L36)
 
 ___
 
@@ -118,7 +132,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:39](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L39)
+[medusa/src/services/pricing.ts:37](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L37)
 
 ___
 
@@ -126,13 +140,31 @@ ___
 
 • `Protected` **transactionManager\_**: `undefined` \| `EntityManager`
 
-#### Overrides
+#### Inherited from
 
 TransactionBaseService.transactionManager\_
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:37](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L37)
+[medusa/src/interfaces/transaction-base-service.ts:6](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L6)
+
+## Accessors
+
+### activeManager\_
+
+• `Protected` `get` **activeManager_**(): `EntityManager`
+
+#### Returns
+
+`EntityManager`
+
+#### Inherited from
+
+TransactionBaseService.activeManager\_
+
+#### Defined in
+
+[medusa/src/interfaces/transaction-base-service.ts:8](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L8)
 
 ## Methods
 
@@ -171,13 +203,13 @@ TransactionBaseService.atomicPhase\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:50](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L50)
+[medusa/src/interfaces/transaction-base-service.ts:56](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L56)
 
 ___
 
 ### calculateTaxes
 
-▸ **calculateTaxes**(`variantPricing`, `productRates`): `Promise`<`TaxedPricing`\>
+▸ **calculateTaxes**(`variantPricing`, `productRates`): `TaxedPricing`
 
 Gets the prices for a product variant
 
@@ -190,13 +222,13 @@ Gets the prices for a product variant
 
 #### Returns
 
-`Promise`<`TaxedPricing`\>
+`TaxedPricing`
 
 The tax related variant prices.
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:104](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L104)
+[medusa/src/services/pricing.ts:101](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L101)
 
 ___
 
@@ -204,7 +236,7 @@ ___
 
 ▸ **collectPricingContext**(`context`): `Promise`<`PricingContext`\>
 
-Collects additional information neccessary for completing the price
+Collects additional information necessary for completing the price
 selection.
 
 #### Parameters
@@ -221,7 +253,7 @@ The pricing context
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:69](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L69)
+[medusa/src/services/pricing.ts:65](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L65)
 
 ___
 
@@ -247,7 +279,7 @@ A map of variant ids to their corresponding prices
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:323](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L323)
+[medusa/src/services/pricing.ts:388](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L388)
 
 ___
 
@@ -272,7 +304,7 @@ A map of variant ids to their corresponding prices
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:341](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L341)
+[medusa/src/services/pricing.ts:406](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L406)
 
 ___
 
@@ -294,7 +326,7 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:285](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L285)
+[medusa/src/services/pricing.ts:349](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L349)
 
 ___
 
@@ -319,7 +351,7 @@ The product variant prices
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:213](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L213)
+[medusa/src/services/pricing.ts:212](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L212)
 
 ___
 
@@ -328,6 +360,10 @@ ___
 ▸ **getProductVariantPricingById**(`variantId`, `context`): `Promise`<`ProductVariantPricing`\>
 
 Gets the prices for a product variant by a variant id.
+
+**`Deprecated`**
+
+Use [getProductVariantsPricing](PricingService.md#getproductvariantspricing) instead.
 
 #### Parameters
 
@@ -344,7 +380,7 @@ The product variant prices
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:251](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L251)
+[medusa/src/services/pricing.ts:251](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L251)
 
 ___
 
@@ -366,7 +402,39 @@ ___
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:166](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L166)
+[medusa/src/services/pricing.ts:163](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L163)
+
+___
+
+### getProductVariantsPricing
+
+▸ **getProductVariantsPricing**<`T`, `TOutput`\>(`variantIds`, `context`): `Promise`<`TOutput`\>
+
+Gets the prices for a collection of variants.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `string` \| `string`[] |
+| `TOutput` | `T` extends `string` ? `ProductVariantPricing` : { `[variant_id: string]`: `ProductVariantPricing`;  } |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `variantIds` | `T` | the id of the variants to get the prices for |
+| `context` | `PriceSelectionContext` \| `PricingContext` | the price selection context to use |
+
+#### Returns
+
+`Promise`<`TOutput`\>
+
+The product variant prices
+
+#### Defined in
+
+[medusa/src/services/pricing.ts:292](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L292)
 
 ___
 
@@ -391,7 +459,7 @@ The shipping option prices
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:427](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L427)
+[medusa/src/services/pricing.ts:486](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L486)
 
 ___
 
@@ -416,7 +484,7 @@ A list of products with variants decorated with prices
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:384](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L384)
+[medusa/src/services/pricing.ts:450](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L450)
 
 ___
 
@@ -441,13 +509,13 @@ A list of shipping options with prices
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:489](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L489)
+[medusa/src/services/pricing.ts:548](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L548)
 
 ___
 
 ### setVariantPrices
 
-▸ **setVariantPrices**(`variants`, `context`): `Promise`<`PricedVariant`[]\>
+▸ **setVariantPrices**(`variants`, `context?`): `Promise`<`PricedVariant`[]\>
 
 Set additional prices on a list of product variants.
 
@@ -466,7 +534,7 @@ A list of products with variants decorated with prices
 
 #### Defined in
 
-[packages/medusa/src/services/pricing.ts:359](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/services/pricing.ts#L359)
+[medusa/src/services/pricing.ts:424](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/services/pricing.ts#L424)
 
 ___
 
@@ -490,7 +558,7 @@ TransactionBaseService.shouldRetryTransaction\_
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:31](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L31)
+[medusa/src/interfaces/transaction-base-service.ts:37](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L37)
 
 ___
 
@@ -514,4 +582,4 @@ TransactionBaseService.withTransaction
 
 #### Defined in
 
-[packages/medusa/src/interfaces/transaction-base-service.ts:13](https://github.com/medusajs/medusa/blob/a4dd26e13/packages/medusa/src/interfaces/transaction-base-service.ts#L13)
+[medusa/src/interfaces/transaction-base-service.ts:20](https://github.com/medusajs/medusa/blob/66c59d54f/packages/medusa/src/interfaces/transaction-base-service.ts#L20)

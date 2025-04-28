@@ -220,16 +220,126 @@ export const defaultAdminDiscountConditionFields: (keyof DiscountCondition)[] =
 
 export const defaultAdminDiscountConditionRelations = ["discount_rule"]
 
+/**
+ * @schema AdminDiscountsRes
+ * type: object
+ * x-expanded-relations:
+ *   field: discount
+ *   relations:
+ *     - parent_discount
+ *     - regions
+ *     - rule
+ *     - rule.conditions
+ *   eager:
+ *     - regions.fulfillment_providers
+ *     - regions.payment_providers
+ * required:
+ *   - discount
+ * properties:
+ *   discount:
+ *     $ref: "#/components/schemas/Discount"
+ */
 export type AdminDiscountsRes = {
   discount: Discount
 }
 
+/**
+ * @schema AdminDiscountConditionsRes
+ * type: object
+ * x-expanded-relations:
+ *   field: discount_condition
+ *   relations:
+ *     - discount_rule
+ * required:
+ *   - discount_condition
+ * properties:
+ *   discount_condition:
+ *     $ref: "#/components/schemas/DiscountCondition"
+ */
 export type AdminDiscountConditionsRes = {
   discount_condition: DiscountCondition
 }
 
+/**
+ * @schema AdminDiscountsDeleteRes
+ * type: object
+ * required:
+ *   - id
+ *   - object
+ *   - deleted
+ * properties:
+ *   id:
+ *     type: string
+ *     description: The ID of the deleted Discount
+ *   object:
+ *     type: string
+ *     description: The type of the object that was deleted.
+ *     default: discount
+ *   deleted:
+ *     type: boolean
+ *     description: Whether the discount was deleted successfully or not.
+ *     default: true
+ */
 export type AdminDiscountsDeleteRes = DeleteResponse
 
+/**
+ * @schema AdminDiscountConditionsDeleteRes
+ * type: object
+ * required:
+ *   - id
+ *   - object
+ *   - deleted
+ *   - discount
+ * properties:
+ *   id:
+ *     type: string
+ *     description: The ID of the deleted DiscountCondition
+ *   object:
+ *     type: string
+ *     description: The type of the object that was deleted.
+ *     default: discount-condition
+ *   deleted:
+ *     type: boolean
+ *     description: Whether the discount condition was deleted successfully or not.
+ *     default: true
+ *   discount:
+ *     description: The Discount to which the condition used to belong
+ *     $ref: "#/components/schemas/Discount"
+ */
+export type AdminDiscountConditionsDeleteRes = DeleteResponse & {
+  discount: Discount
+}
+
+/**
+ * @schema AdminDiscountsListRes
+ * type: object
+ * x-expanded-relations:
+ *   field: discounts
+ *   relations:
+ *     - parent_discount
+ *     - regions
+ *     - rule
+ *     - rule.conditions
+ * required:
+ *   - discounts
+ *   - count
+ *   - offset
+ *   - limit
+ * properties:
+ *   discounts:
+ *     type: array
+ *     items:
+ *       $ref: "#/components/schemas/Discount"
+ *   count:
+ *     type: integer
+ *     description: The total number of items available
+ *   offset:
+ *     type: integer
+ *     description: The number of items skipped before these items
+ *   limit:
+ *     type: integer
+ *     description: The number of items per page
+ */
 export type AdminDiscountsListRes = PaginatedResponse & {
   discounts: Discount[]
 }

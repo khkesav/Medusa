@@ -1,7 +1,7 @@
 import fs from "fs"
 
 /**
- * @oas [post] /uploads
+ * @oas [post] /admin/uploads
  * operationId: "PostUploads"
  * summary: "Upload files"
  * description: "Uploads at least one file to the specific fileservice that is installed in Medusa."
@@ -38,23 +38,14 @@ import fs from "fs"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Upload
+ *   - Uploads
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             uploads:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   url:
- *                     type: string
- *                     description: The URL of the uploaded file.
- *                     format: uri
+ *           $ref: "#/components/schemas/AdminUploadsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":

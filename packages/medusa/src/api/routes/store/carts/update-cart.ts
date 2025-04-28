@@ -14,9 +14,10 @@ import { CartService } from "../../../../services"
 import { AddressPayload } from "../../../../types/common"
 import { FeatureFlagDecorators } from "../../../../utils/feature-flag-decorators"
 import { IsType } from "../../../../utils/validators/is-type"
+import { cleanResponseData } from "../../../../utils/clean-response-data"
 
 /**
- * @oas [post] /carts/{id}
+ * @oas [post] /store/carts/{id}
  * operationId: PostCartsCart
  * summary: Update a Cart
  * description: "Updates a Cart."
@@ -26,66 +27,9 @@ import { IsType } from "../../../../utils/validators/is-type"
  *   content:
  *     application/json:
  *       schema:
- *         properties:
- *           region_id:
- *             type: string
- *             description: The id of the Region to create the Cart in.
- *           country_code:
- *             type: string
- *             description: "The 2 character ISO country code to create the Cart in."
- *             externalDocs:
- *               url: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
- *               description: See a list of codes.
- *           email:
- *             type: string
- *             description: "An email to be used on the Cart."
- *             format: email
- *           sales_channel_id:
- *             type: string
- *             description: The ID of the Sales channel to update the Cart with.
- *           billing_address:
- *             description: "The Address to be used for billing purposes."
- *             anyOf:
- *               - $ref: "#/components/schemas/address"
- *                 description: A full billing address object.
- *               - type: string
- *                 description: The billing address ID
- *           shipping_address:
- *             description: "The Address to be used for shipping."
- *             anyOf:
- *               - $ref: "#/components/schemas/address"
- *                 description: A full shipping address object.
- *               - type: string
- *                 description: The shipping address ID
- *           gift_cards:
- *             description: "An array of Gift Card codes to add to the Cart."
- *             type: array
- *             items:
- *               required:
- *                 - code
- *               properties:
- *                 code:
- *                   description: "The code that a Gift Card is identified by."
- *                   type: string
- *           discounts:
- *             description: "An array of Discount codes to add to the Cart."
- *             type: array
- *             items:
- *               required:
- *                 - code
- *               properties:
- *                 code:
- *                   description: "The code that a Discount is identifed by."
- *                   type: string
- *           customer_id:
- *             description: "The ID of the Customer to associate the Cart with."
- *             type: string
- *           context:
- *             description: "An optional object to provide context to the Cart."
- *             type: object
- *             example:
- *               ip: "::1"
- *               user_agent: "Chrome"
+ *         $ref: "#/components/schemas/StorePostCartsCartReq"
+ * x-codegen:
+ *   method: update
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -107,16 +51,14 @@ import { IsType } from "../../../../utils/validators/is-type"
  *           "email": "user@example.com"
  *       }'
  * tags:
- *   - Cart
+ *   - Carts
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             cart:
- *               $ref: "#/components/schemas/cart"
+ *           $ref: "#/components/schemas/StoreCartsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "404":
@@ -134,6 +76,10 @@ export default async (req, res) => {
 
   const cartService: CartService = req.scope.resolve("cartService")
   const manager: EntityManager = req.scope.resolve("manager")
+
+  if (req.user?.customer_id) {
+    validated.customer_id = req.user.customer_id
+  }
 
   await manager.transaction(async (transactionManager) => {
     await cartService.withTransaction(transactionManager).update(id, validated)
@@ -155,7 +101,7 @@ export default async (req, res) => {
     select: defaultStoreCartFields,
     relations: defaultStoreCartRelations,
   })
-  res.json({ cart: data })
+  res.json({ cart: cleanResponseData(data, []) })
 }
 
 class GiftCard {
@@ -168,6 +114,72 @@ class Discount {
   code: string
 }
 
+/**
+ * @schema StorePostCartsCartReq
+ * type: object
+ * properties:
+ *   region_id:
+ *     type: string
+ *     description: The id of the Region to create the Cart in.
+ *   country_code:
+ *     type: string
+ *     description: "The 2 character ISO country code to create the Cart in."
+ *     externalDocs:
+ *       url: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
+ *       description: See a list of codes.
+ *   email:
+ *     type: string
+ *     description: "An email to be used on the Cart."
+ *     format: email
+ *   sales_channel_id:
+ *     type: string
+ *     description: The ID of the Sales channel to update the Cart with.
+ *   billing_address:
+ *     description: "The Address to be used for billing purposes."
+ *     anyOf:
+ *       - $ref: "#/components/schemas/AddressPayload"
+ *         description: A full billing address object.
+ *       - type: string
+ *         description: The billing address ID
+ *   shipping_address:
+ *     description: "The Address to be used for shipping."
+ *     anyOf:
+ *       - $ref: "#/components/schemas/AddressPayload"
+ *         description: A full shipping address object.
+ *       - type: string
+ *         description: The shipping address ID
+ *   gift_cards:
+ *     description: "An array of Gift Card codes to add to the Cart."
+ *     type: array
+ *     items:
+ *       type: object
+ *       required:
+ *         - code
+ *       properties:
+ *         code:
+ *           description: "The code that a Gift Card is identified by."
+ *           type: string
+ *   discounts:
+ *     description: "An array of Discount codes to add to the Cart."
+ *     type: array
+ *     items:
+ *       type: object
+ *       required:
+ *         - code
+ *       properties:
+ *         code:
+ *           description: "The code that a Discount is identifed by."
+ *           type: string
+ *   customer_id:
+ *     description: "The ID of the Customer to associate the Cart with."
+ *     type: string
+ *   context:
+ *     description: "An optional object to provide context to the Cart."
+ *     type: object
+ *     example:
+ *       ip: "::1"
+ *       user_agent: "Chrome"
+ */
 export class StorePostCartsCartReq {
   @IsOptional()
   @IsString()

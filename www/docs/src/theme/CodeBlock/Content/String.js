@@ -1,36 +1,43 @@
+import Highlight, {defaultProps} from 'prism-react-renderer';
 import React from 'react';
-import clsx from 'clsx';
-import {useThemeConfig, usePrismTheme} from '@docusaurus/theme-common';
 import {
+  containsLineNumbers,
   parseCodeBlockTitle,
   parseLanguage,
   parseLines,
-  containsLineNumbers,
   useCodeWordWrap,
 } from '@docusaurus/theme-common/internal';
-import Highlight, {defaultProps} from 'prism-react-renderer';
-import Line from '@theme/CodeBlock/Line';
+import {usePrismTheme, useThemeConfig} from '@docusaurus/theme-common';
+
 import Container from '@theme/CodeBlock/Container';
-import styles from './styles.module.css';
 import CopyButton from '../../CopyButton';
-import ThemedImage from '@theme/ThemedImage';
-import useBaseUrl from '@docusaurus/useBaseUrl';
+import Line from '@theme/CodeBlock/Line';
+import Tooltip from '../../Tooltip';
+import clsx from 'clsx';
+import styles from './styles.module.css';
+import useIsBrowser from '@docusaurus/useIsBrowser';
+import IconAlert from '../../Icon/Alert';
+import IconCopy from '../../Icon/Copy';
 
 export default function CodeBlockString({
   children,
   className: blockClassName = '',
   metastring,
   title: titleProp,
-  showLineNumbers: showLineNumbersProp,
+  showLineNumbers: showLineNumbersProp = true,
   language: languageProp,
+  noReport = false,
+  noCopy = false
 }) {
   const {
     prism: {defaultLanguage, magicComments},
+    reportCodeLinkPrefix
   } = useThemeConfig();
   const language =
     languageProp ?? parseLanguage(blockClassName) ?? defaultLanguage;
   const prismTheme = usePrismTheme();
   const wordWrap = useCodeWordWrap();
+  const isBrowser = useIsBrowser();
   // We still parse the metastring in case we want to support more syntax in the
   // future. Note that MDX doesn't strip quotes when parsing metastring:
   // "title=\"xyz\"" => title: "\"xyz\""
@@ -63,11 +70,11 @@ export default function CodeBlockString({
               /* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */
               tabIndex={0}
               ref={wordWrap.codeBlockRef}
-              className={clsx(className, styles.codeBlock, 'thin-scrollbar')}>
+              className={clsx(className, styles.codeBlock, 'thin-scrollbar', tokens.length === 1 ? styles.thinCodeWrapper : '')}>
               <code
                 className={clsx(
                   styles.codeBlockLines,
-                  showLineNumbers && styles.codeBlockLinesWithNumbering,
+                  showLineNumbers && tokens.length > 1 && styles.codeBlockLinesWithNumbering,
                   tokens.length === 1 ? 'thin-code' : ''
                 )}>
                 {tokens.map((line, i) => (
@@ -77,7 +84,7 @@ export default function CodeBlockString({
                     getLineProps={getLineProps}
                     getTokenProps={getTokenProps}
                     classNames={lineClassNames[i]}
-                    showLineNumbers={showLineNumbers}
+                    showLineNumbers={showLineNumbers && tokens.length > 1}
                   />
                 ))}
               </code>
@@ -85,13 +92,18 @@ export default function CodeBlockString({
           )}
         </Highlight>
         <div className={styles.buttonGroup}>
-          {/* <CopyButton className={styles.codeButton} code={code} /> */}
-          <CopyButton buttonClassName='code-action' text={code}>
-            <ThemedImage alt='Copy to Clipboard' sources={{
-              light: useBaseUrl('/img/clipboard-copy.png'),
-              dark: useBaseUrl('/img/clipboard-copy-dark.png')
-            }} className="no-zoom-img" />
-          </CopyButton>
+          {!noReport && (
+            <Tooltip text="Report Incorrect Code">
+              <a href={`${reportCodeLinkPrefix}&title=${encodeURIComponent(`Docs(Code Issue): Code Issue in ${isBrowser ? location.pathname : ''}`)}`} target="_blank" className='report-code code-action img-url'>
+                <IconAlert />
+              </a>
+            </Tooltip>
+          )}
+          {!noCopy && (
+            <CopyButton buttonClassName='code-action code-action-copy' text={code}>
+              <IconCopy />
+            </CopyButton>
+          )}
         </div>
       </div>
     </Container>

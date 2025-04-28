@@ -1,5 +1,5 @@
+import { getConfigFile } from "medusa-core-utils"
 import { ConfigModule } from "../types/global"
-import { getConfigFile } from "medusa-core-utils/dist"
 import logger from "./logger"
 
 const isProduction = ["production", "prod"].includes(process.env.NODE_ENV || "")
@@ -19,13 +19,10 @@ export const handleConfigError = (error: Error): void => {
 }
 
 export default (rootDirectory: string): ConfigModule => {
-  const { configModule, error } = getConfigFile(
+  const { configModule, error } = getConfigFile<ConfigModule>(
     rootDirectory,
     `medusa-config`
-  ) as {
-    configModule: ConfigModule
-    error: Error | null
-  }
+  )
 
   if (error) {
     handleConfigError(error)
@@ -73,6 +70,7 @@ export default (rootDirectory: string): ConfigModule => {
       cookie_secret: cookie_secret ?? "supersecret",
       ...configModule?.projectConfig,
     },
+    modules: configModule.modules ?? {},
     featureFlags: configModule?.featureFlags ?? {},
     plugins: configModule?.plugins ?? [],
   }

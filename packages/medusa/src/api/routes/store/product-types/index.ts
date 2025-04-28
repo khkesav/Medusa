@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { ProductType } from "../../../.."
 import { PaginatedResponse } from "../../../../types/common"
-import middlewares, { transformQuery } from "../../../middlewares"
+import middlewares, { transformStoreQuery } from "../../../middlewares"
 import "reflect-metadata"
 import { StoreGetProductTypesParams } from "./list-product-types"
 
@@ -12,7 +12,7 @@ export default (app) => {
 
   route.get(
     "/",
-    transformQuery(StoreGetProductTypesParams, {
+    transformStoreQuery(StoreGetProductTypesParams, {
       defaultFields: defaultStoreProductTypeFields,
       defaultRelations: defaultStoreProductTypeRelations,
       allowedFields: allowedStoreProductTypeFields,
@@ -39,12 +39,31 @@ export const defaultStoreProductTypeFields = [
 ]
 export const defaultStoreProductTypeRelations = []
 
+/**
+ * @schema StoreProductTypesListRes
+ * type: object
+ * required:
+ *   - product_types
+ *   - count
+ *   - offset
+ *   - limit
+ * properties:
+ *   product_types:
+ *     type: array
+ *     items:
+ *       $ref: "#/components/schemas/ProductType"
+ *   count:
+ *     type: integer
+ *     description: The total number of items available
+ *   offset:
+ *     type: integer
+ *     description: The number of items skipped before these items
+ *   limit:
+ *     type: integer
+ *     description: The number of items per page
+ */
 export type StoreProductTypesListRes = PaginatedResponse & {
   product_types: ProductType[]
-}
-
-export type StoreProductTypesRes = {
-  product_type: ProductType
 }
 
 export * from "./list-product-types"

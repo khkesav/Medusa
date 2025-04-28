@@ -2,10 +2,10 @@ import fs from "fs"
 import { IFileService } from "../../../../interfaces"
 
 /**
- * @oas [post] /uploads/protected
+ * @oas [post] /admin/uploads/protected
  * operationId: "PostUploadsProtected"
- * summary: "Upload files with acl or in a non-public bucket"
- * description: "Uploads at least one file to the specific fileservice that is installed in Medusa."
+ * summary: "Protected File Upload"
+ * description: "Uploads at least one file with ACL or a non-public bucket to the specific fileservice that is installed in Medusa."
  * x-authenticated: true
  * requestBody:
  *   content:
@@ -39,23 +39,14 @@ import { IFileService } from "../../../../interfaces"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Upload
+ *   - Uploads
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             uploads:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   url:
- *                     type: string
- *                     description: The URL of the uploaded file.
- *                     format: uri
+ *           $ref: "#/components/schemas/AdminUploadsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -83,6 +74,7 @@ export default async (req, res) => {
 
   res.status(200).json({ uploads: result })
 }
+
 export class IAdminPostUploadsFileReq {
   originalName: string
   path: string

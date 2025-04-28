@@ -1,7 +1,9 @@
-import BatchJobService from "../services/batch-job"
-import EventBusService from "../services/event-bus"
-import { StrategyResolverService } from "../services"
 import { EntityManager } from "typeorm"
+import {
+  BatchJobService,
+  EventBusService,
+  StrategyResolverService,
+} from "../services"
 
 type InjectedDependencies = {
   eventBusService: EventBusService
@@ -27,51 +29,56 @@ class BatchJobSubscriber {
     this.strategyResolver_ = strategyResolverService
     this.manager_ = manager
 
-    this.eventBusService_
-      .subscribe(BatchJobService.Events.CREATED, this.preProcessBatchJob)
-      .subscribe(BatchJobService.Events.CONFIRMED, this.processBatchJob)
+    this.eventBusService_.subscribe(
+      BatchJobService.Events.CREATED,
+      this.preProcessBatchJob
+    ) as EventBusService
+
+    this.eventBusService_.subscribe(
+      BatchJobService.Events.CONFIRMED,
+      this.processBatchJob
+    ) as EventBusService
   }
 
   preProcessBatchJob = async (data): Promise<void> => {
-    await this.manager_.transaction(async (manager) => {
-      const batchJobServiceTx = this.batchJobService_.withTransaction(manager)
-      const batchJob = await batchJobServiceTx.retrieve(data.id)
+    try {
+      await this.manager_.transaction(async (manager) => {
+        const batchJobServiceTx = this.batchJobService_.withTransaction(manager)
+        const batchJob = await batchJobServiceTx.retrieve(data.id)
 
-      const batchJobStrategy = this.strategyResolver_.resolveBatchJobByType(
-        batchJob.type
-      )
+        const batchJobStrategy = this.strategyResolver_.resolveBatchJobByType(
+          batchJob.type
+        )
 
-      try {
         await batchJobStrategy
           .withTransaction(manager)
           .preProcessBatchJob(batchJob.id)
         await batchJobServiceTx.setPreProcessingDone(batchJob.id)
-      } catch (e) {
-        await this.batchJobService_.setFailed(batchJob.id, e.message)
-        throw e
-      }
-    })
+      })
+    } catch (e) {
+      await this.batchJobService_.setFailed(data.id, e.message)
+      throw e
+    }
   }
 
   processBatchJob = async (data): Promise<void> => {
-    await this.manager_.transaction(async (manager) => {
-      const batchJobServiceTx = this.batchJobService_.withTransaction(manager)
-      const batchJob = await batchJobServiceTx.retrieve(data.id)
+    try {
+      await this.manager_.transaction(async (manager) => {
+        const batchJobServiceTx = this.batchJobService_.withTransaction(manager)
+        const batchJob = await batchJobServiceTx.retrieve(data.id)
 
-      const batchJobStrategy = this.strategyResolver_.resolveBatchJobByType(
-        batchJob.type
-      )
+        const batchJobStrategy = this.strategyResolver_.resolveBatchJobByType(
+          batchJob.type
+        )
 
-      await batchJobServiceTx.setProcessing(batchJob.id)
-
-      try {
+        await batchJobServiceTx.setProcessing(batchJob.id)
         await batchJobStrategy.withTransaction(manager).processJob(batchJob.id)
         await batchJobServiceTx.complete(batchJob.id)
-      } catch (e) {
-        await this.batchJobService_.setFailed(batchJob.id, e.message)
-        throw e
-      }
-    })
+      })
+    } catch (e) {
+      await this.batchJobService_.setFailed(data.id, e.message)
+      throw e
+    }
   }
 }
 

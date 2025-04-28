@@ -1,13 +1,15 @@
 import { PricingService, ProductService } from "../../../../services"
 
 /**
- * @oas [get] /products/{id}
+ * @oas [get] /admin/products/{id}
  * operationId: "GetProductsProduct"
  * summary: "Get a Product"
  * description: "Retrieves a Product."
  * x-authenticated: true
  * parameters:
  *   - (path) id=* {string} The ID of the Product.
+ * x-codegen:
+ *   method: retrieve
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -28,16 +30,14 @@ import { PricingService, ProductService } from "../../../../services"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Product
+ *   - Products
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             product:
- *               $ref: "#/components/schemas/product"
+ *           $ref: "#/components/schemas/AdminProductsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":

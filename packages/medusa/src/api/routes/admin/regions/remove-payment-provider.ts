@@ -4,7 +4,7 @@ import { EntityManager } from "typeorm"
 import RegionService from "../../../../services/region"
 
 /**
- * @oas [delete] /regions/{id}/payment-providers/{provider_id}
+ * @oas [delete] /admin/regions/{id}/payment-providers/{provider_id}
  * operationId: "PostRegionsRegionPaymentProvidersProvider"
  * summary: "Delete Payment Provider"
  * description: "Removes a Payment Provider."
@@ -12,6 +12,8 @@ import RegionService from "../../../../services/region"
  * parameters:
  *   - (path) id=* {string} The ID of the Region.
  *   - (path) provider_id=* {string} The ID of the Payment Provider.
+ * x-codegen:
+ *   method: deletePaymentProvider
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -32,16 +34,14 @@ import RegionService from "../../../../services/region"
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - Region
+ *   - Regions
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             region:
- *               $ref: "#/components/schemas/region"
+ *           $ref: "#/components/schemas/AdminRegionsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":

@@ -2,31 +2,32 @@ import { CartService, IdempotencyKeyService } from "../../../../services"
 
 import { EntityManager } from "typeorm"
 import { IdempotencyKey } from "../../../../models/idempotency-key"
+import { cleanResponseData } from "../../../../utils/clean-response-data"
 
 /**
- * @oas [post] /carts/{id}/taxes
+ * @oas [post] /store/carts/{id}/taxes
  * summary: "Calculate Cart Taxes"
  * operationId: "PostCartsCartTaxes"
  * description: "Calculates taxes for a cart. Depending on the cart's region
  *   this may involve making 3rd party API calls to a Tax Provider service."
  * parameters:
  *   - (path) id=* {String} The Cart ID.
+ * x-codegen:
+ *   method: calculateTaxes
  * x-codeSamples:
  *   - lang: Shell
  *     label: cURL
  *     source: |
  *       curl --location --request POST 'https://medusa-url.com/store/carts/{id}/taxes'
  * tags:
- *   - Cart
+ *   - Carts
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             cart:
- *               $ref: "#/components/schemas/cart"
+ *           $ref: "#/components/schemas/StoreCartsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "404":
@@ -116,6 +117,13 @@ export default async (req, res) => {
 
   if (err) {
     throw err
+  }
+
+  if (idempotencyKey.response_body.cart) {
+    idempotencyKey.response_body.cart = cleanResponseData(
+      idempotencyKey.response_body.cart,
+      []
+    )
   }
 
   res.status(idempotencyKey.response_code).json(idempotencyKey.response_body)

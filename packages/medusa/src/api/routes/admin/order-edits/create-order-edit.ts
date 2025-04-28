@@ -1,14 +1,14 @@
-import { Request, Response } from "express"
-import { OrderEditService } from "../../../../services"
 import { IsOptional, IsString } from "class-validator"
+import { Request, Response } from "express"
 import { EntityManager } from "typeorm"
+import { OrderEditService } from "../../../../services"
 import {
   defaultOrderEditFields,
   defaultOrderEditRelations,
 } from "../../../../types/order-edit"
 
 /**
- * @oas [post] /order-edits
+ * @oas [post] /admin/order-edits
  * operationId: "PostOrderEdits"
  * summary: "Create an OrderEdit"
  * description: "Creates an OrderEdit."
@@ -16,16 +16,10 @@ import {
  *   content:
  *     application/json:
  *       schema:
- *         required:
- *           - order_id
- *         properties:
- *           order_id:
- *             description: The ID of the order to create the edit for.
- *             type: string
- *           internal_note:
- *             description: An optional note to create for the order edit.
- *             type: string
+ *         $ref: "#/components/schemas/AdminPostOrderEditsReq"
  * x-authenticated: true
+ * x-codegen:
+ *   method: create
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -48,16 +42,14 @@ import {
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - OrderEdit
+ *   - Order Edits
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             order_edit:
- *               $ref: "#/components/schemas/order_edit"
+ *           $ref: "#/components/schemas/AdminOrderEditsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -78,13 +70,13 @@ export default async (req: Request, res: Response) => {
   const manager = req.scope.resolve("manager") as EntityManager
 
   const data = req.validatedBody as AdminPostOrderEditsReq
-  const loggedInUserId = (req.user?.id ?? req.user?.userId) as string
+  const createdBy = (req.user?.id ?? req.user?.userId) as string
 
   const createdOrderEdit = await manager.transaction(
     async (transactionManager) => {
       return await orderEditService
         .withTransaction(transactionManager)
-        .create(data, { loggedInUserId })
+        .create(data, { createdBy })
     }
   )
 
@@ -97,6 +89,19 @@ export default async (req: Request, res: Response) => {
   return res.json({ order_edit: orderEdit })
 }
 
+/**
+ * @schema AdminPostOrderEditsReq
+ * type: object
+ * required:
+ *   - order_id
+ * properties:
+ *   order_id:
+ *     description: The ID of the order to create the edit for.
+ *     type: string
+ *   internal_note:
+ *     description: An optional note to create for the order edit.
+ *     type: string
+ */
 export class AdminPostOrderEditsReq {
   @IsString()
   order_id: string
@@ -104,4 +109,8 @@ export class AdminPostOrderEditsReq {
   @IsOptional()
   @IsString()
   internal_note?: string
+
+  @IsOptional()
+  @IsString()
+  created_by?: string
 }

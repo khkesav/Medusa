@@ -1,19 +1,21 @@
 import { Request, Response } from "express"
-import { OrderEditService } from "../../../../services"
 import { EntityManager } from "typeorm"
+import { OrderEditService } from "../../../../services"
 import {
   defaultOrderEditFields,
   defaultOrderEditRelations,
 } from "../../../../types/order-edit"
 
 /**
- * @oas [post] /order-edits/{id}/confirm
+ * @oas [post] /admin/order-edits/{id}/confirm
  * operationId: "PostOrderEditsOrderEditConfirm"
  * summary: "Confirms an OrderEdit"
  * description: "Confirms an OrderEdit."
  * x-authenticated: true
  * parameters:
  *   - (path) id=* {string} The ID of the order edit.
+ * x-codegen:
+ *   method: confirm
  * x-codeSamples:
  *   - lang: JavaScript
  *     label: JS Client
@@ -34,16 +36,14 @@ import {
  *   - api_token: []
  *   - cookie_auth: []
  * tags:
- *   - OrderEdit
+ *   - Order Edits
  * responses:
  *   200:
  *     description: OK
  *     content:
  *       application/json:
  *         schema:
- *           properties:
- *             order_edit:
- *               $ref: "#/components/schemas/order_edit"
+ *           $ref: "#/components/schemas/AdminOrderEditsRes"
  *   "400":
  *     $ref: "#/components/responses/400_error"
  *   "401":
@@ -67,7 +67,7 @@ export default async (req: Request, res: Response) => {
   await manager.transaction(async (transactionManager) => {
     await orderEditService
       .withTransaction(transactionManager)
-      .confirm(id, { loggedInUserId: userId })
+      .confirm(id, { confirmedBy: userId })
   })
 
   let orderEdit = await orderEditService.retrieve(id, {

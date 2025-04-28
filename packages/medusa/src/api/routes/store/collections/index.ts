@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { PaginatedResponse } from "../../../../types/common"
 import { ProductCollection } from "../../../../"
-import middlewares, { transformQuery } from "../../../middlewares"
+import middlewares, { transformStoreQuery } from "../../../middlewares"
 import { StoreGetCollectionsParams } from "./list-collections"
 
 const route = Router()
@@ -11,7 +11,7 @@ export default (app) => {
 
   route.get(
     "/",
-    transformQuery(StoreGetCollectionsParams, {
+    transformStoreQuery(StoreGetCollectionsParams, {
       allowedFields,
       isList: true,
     }),
@@ -22,11 +22,12 @@ export default (app) => {
   return app
 }
 
-export const defaultStoreCollectionRelations = ["products"]
+export const defaultStoreCollectionRelations = []
 export const allowedFields = [
   "id",
   "title",
   "handle",
+  "products",
   "metadata",
   "created_at",
   "updated_at",
@@ -34,10 +35,42 @@ export const allowedFields = [
   ...defaultStoreCollectionRelations,
 ]
 
+/**
+ * @schema StoreCollectionsListRes
+ * type: object
+ * required:
+ *   - collections
+ *   - count
+ *   - offset
+ *   - limit
+ * properties:
+ *   collections:
+ *      type: array
+ *      items:
+ *        $ref: "#/components/schemas/ProductCollection"
+ *   count:
+ *      type: integer
+ *      description: The total number of items available
+ *   offset:
+ *      type: integer
+ *      description: The number of items skipped before these items
+ *   limit:
+ *      type: integer
+ *      description: The number of items per page
+ */
 export type StoreCollectionsListRes = PaginatedResponse & {
   collections: ProductCollection[]
 }
 
+/**
+ * @schema StoreCollectionsRes
+ * type: object
+ * required:
+ *   - collection
+ * properties:
+ *   collection:
+ *     $ref: "#/components/schemas/ProductCollection"
+ */
 export type StoreCollectionsRes = {
   collection: ProductCollection
 }

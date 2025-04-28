@@ -14,7 +14,6 @@ const { useApi } = require("../../../../helpers/use-api")
 const { initDb, useDb } = require("../../../../helpers/use-db")
 
 const cartSeeder = require("../../../helpers/cart-seeder")
-const productSeeder = require("../../../helpers/product-seeder")
 const swapSeeder = require("../../../helpers/swap-seeder")
 const {
   simpleCartFactory,
@@ -22,6 +21,7 @@ const {
   simpleProductFactory,
   simpleShippingOptionFactory,
   simpleLineItemFactory,
+  simpleSalesChannelFactory,
 } = require("../../../factories")
 const {
   simpleDiscountFactory,
@@ -47,7 +47,7 @@ describe("/store/carts", () => {
   beforeAll(async () => {
     const cwd = path.resolve(path.join(__dirname, "..", "..", ".."))
     dbConnection = await initDb({ cwd })
-    medusaProcess = await setupServer({ cwd, verbose: false })
+    medusaProcess = await setupServer({ cwd })
   })
 
   afterAll(async () => {
@@ -57,6 +57,9 @@ describe("/store/carts", () => {
   })
 
   describe("POST /store/carts", () => {
+    let prod1
+    let prodSale
+
     beforeEach(async () => {
       const manager = dbConnection.manager
       await manager.insert(Region, {
@@ -66,8 +69,25 @@ describe("/store/carts", () => {
         tax_rate: 0,
       })
       await manager.query(
-        `UPDATE "country" SET region_id='region' WHERE iso_2 = 'us'`
+        `UPDATE "country"
+         SET region_id='region'
+         WHERE iso_2 = 'us'`
       )
+
+      prod1 = await simpleProductFactory(dbConnection, {
+        id: "test-product",
+        variants: [{ id: "test-variant_1" }],
+      })
+
+      prodSale = await simpleProductFactory(dbConnection, {
+        id: "test-product-sale",
+        variants: [
+          {
+            id: "test-variant-sale",
+            prices: [{ amount: 1000, currency: "usd" }],
+          },
+        ],
+      })
     })
 
     afterEach(async () => {
@@ -88,9 +108,12 @@ describe("/store/carts", () => {
       const api = useApi()
 
       await dbConnection.manager.query(
-        `UPDATE "country" SET region_id=null WHERE iso_2 = 'us'`
+        `UPDATE "country"
+         SET region_id=null
+         WHERE iso_2 = 'us'`
       )
-      await dbConnection.manager.query(`DELETE from region`)
+      await dbConnection.manager.query(`DELETE
+                                        from region`)
 
       try {
         await api.post("/store/carts")
@@ -103,8 +126,6 @@ describe("/store/carts", () => {
     })
 
     it("creates a cart with items", async () => {
-      await productSeeder(dbConnection)
-
       const yesterday = ((today) =>
         new Date(today.setDate(today.getDate() - 1)))(new Date())
       const tomorrow = ((today) =>
@@ -123,7 +144,7 @@ describe("/store/carts", () => {
       await dbConnection.manager.save(priceList1)
 
       const ma_sale_1 = dbConnection.manager.create(MoneyAmount, {
-        variant_id: "test-variant-sale",
+        variant_id: prodSale.variants[0].id,
         currency_code: "usd",
         amount: 800,
         price_list_id: "pl_current",
@@ -137,11 +158,11 @@ describe("/store/carts", () => {
         .post("/store/carts", {
           items: [
             {
-              variant_id: "test-variant_1",
+              variant_id: prod1.variants[0].id,
               quantity: 1,
             },
             {
-              variant_id: "test-variant-sale",
+              variant_id: prodSale.variants[0].id,
               quantity: 2,
             },
           ],
@@ -155,11 +176,11 @@ describe("/store/carts", () => {
       expect(response.data.cart.items).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            variant_id: "test-variant_1",
+            variant_id: prod1.variants[0].id,
             quantity: 1,
           }),
           expect.objectContaining({
-            variant_id: "test-variant-sale",
+            variant_id: prodSale.variants[0].id,
             quantity: 2,
             unit_price: 800,
           }),
@@ -515,6 +536,7 @@ describe("/store/carts", () => {
 
       let discountCart
       let discount
+
       beforeEach(async () => {
         discount = await simpleDiscountFactory(dbConnection, discountData, 100)
         discountCart = await simpleCartFactory(
@@ -582,13 +604,22 @@ describe("/store/carts", () => {
           .catch((err) => console.log(err))
 
         expect(response.data.cart.items.length).toEqual(2)
+
+        const item1 = response.data.cart.items.find((i) => i.id === "test-li")
+        expect(item1.adjustments).toHaveLength(1)
+
+        const item2 = response.data.cart.items.find((i) => i.id !== "test-li")
+        expect(item2.adjustments).toHaveLength(1)
+
+        expect(item1.adjustments[0].amount).toBeCloseTo(17, 0)
+        expect(item2.adjustments[0].amount).toBeCloseTo(168, 0)
+
         expect(response.data.cart.items).toEqual(
           expect.arrayContaining([
             expect.objectContaining({
               adjustments: [
                 expect.objectContaining({
                   item_id: "test-li",
-                  amount: 17,
                   discount_id: "medusa-185",
                 }),
               ],
@@ -596,7 +627,6 @@ describe("/store/carts", () => {
             expect.objectContaining({
               adjustments: [
                 expect.objectContaining({
-                  amount: 168,
                   discount_id: "medusa-185",
                 }),
               ],
@@ -641,14 +671,23 @@ describe("/store/carts", () => {
           .catch((err) => console.log(err))
 
         expect(response.data.cart.items.length).toEqual(2)
+
+        const item1 = response.data.cart.items.find((i) => i.id === "test-li")
+        expect(item1.adjustments).toHaveLength(1)
+
+        const item2 = response.data.cart.items.find(
+          (i) => i.id === "line-item-2"
+        )
+        expect(item2.adjustments).toHaveLength(1)
+
         expect(response.data.cart.items).toEqual(
           expect.arrayContaining([
             expect.objectContaining({
               adjustments: [
                 expect.objectContaining({
                   item_id: "test-li",
+                  amount: 9.25,
                   discount_id: "medusa-185",
-                  amount: 9,
                 }),
               ],
             }),
@@ -656,7 +695,7 @@ describe("/store/carts", () => {
               adjustments: [
                 expect.objectContaining({
                   item_id: "line-item-2",
-                  amount: 176,
+                  amount: 175.75,
                   discount_id: "medusa-185",
                 }),
               ],
@@ -925,6 +964,11 @@ describe("/store/carts", () => {
     beforeEach(async () => {
       await cartSeeder(dbConnection)
       await swapSeeder(dbConnection)
+
+      await simpleSalesChannelFactory(dbConnection, {
+        id: "test-channel",
+        is_default: true,
+      })
     })
 
     afterEach(async () => {
@@ -952,16 +996,18 @@ describe("/store/carts", () => {
     it("fails on apply discount if limit has been reached", async () => {
       const api = useApi()
 
+      const code = "SPENT"
+
       const err = await api
         .post("/store/carts/test-cart", {
-          discounts: [{ code: "SPENT" }],
+          discounts: [{ code }],
         })
         .catch((err) => err)
 
       expect(err).toBeTruthy()
       expect(err.response.status).toEqual(400)
       expect(err.response.data.message).toEqual(
-        "Discount has been used maximum allowed times"
+        `Discount ${code} has been used maximum allowed times`
       )
     })
 
@@ -1035,6 +1081,82 @@ describe("/store/carts", () => {
         ])
       )
       expect(response.status).toEqual(200)
+    })
+
+    it("successfully removes adjustments upon update without discounts", async () => {
+      const discountData = {
+        code: "MEDUSA185DKK",
+        id: "medusa-185",
+        rule: {
+          allocation: "total",
+          type: "fixed",
+          value: 185,
+        },
+        regions: ["test-region"],
+      }
+
+      const cartId = "discount-cart"
+
+      const discount = await simpleDiscountFactory(
+        dbConnection,
+        discountData,
+        100
+      )
+      const discountCart = await simpleCartFactory(
+        dbConnection,
+        {
+          id: cartId,
+          customer: "test-customer",
+          region: "test-region",
+          shipping_address: {
+            address_1: "next door",
+            first_name: "lebron",
+            last_name: "james",
+            country_code: "dk",
+            postal_code: "100",
+          },
+          shipping_methods: [
+            {
+              shipping_option: "test-option",
+              price: 1000,
+            },
+          ],
+        },
+        100
+      )
+      await dbConnection.manager
+        .createQueryBuilder()
+        .relation(Cart, "discounts")
+        .of(discountCart)
+        .add(discount)
+
+      const api = useApi()
+
+      let response = await api.post(`/store/carts/${cartId}/line-items`, {
+        quantity: 1,
+        variant_id: "test-variant-quantity",
+      })
+
+      expect(response.data.cart.items.length).toEqual(1)
+      expect(response.data.cart.items).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            adjustments: [
+              expect.objectContaining({
+                amount: 185,
+                discount_id: "medusa-185",
+              }),
+            ],
+          }),
+        ])
+      )
+
+      response = await api.post(`/store/carts/${cartId}`, {
+        discounts: [],
+      })
+
+      expect(response.data.cart.items.length).toEqual(1)
+      expect(response.data.cart.items[0].adjustments).toHaveLength(0)
     })
 
     it("successfully passes customer conditions with `not_in` operator and applies discount", async () => {
@@ -1226,14 +1348,15 @@ describe("/store/carts", () => {
         },
       })
 
+      const code = "TEST"
       try {
         await api.post("/store/carts/test-customer-discount", {
-          discounts: [{ code: "TEST" }],
+          discounts: [{ code }],
         })
       } catch (error) {
         expect(error.response.status).toEqual(400)
         expect(error.response.data.message).toEqual(
-          "Discount is not valid for customer"
+          `Discount ${code} is not valid for customer`
         )
       }
     })
@@ -1295,14 +1418,15 @@ describe("/store/carts", () => {
         },
       })
 
+      const code = "TEST"
       try {
         await api.post("/store/carts/test-customer-discount", {
-          discounts: [{ code: "TEST" }],
+          discounts: [{ code }],
         })
       } catch (error) {
         expect(error.response.status).toEqual(400)
         expect(error.response.data.message).toEqual(
-          "Discount is not valid for customer"
+          `Discount ${code} is not valid for customer`
         )
       }
     })
@@ -1311,56 +1435,143 @@ describe("/store/carts", () => {
       expect.assertions(2)
       const api = useApi()
 
-      try {
-        await api.post("/store/carts/test-cart", {
-          discounts: [{ code: "EXP_DISC" }],
+      const code = "EXP_DISC"
+
+      const err = await api
+        .post("/store/carts/test-cart", {
+          discounts: [{ code }],
         })
-      } catch (error) {
-        expect(error.response.status).toEqual(400)
-        expect(error.response.data.message).toEqual("Discount is expired")
-      }
+        .catch((e) => e)
+
+      expect(err.response.status).toEqual(400)
+      expect(err.response.data.message).toEqual(`Discount ${code} is expired`)
     })
 
     it("fails on discount before start day", async () => {
       expect.assertions(2)
       const api = useApi()
 
-      try {
-        await api.post("/store/carts/test-cart", {
-          discounts: [{ code: "PREM_DISC" }],
+      const code = "PREM_DISC"
+
+      const err = await api
+        .post("/store/carts/test-cart", {
+          discounts: [{ code }],
         })
-      } catch (error) {
-        expect(error.response.status).toEqual(400)
-        expect(error.response.data.message).toEqual("Discount is not valid yet")
-      }
+        .catch((e) => e)
+
+      expect(err.response.status).toEqual(400)
+      expect(err.response.data.message).toEqual(
+        `Discount ${code} is not valid yet`
+      )
     })
 
     it("fails on apply invalid dynamic discount", async () => {
       const api = useApi()
 
-      try {
-        await api.post("/store/carts/test-cart", {
-          discounts: [{ code: "INV_DYN_DISC" }],
+      const code = "INV_DYN_DISC"
+
+      const err = await api
+        .post("/store/carts/test-cart", {
+          discounts: [{ code }],
         })
-      } catch (error) {
-        expect(error.response.status).toEqual(400)
-        expect(error.response.data.message).toEqual("Discount is expired")
-      }
+        .catch((e) => e)
+
+      expect(err.response.status).toEqual(400)
+      expect(err.response.data.message).toEqual(`Discount ${code} is expired`)
     })
 
     it("Applies dynamic discount to cart correctly", async () => {
       const api = useApi()
 
-      const cart = await api.post(
-        "/store/carts/test-cart",
-        {
-          discounts: [{ code: "DYN_DISC" }],
-        },
-        { withCredentials: true }
-      )
+      const cart = await api.post("/store/carts/test-cart", {
+        discounts: [{ code: "DYN_DISC" }],
+      })
 
       expect(cart.data.cart.shipping_total).toBe(1000)
       expect(cart.status).toEqual(200)
+    })
+
+    it("successfully apply a fixed discount with total allocation and return the total with the right precision", async () => {
+      const api = useApi()
+
+      const cartId = "test-cart"
+      const quantity = 2
+
+      const variant1Price = 4452600
+      const product1 = await simpleProductFactory(dbConnection, {
+        variants: [
+          {
+            id: "test-variant-1-fixed-discount-total",
+            prices: [
+              {
+                amount: variant1Price,
+                currency: "usd",
+                variant_id: "test-variant-1-fixed-discount-total",
+              },
+            ],
+          },
+        ],
+      })
+
+      await api.post(`/store/carts/${cartId}/line-items`, {
+        variant_id: product1.variants[0].id,
+        quantity,
+      })
+
+      const variant2Price = 482200
+      const product2 = await simpleProductFactory(dbConnection, {
+        variants: [
+          {
+            id: "test-variant-2-fixed-discount-total",
+            prices: [
+              {
+                amount: variant2Price,
+                currency: "usd",
+                variant_id: "test-variant-2-fixed-discount-total",
+              },
+            ],
+          },
+        ],
+      })
+
+      await api.post(`/store/carts/${cartId}/line-items`, {
+        variant_id: product2.variants[0].id,
+        quantity,
+      })
+
+      const discountAmount = 10000
+      const discount = await simpleDiscountFactory(dbConnection, {
+        id: "test-discount",
+        code: "TEST",
+        regions: ["test-region"],
+        rule: {
+          type: "fixed",
+          value: discountAmount,
+          allocation: "total",
+        },
+      })
+
+      const response = await api.post(`/store/carts/${cartId}`, {
+        discounts: [{ code: discount.code }],
+      })
+
+      expect(response.status).toBe(200)
+
+      const cart = response.data.cart
+
+      const shippingAmount = 1000
+      const expectedTotal =
+        quantity * variant1Price +
+        quantity * variant2Price +
+        shippingAmount -
+        discountAmount
+
+      const expectedSubtotal = expectedTotal + discountAmount - shippingAmount
+
+      expect(cart.total).toBe(expectedTotal)
+      expect(cart.subtotal).toBe(expectedSubtotal)
+      expect(cart.discount_total).toBe(discountAmount)
+      expect(cart.shipping_total).toBe(1000)
     })
 
     it("updates cart customer id", async () => {
@@ -1556,6 +1767,44 @@ describe("/store/carts", () => {
       expect(response.status).toEqual(200)
     })
 
+    it("partially updates shipping and billing address while retaining the addresses country codes", async () => {
+      const api = useApi()
+
+      // Partially update the shipping address
+      await api
+        .post("/store/carts/test-cart", {
+          shipping_address: {
+            last_name: "james",
+          },
+        })
+        .catch((error) => console.log(error))
+
+      // Partially update the billing address
+      const response = await api.post("/store/carts/test-cart", {
+        billing_address: {
+          first_name: "bruce",
+          last_name: "banner",
+          country_code: "us",
+        },
+      })
+
+      expect(response.status).toEqual(200)
+      expect(response.data.cart).toEqual(
+        expect.objectContaining({
+          shipping_address: expect.objectContaining({
+            first_name: "lebron",
+            last_name: "james",
+            country_code: "us",
+          }),
+          billing_address: expect.objectContaining({
+            first_name: "bruce",
+            last_name: "banner",
+            country_code: "us",
+          }),
+        })
+      )
+    })
+
     it("adds free shipping to cart then removes it again", async () => {
       const api = useApi()
 
@@ -1679,7 +1928,9 @@ describe("/store/carts", () => {
       const manager = dbConnection.manager
       const api = useApi()
       await manager.query(
-        `UPDATE "cart" SET completed_at=current_timestamp WHERE id = 'test-cart-2'`
+        `UPDATE "cart"
+         SET completed_at=current_timestamp
+         WHERE id = 'test-cart-2'`
       )
       try {
         await api.post(`/store/carts/test-cart-2/complete-cart`)
@@ -1714,7 +1965,7 @@ describe("/store/carts", () => {
         await api.post(`/store/carts/test-cart-2/complete-cart`)
       } catch (e) {
         expect(e.response.data).toMatchSnapshot({
-          code: "insufficient_inventory",
+          errors: [{ code: "insufficient_inventory" }],
         })
         expect(e.response.status).toBe(409)
       }
@@ -1750,7 +2001,7 @@ describe("/store/carts", () => {
         await api.post(`/store/carts/swap-cart/complete-cart`)
       } catch (e) {
         expect(e.response.data).toMatchSnapshot({
-          code: "insufficient_inventory",
+          errors: [{ code: "insufficient_inventory" }],
         })
         expect(e.response.status).toBe(409)
       }
@@ -1791,6 +2042,56 @@ describe("/store/carts", () => {
       const res = await api.get(`/store/carts/swap-cart`)
       expect(res.data.cart.payment_authorized_at).not.toBe(null)
       expect(res.data.cart.completed_at).not.toBe(null)
+    })
+
+    it("completes cart with a non-customer and for a customer with the same email created later the order doesn't show up", async () => {
+      const api = useApi()
+      const customerEmail = "test-email-for-non-existent-customer@test.com"
+      const product = await simpleProductFactory(dbConnection)
+
+      const region = await simpleRegionFactory(dbConnection, { tax_rate: 10 })
+
+      const cart = await simpleCartFactory(dbConnection, {
+        customer: {
+          email: customerEmail,
+          has_account: false,
+        },
+        region: region.id,
+        line_items: [
+          {
+            variant_id: product.variants[0].id,
+            quantity: 1,
+            unit_price: 1000,
+          },
+        ],
+      })
+
+      await api.post(`/store/carts/${cart.id}/payment-sessions`)
+
+      const completeRes = await api.post(`/store/carts/${cart.id}/complete`)
+
+      expect(completeRes.status).toEqual(200)
+
+      const customerResponse = await api.post("/store/customers", {
+        first_name: "John",
+        last_name: "Doe",
+        email: customerEmail,
+        password: "test",
+      })
+
+      const [authCookie] = customerResponse.headers["set-cookie"][0].split(";")
+
+      const customerOrdersResponse = await api
+        .get("/store/customers/me/orders?status[]=completed", {
+          headers: {
+            Cookie: authCookie,
+          },
+        })
+        .catch((err) => {
+          return err.response
+        })
+      expect(customerOrdersResponse.status).toEqual(200)
+      expect(customerOrdersResponse.data.orders.length).toEqual(0)
     })
   })
 
@@ -1978,16 +2279,23 @@ describe("/store/carts", () => {
   })
 
   describe("DELETE /store/carts/:id/discounts/:code", () => {
+    const discountData = {
+      code: "MEDUSA185DKK",
+      id: "medusa-185",
+      rule: {
+        allocation: "total",
+        type: "fixed",
+        value: 185,
+      },
+      regions: ["test-region"],
+    }
+
     beforeEach(async () => {
-      try {
-        await cartSeeder(dbConnection)
-        await dbConnection.manager.query(
-          `INSERT INTO "cart_discounts" (cart_id, discount_id) VALUES ('test-cart', 'free-shipping')`
-        )
-      } catch (err) {
-        console.log(err)
-        throw err
-      }
+      await cartSeeder(dbConnection)
+      await dbConnection.manager.query(
+        `INSERT INTO "cart_discounts" (cart_id, discount_id)
+         VALUES ('test-cart', 'free-shipping')`
+      )
     })
 
     afterEach(async () => {
@@ -2015,16 +2323,79 @@ describe("/store/carts", () => {
       expect(response.data.cart.shipping_total).toBe(1000)
       expect(response.status).toEqual(200)
     })
+
+    it("removes line item adjustments upon discount deletion", async () => {
+      const cartId = "discount-cart"
+      const discount = await simpleDiscountFactory(
+        dbConnection,
+        discountData,
+        100
+      )
+      const discountCart = await simpleCartFactory(
+        dbConnection,
+        {
+          id: cartId,
+          customer: "test-customer",
+          region: "test-region",
+          shipping_address: {
+            address_1: "next door",
+            first_name: "lebron",
+            last_name: "james",
+            country_code: "dk",
+            postal_code: "100",
+          },
+          shipping_methods: [
+            {
+              shipping_option: "test-option",
+              price: 1000,
+            },
+          ],
+        },
+        100
+      )
+      await dbConnection.manager
+        .createQueryBuilder()
+        .relation(Cart, "discounts")
+        .of(discountCart)
+        .add(discount)
+
+      const api = useApi()
+
+      let response = await api.post(`/store/carts/${cartId}/line-items`, {
+        quantity: 1,
+        variant_id: "test-variant-quantity",
+      })
+
+      expect(response.data.cart.items.length).toEqual(1)
+      expect(response.data.cart.items).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            adjustments: [
+              expect.objectContaining({
+                amount: 185,
+                discount_id: "medusa-185",
+              }),
+            ],
+          }),
+        ])
+      )
+
+      response = await api.delete(
+        `/store/carts/${cartId}/discounts/${discountData.code}`
+      )
+
+      expect(response.data.cart.items.length).toEqual(1)
+      expect(response.data.cart.items[0].adjustments).toHaveLength(0)
+    })
   })
 
   describe("get-cart with session customer", () => {
     beforeEach(async () => {
-      try {
-        await cartSeeder(dbConnection)
-      } catch (err) {
-        console.log(err)
-        throw err
-      }
+      await cartSeeder(dbConnection)
+      await simpleSalesChannelFactory(dbConnection, {
+        id: "test-channel",
+        is_default: true,
+      })
     })
 
     afterEach(async () => {

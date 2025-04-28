@@ -1,9 +1,9 @@
-import { Connection } from "typeorm"
+import { DataSource } from "typeorm"
 import faker from "faker"
 import {
+  MoneyAmount,
   ProductOptionValue,
   ProductVariant,
-  MoneyAmount,
 } from "@medusajs/medusa"
 
 export type ProductVariantFactoryData = {
@@ -14,11 +14,11 @@ export type ProductVariantFactoryData = {
   inventory_quantity?: number
   title?: string
   options?: { option_id: string; value: string }[]
-  prices?: { currency: string; amount: number, region_id?: string }[]
+  prices?: { currency: string; amount: number; region_id?: string }[]
 }
 
 export const simpleProductVariantFactory = async (
-  connection: Connection,
+  dataSource: DataSource,
   data: ProductVariantFactoryData,
   seed?: number
 ): Promise<ProductVariant> => {
@@ -26,13 +26,13 @@ export const simpleProductVariantFactory = async (
     faker.seed(seed)
   }
 
-  const manager = connection.manager
+  const manager = dataSource.manager
 
   const id = data.id || `simple-variant-${Math.random() * 1000}`
   const toSave = manager.create(ProductVariant, {
     id,
     product_id: data.product_id,
-    sku: data.sku ,
+    sku: data.sku,
     inventory_quantity:
       typeof data.inventory_quantity !== "undefined"
         ? data.inventory_quantity
@@ -45,7 +45,7 @@ export const simpleProductVariantFactory = async (
   const options = data.options || [{ option_id: "test-option", value: "Large" }]
   for (const o of options) {
     await manager.insert(ProductOptionValue, {
-      id: `${o.value}-${o.option_id}`,
+      id: `${variant.id}-${o.option_id ?? Math.random()}`,
       value: o.value,
       variant_id: id,
       option_id: o.option_id,
@@ -59,7 +59,7 @@ export const simpleProductVariantFactory = async (
       variant_id: id,
       currency_code: p.currency,
       amount: p.amount,
-      region_id: p.region_id ,
+      region_id: p.region_id,
     })
   }
 

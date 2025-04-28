@@ -1,11 +1,14 @@
-import { MedusaError } from "medusa-core-utils"
 import { AwilixContainer } from "awilix"
-import { EntityManager, In } from "typeorm"
-import Redis from "ioredis"
+import { MedusaError } from "medusa-core-utils"
+import { In } from "typeorm"
 
-import { LineItemTaxLineRepository } from "../repositories/line-item-tax-line"
-import { ShippingMethodTaxLineRepository } from "../repositories/shipping-method-tax-line"
-import { TaxProviderRepository } from "../repositories/tax-provider"
+import { ICacheService, IEventBusService } from "@medusajs/types"
+import {
+  ITaxService,
+  ItemTaxCalculationLine,
+  TaxCalculationContext,
+  TransactionBaseService
+} from "../interfaces"
 import {
   Cart,
   LineItem,
@@ -13,22 +16,14 @@ import {
   Region,
   ShippingMethod,
   ShippingMethodTaxLine,
-  TaxProvider,
+  TaxProvider
 } from "../models"
+import { LineItemTaxLineRepository } from "../repositories/line-item-tax-line"
+import { ShippingMethodTaxLineRepository } from "../repositories/shipping-method-tax-line"
+import { TaxProviderRepository } from "../repositories/tax-provider"
 import { isCart } from "../types/cart"
-import {
-  ITaxService,
-  ItemTaxCalculationLine,
-  TaxCalculationContext,
-  TransactionBaseService,
-} from "../interfaces"
-
-import { TaxServiceRate } from "../types/tax-service"
-
+import { TaxLinesMaps, TaxServiceRate } from "../types/tax-service"
 import TaxRateService from "./tax-rate"
-import EventBusService from "./event-bus"
-
-const CACHE_TIME = 30 // seconds
 
 type RegionDetails = {
   id: string
@@ -39,32 +34,28 @@ type RegionDetails = {
  * Finds tax providers and assists in tax related operations.
  */
 class TaxProviderService extends TransactionBaseService {
-  protected manager_: EntityManager
-  protected transactionManager_: EntityManager
-
   protected readonly container_: AwilixContainer
+  protected readonly cacheService_: ICacheService
   protected readonly taxRateService_: TaxRateService
   protected readonly taxLineRepo_: typeof LineItemTaxLineRepository
   protected readonly smTaxLineRepo_: typeof ShippingMethodTaxLineRepository
   protected readonly taxProviderRepo_: typeof TaxProviderRepository
-  protected readonly redis_: Redis.Redis
-  protected readonly eventBus_: EventBusService
+  protected readonly eventBus_: IEventBusService
 
   constructor(container: AwilixContainer) {
     super(container)
 
     this.container_ = container
+    this.cacheService_ = container["cacheService"]
     this.taxLineRepo_ = container["lineItemTaxLineRepository"]
     this.smTaxLineRepo_ = container["shippingMethodTaxLineRepository"]
     this.taxRateService_ = container["taxRateService"]
     this.eventBus_ = container["eventBusService"]
     this.taxProviderRepo_ = container["taxProviderRepository"]
-    this.manager_ = container["manager"]
-    this.redis_ = container["redisClient"]
   }
 
   async list(): Promise<TaxProvider[]> {
-    const tpRepo = this.manager_.getCustomRepository(this.taxProviderRepo_)
+    const tpRepo = this.activeManager_.withRepository(this.taxProviderRepo_)
     return tpRepo.find({})
   }
 
@@ -76,12 +67,16 @@ class TaxProviderService extends TransactionBaseService {
   retrieveProvider(region: Region): ITaxService {
     let provider: ITaxService
     if (region.tax_provider_id) {
-      provider = this.container_[`tp_${region.tax_provider_id}`]
+      try {
+        provider = this.container_[`tp_${region.tax_provider_id}`]
+      } catch (e) {
+        // noop
+      }
     } else {
       provider = this.container_["systemTaxService"]
     }
 
-    if (!provider) {
+    if (!provider!) {
       throw new MedusaError(
         MedusaError.Types.NOT_FOUND,
         `Could not find a tax provider with id: ${region.tax_provider_id}`
@@ -93,9 +88,7 @@ class TaxProviderService extends TransactionBaseService {
 
   async clearLineItemsTaxLines(itemIds: string[]): Promise<void> {
     return await this.atomicPhase_(async (transactionManager) => {
-      const taxLineRepo = transactionManager.getCustomRepository(
-        this.taxLineRepo_
-      )
+      const taxLineRepo = transactionManager.withRepository(this.taxLineRepo_)
 
       await taxLineRepo.delete({ item_id: In(itemIds) })
     })
@@ -103,10 +96,8 @@ class TaxProviderService extends TransactionBaseService {
 
   async clearTaxLines(cartId: string): Promise<void> {
     return await this.atomicPhase_(async (transactionManager) => {
-      const taxLineRepo = transactionManager.getCustomRepository(
-        this.taxLineRepo_
-      )
-      const shippingTaxRepo = transactionManager.getCustomRepository(
+      const taxLineRepo = transactionManager.withRepository(this.taxLineRepo_)
+      const shippingTaxRepo = transactionManager.withRepository(
         this.smTaxLineRepo_
       )
 
@@ -138,10 +129,10 @@ class TaxProviderService extends TransactionBaseService {
         taxLines = await this.getTaxLines(cartOrLineItems, calculationContext)
       }
 
-      const itemTaxLineRepo = transactionManager.getCustomRepository(
+      const itemTaxLineRepo = transactionManager.withRepository(
         this.taxLineRepo_
       )
-      const shippingTaxLineRepo = transactionManager.getCustomRepository(
+      const shippingTaxLineRepo = transactionManager.withRepository(
         this.smTaxLineRepo_
       )
 
@@ -219,7 +210,9 @@ class TaxProviderService extends TransactionBaseService {
       calculationContext
     )
 
-    const smTaxLineRepo = this.manager_.getCustomRepository(this.smTaxLineRepo_)
+    const smTaxLineRepo = this.activeManager_.withRepository(
+      this.smTaxLineRepo_
+    )
 
     // .create only creates entities nothing is persisted in DB
     return providerLines.map((pl) => {
@@ -260,7 +253,14 @@ class TaxProviderService extends TransactionBaseService {
           return null
         }
 
-        if (l.variant && l.variant.product_id) {
+        if (l.variant_id && !l.variant) {
+          throw new MedusaError(
+            MedusaError.Types.INVALID_DATA,
+            `Unable to get the tax lines for the item ${l.id}, it contains a variant_id but the variant is missing.`
+          )
+        }
+
+        if (l.variant?.product_id) {
           return {
             item: l,
             rates: await this.getRegionRatesForProduct(
@@ -301,8 +301,10 @@ class TaxProviderService extends TransactionBaseService {
       calculationContext
     )
 
-    const liTaxLineRepo = this.manager_.getCustomRepository(this.taxLineRepo_)
-    const smTaxLineRepo = this.manager_.getCustomRepository(this.smTaxLineRepo_)
+    const liTaxLineRepo = this.activeManager_.withRepository(this.taxLineRepo_)
+    const smTaxLineRepo = this.activeManager_.withRepository(
+      this.smTaxLineRepo_
+    )
 
     // .create only creates entities nothing is persisted in DB
     return providerLines.map((pl) => {
@@ -334,6 +336,42 @@ class TaxProviderService extends TransactionBaseService {
   }
 
   /**
+   * Return a map of tax lines for line items and shipping methods
+   * @param items
+   * @param calculationContext
+   * @protected
+   */
+  async getTaxLinesMap(
+    items: LineItem[],
+    calculationContext: TaxCalculationContext
+  ): Promise<TaxLinesMaps> {
+    const lineItemsTaxLinesMap = {}
+    const shippingMethodsTaxLinesMap = {}
+
+    const taxLines = await this.getTaxLines(items, calculationContext)
+
+    taxLines.forEach((taxLine) => {
+      if ("item_id" in taxLine) {
+        const itemTaxLines = lineItemsTaxLinesMap[taxLine.item_id] ?? []
+        itemTaxLines.push(taxLine)
+        lineItemsTaxLinesMap[taxLine.item_id] = itemTaxLines
+      }
+      if ("shipping_method_id" in taxLine) {
+        const shippingMethodTaxLines =
+          shippingMethodsTaxLinesMap[taxLine.shipping_method_id] ?? []
+        shippingMethodTaxLines.push(taxLine)
+        shippingMethodsTaxLinesMap[taxLine.shipping_method_id] =
+          shippingMethodTaxLines
+      }
+    })
+
+    return {
+      lineItemsTaxLines: lineItemsTaxLinesMap,
+      shippingMethodsTaxLines: shippingMethodsTaxLinesMap,
+    }
+  }
+
+  /**
    * Gets the tax rates configured for a shipping option. The rates are cached
    * between calls.
    * @param optionId - the option id of the shipping method.
@@ -344,14 +382,15 @@ class TaxProviderService extends TransactionBaseService {
     optionId: string,
     regionDetails: RegionDetails
   ): Promise<TaxServiceRate[]> {
-    const cacheHit = await this.getCacheEntry(optionId, regionDetails.id)
+    const cacheKey = this.getCacheKey(optionId, regionDetails.id)
+    const cacheHit = await this.cacheService_.get<TaxServiceRate[]>(cacheKey)
     if (cacheHit) {
       return cacheHit
     }
 
     let toReturn: TaxServiceRate[] = []
     const optionRates = await this.taxRateService_
-      .withTransaction(this.manager_)
+      .withTransaction(this.activeManager_)
       .listByShippingOption(optionId)
 
     if (optionRates.length > 0) {
@@ -374,7 +413,7 @@ class TaxProviderService extends TransactionBaseService {
       ]
     }
 
-    await this.setCache(optionId, regionDetails.id, toReturn)
+    await this.cacheService_.set(cacheKey, toReturn)
 
     return toReturn
   }
@@ -390,14 +429,15 @@ class TaxProviderService extends TransactionBaseService {
     productId: string,
     region: RegionDetails
   ): Promise<TaxServiceRate[]> {
-    const cacheHit = await this.getCacheEntry(productId, region.id)
+    const cacheKey = this.getCacheKey(productId, region.id)
+    const cacheHit = await this.cacheService_.get<TaxServiceRate[]>(cacheKey)
     if (cacheHit) {
       return cacheHit
     }
 
     let toReturn: TaxServiceRate[] = []
     const productRates = await this.taxRateService_
-      .withTransaction(this.manager_)
+      .withTransaction(this.activeManager_)
       .listByProduct(productId, {
         region_id: region.id,
       })
@@ -422,71 +462,23 @@ class TaxProviderService extends TransactionBaseService {
       ]
     }
 
-    await this.setCache(productId, region.id, toReturn)
+    await this.cacheService_.set(cacheKey, toReturn)
 
     return toReturn
   }
 
   /**
    * The cache key to get cache hits by.
-   * @param productId - the product id to cache
+   * @param id - the entity id to cache
    * @param regionId - the region id to cache
    * @return the cache key to use for the id set
    */
-  private getCacheKey(productId: string, regionId: string): string {
-    return `txrtcache:${productId}:${regionId}`
-  }
-
-  /**
-   * Sets the cache results for a set of ids
-   * @param productId - the product id to cache
-   * @param regionId - the region id to cache
-   * @param value - tax rates to cache
-   * @return promise that resolves after the cache has been set
-   */
-  private async setCache(
-    productId: string,
-    regionId: string,
-    value: TaxServiceRate[]
-  ): Promise<null | string> {
-    const cacheKey = this.getCacheKey(productId, regionId)
-    return await this.redis_.set(
-      cacheKey,
-      JSON.stringify(value),
-      "EX",
-      CACHE_TIME
-    )
-  }
-
-  /**
-   * Gets the cache results for a set of ids
-   * @param productId - the product id to cache
-   * @param regionId - the region id to cache
-   * @return the cached result or null
-   */
-  private async getCacheEntry(
-    productId: string,
-    regionId: string
-  ): Promise<TaxServiceRate[] | null> {
-    const cacheKey = this.getCacheKey(productId, regionId)
-
-    try {
-      const cacheHit = await this.redis_.get(cacheKey)
-      if (cacheHit) {
-        // TODO: Validate that cache has correct data
-        const parsedResults = JSON.parse(cacheHit) as TaxServiceRate[]
-        return parsedResults
-      }
-    } catch (_) {
-      // noop - cache parse failed
-      await this.redis_.del(cacheKey)
-    }
-
-    return null
+  private getCacheKey(id: string, regionId: string): string {
+    return `txrtcache:${id}:${regionId}`
   }
 
   async registerInstalledProviders(providers: string[]): Promise<void> {
-    const model = this.manager_.getCustomRepository(this.taxProviderRepo_)
+    const model = this.activeManager_.withRepository(this.taxProviderRepo_)
     await model.update({}, { is_installed: false })
 
     for (const p of providers) {
